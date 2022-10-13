@@ -1,7 +1,13 @@
+using Portfel.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var connectionString = builder.Configuration.GetConnectionString("PortfelContext");
+builder.Services.AddDbContext<PortfelContext>(opts => opts.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
