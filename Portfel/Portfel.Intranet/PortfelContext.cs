@@ -9,6 +9,11 @@ namespace Portfel.Data
             : base(options)
         {
         }
-        public DbSet<Konto> Kontos { get; set; }
+        public DbSet<Konto> Konto { get; set; }
+        public DbSet<RodzajOplaty> RodzajOplaty { get; set; }
+        public DbSet<RodzajTransakcji> RodzajTransakcji { get; set; }
+        public DbSet<SymbolGieldowy> SymbolGieldowy { get; set; }
+        public DbSet<Transakcja> Transakcja { get; set; }
+        public DbSet<Uzytkownik> Uzytkownik { get; set; }
     }
 }

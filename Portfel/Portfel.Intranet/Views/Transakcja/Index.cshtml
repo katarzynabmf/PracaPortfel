@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Portfel.Data.Data.Transakcja>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Konto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RodzajTransakcji)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Waluta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SymbolGieldowy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kwota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ilosc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RodzajOplaty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komentarz)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Konto.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RodzajTransakcji.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Waluta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SymbolGieldowy.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kwota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ilosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RodzajOplaty.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Komentarz)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
