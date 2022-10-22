@@ -12,9 +12,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class TransakcjaController : Controller
     {
-        private readonly PortfelContext _context;
+        private readonly PortfelContexts _context;
 
-        public TransakcjaController(PortfelContext context)
+        public TransakcjaController(PortfelContexts context)
         {
             _context = context;
         }

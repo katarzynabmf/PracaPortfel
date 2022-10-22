@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-var connectionString = builder.Configuration.GetConnectionString("PortfelContext");
-builder.Services.AddDbContext<PortfelContext>(opts => opts.UseSqlServer(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("PortfelContexts");
+builder.Services.AddDbContext<PortfelContexts>(opts => opts.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

@@ -9,11 +9,11 @@ using Portfel.Data;
 
 #nullable disable
 
-namespace Portfel.Intranet.Migrations
+namespace Portfel.Data.Migrations
 {
-    [DbContext(typeof(PortfelContext))]
-    [Migration("20221014173156_DodanoKolejneTabele")]
-    partial class DodanoKolejneTabele
+    [DbContext(typeof(PortfelContexts))]
+    [Migration("20221022192358_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

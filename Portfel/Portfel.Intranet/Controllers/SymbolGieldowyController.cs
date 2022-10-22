@@ -12,9 +12,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class SymbolGieldowyController : Controller
     {
-        private readonly PortfelContext _context;
+        private readonly PortfelContexts _context;
 
-        public SymbolGieldowyController(PortfelContext context)
+        public SymbolGieldowyController(PortfelContexts context)
         {
             _context = context;
         }

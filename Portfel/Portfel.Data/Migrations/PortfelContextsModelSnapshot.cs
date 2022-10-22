@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfel.Data;
 
 #nullable disable
 
-namespace Portfel.Intranet.Migrations
+namespace Portfel.Data.Migrations
 {
-    [DbContext(typeof(PortfelContext))]
-    [Migration("20221014173832_M2")]
-    partial class M2
+    [DbContext(typeof(PortfelContexts))]
+    partial class PortfelContextsModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

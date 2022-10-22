@@ -3,9 +3,9 @@ using Portfel.Data.Data;
 
 namespace Portfel.Data
 {
-    public class PortfelContext : DbContext
+    public class PortfelContexts : DbContext
     {
-        public PortfelContext(DbContextOptions options)
+        public PortfelContexts(DbContextOptions options)
             : base(options)
         {
         }

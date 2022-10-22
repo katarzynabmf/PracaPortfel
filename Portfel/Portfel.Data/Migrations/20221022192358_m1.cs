@@ -3,34 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Portfel.Intranet.Migrations
+namespace Portfel.Data.Migrations
 {
-    public partial class DodanoKolejneTabele : Migration
+    public partial class m1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Kontos_Uzytkownik_UzytkownikId",
-                table: "Kontos");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Kontos",
-                table: "Kontos");
-
-            migrationBuilder.RenameTable(
-                name: "Kontos",
-                newName: "Konto");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Kontos_UzytkownikId",
-                table: "Konto",
-                newName: "IX_Konto_UzytkownikId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Konto",
-                table: "Konto",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "RodzajOplaty",
                 columns: table => new
@@ -69,6 +47,42 @@ namespace Portfel.Intranet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SymbolGieldowy", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Uzytkownik",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Imie = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Haslo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Uzytkownik", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Konto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Waluta = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gotowka = table.Column<double>(type: "float", nullable: false),
+                    UzytkownikId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Konto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Konto_Uzytkownik_UzytkownikId",
+                        column: x => x.UzytkownikId,
+                        principalTable: "Uzytkownik",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -115,6 +129,11 @@ namespace Portfel.Intranet.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Konto_UzytkownikId",
+                table: "Konto",
+                column: "UzytkownikId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transakcja_KontoId",
                 table: "Transakcja",
                 column: "KontoId");
@@ -133,23 +152,15 @@ namespace Portfel.Intranet.Migrations
                 name: "IX_Transakcja_SymbolGieldowyId",
                 table: "Transakcja",
                 column: "SymbolGieldowyId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Konto_Uzytkownik_UzytkownikId",
-                table: "Konto",
-                column: "UzytkownikId",
-                principalTable: "Uzytkownik",
-                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Konto_Uzytkownik_UzytkownikId",
-                table: "Konto");
-
             migrationBuilder.DropTable(
                 name: "Transakcja");
+
+            migrationBuilder.DropTable(
+                name: "Konto");
 
             migrationBuilder.DropTable(
                 name: "RodzajOplaty");
@@ -160,30 +171,8 @@ namespace Portfel.Intranet.Migrations
             migrationBuilder.DropTable(
                 name: "SymbolGieldowy");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Konto",
-                table: "Konto");
-
-            migrationBuilder.RenameTable(
-                name: "Konto",
-                newName: "Kontos");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Konto_UzytkownikId",
-                table: "Kontos",
-                newName: "IX_Kontos_UzytkownikId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Kontos",
-                table: "Kontos",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Kontos_Uzytkownik_UzytkownikId",
-                table: "Kontos",
-                column: "UzytkownikId",
-                principalTable: "Uzytkownik",
-                principalColumn: "Id");
+            migrationBuilder.DropTable(
+                name: "Uzytkownik");
         }
     }
 }
