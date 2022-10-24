@@ -19,6 +19,6 @@ namespace Portfel.Data.Data
         public string Email { get; set; }
 
         //dla danego uzytkownika jest wiele kont
-        public virtual ICollection<Konto> Konto { get; set; }
+        public virtual ICollection<Konto> Konto { get; set; } = new List<Konto>();
     }
 }

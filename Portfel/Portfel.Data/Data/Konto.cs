@@ -19,6 +19,16 @@ namespace Portfel.Data.Data
         public double Gotowka { get; set; }
 
         public int? UzytkownikId { get; set; }
-        public virtual Uzytkownik Uzytkownik { get; set; }
+        public Uzytkownik Uzytkownik { get; set; } 
+    }
+
+    public class EdytujKontoRequest
+    {
+        public int Id { get; set; }
+        public string Nazwa { get; set; }
+        public string Waluta { get; set; }
+        public double Gotowka { get; set; }
+
+        public int? UzytkownikId { get; set; }
     }
 }

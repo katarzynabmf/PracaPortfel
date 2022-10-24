@@ -63,19 +63,32 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz")] Transakcja transakcja)
+        public async Task<IActionResult> Create([Bind("KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz")] StworzTransakcjaRequest stworzTransakcja)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(transakcja);
+                _context.Add(new Transakcja()
+
+                    {
+                        KontoId = stworzTransakcja.KontoId,
+                        Date = stworzTransakcja.Date,
+                        RodzajTransakcjiId = stworzTransakcja.RodzajTransakcjiId,
+                        Waluta = stworzTransakcja.Waluta,
+                        SymbolGieldowyId = stworzTransakcja.SymbolGieldowyId,
+                        Kwota = stworzTransakcja.Kwota,
+                        Ilosc = stworzTransakcja.Ilosc,
+                        RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
+                        Komentarz = stworzTransakcja.Komentarz
+                    }
+                );
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", transakcja.KontoId);
-            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", transakcja.RodzajOplatyId);
-            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", transakcja.RodzajTransakcjiId);
-            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", transakcja.SymbolGieldowyId);
-            return View(transakcja);
+            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", stworzTransakcja.KontoId);
+            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", stworzTransakcja.RodzajOplatyId);
+            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", stworzTransakcja.RodzajTransakcjiId);
+            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", stworzTransakcja.SymbolGieldowyId);
+            return View(stworzTransakcja);
         }
 
         // GET: Transakcja/Edit/5
@@ -103,9 +116,9 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz")] Transakcja transakcja)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz")] EdytujTransakcjaRequest edytujTransakcja)
         {
-            if (id != transakcja.Id)
+            if (id != edytujTransakcja.Id)
             {
                 return NotFound();
             }
@@ -114,12 +127,28 @@ namespace Portfel.Intranet.Controllers
             {
                 try
                 {
+                    var transakcja = await _context.Transakcja.FindAsync(id);
+                    if (transakcja == null)
+                    {
+                        return NotFound();
+                    }
+
+                    transakcja.KontoId = edytujTransakcja.KontoId;
+                    transakcja.Date = edytujTransakcja.Date;
+                    transakcja.RodzajTransakcjiId = edytujTransakcja.RodzajTransakcjiId;
+                    transakcja.Waluta = edytujTransakcja.Waluta;
+                    transakcja.SymbolGieldowyId = edytujTransakcja.SymbolGieldowyId;
+                    transakcja.Kwota = edytujTransakcja.Kwota;
+                    transakcja.Ilosc = edytujTransakcja.Ilosc;
+                    transakcja.RodzajOplatyId = edytujTransakcja.RodzajOplatyId;
+                    transakcja.Komentarz = edytujTransakcja.Komentarz;
+
                     _context.Update(transakcja);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TransakcjaExists(transakcja.Id))
+                    if (!TransakcjaExists(edytujTransakcja.Id))
                     {
                         return NotFound();
                     }
@@ -130,11 +159,11 @@ namespace Portfel.Intranet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", transakcja.KontoId);
-            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", transakcja.RodzajOplatyId);
-            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", transakcja.RodzajTransakcjiId);
-            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", transakcja.SymbolGieldowyId);
-            return View(transakcja);
+            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", edytujTransakcja.KontoId);
+            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", edytujTransakcja.RodzajOplatyId);
+            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", edytujTransakcja.RodzajTransakcjiId);
+            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", edytujTransakcja.SymbolGieldowyId);
+            return View(edytujTransakcja);
         }
 
         // GET: Transakcja/Delete/5

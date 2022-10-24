@@ -1,8 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Portfel.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+var connectionString = builder.Configuration.GetConnectionString("PortfelContexts");
+builder.Services.AddDbContext<PortfelContexts>(opts => opts.UseSqlServer(connectionString));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

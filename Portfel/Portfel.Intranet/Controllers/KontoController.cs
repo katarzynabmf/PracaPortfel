@@ -57,16 +57,22 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] Konto konto)
+        public async Task<IActionResult> Create([Bind("Nazwa,Waluta,Gotowka,UzytkownikId")] StworzKontoRequest stworzKonto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(konto);
+                _context.Add(new Konto()
+                {
+                    Nazwa = stworzKonto.Nazwa,
+                    Gotowka = stworzKonto.Gotowka,
+                    Waluta = stworzKonto.Waluta,
+                    UzytkownikId = stworzKonto.UzytkownikId
+                });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", konto.UzytkownikId);
-            return View(konto);
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", stworzKonto.UzytkownikId);
+            return View(stworzKonto);
         }
 
         // GET: Konto/Edit/5
@@ -91,9 +97,9 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] Konto konto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] EdytujKontoRequest edytujKonto)
         {
-            if (id != konto.Id)
+            if (id != edytujKonto.Id)
             {
                 return NotFound();
             }
@@ -102,12 +108,21 @@ namespace Portfel.Intranet.Controllers
             {
                 try
                 {
+                    var konto = await _context.Konto.FindAsync(id);
+                    if (konto == null)
+                    {
+                        return NotFound();
+                    }
+                    konto.Nazwa = edytujKonto.Nazwa;
+                    konto.Gotowka = edytujKonto.Gotowka;
+                    konto.Waluta = edytujKonto.Waluta;
+                    konto.UzytkownikId = edytujKonto.UzytkownikId;
                     _context.Update(konto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KontoExists(konto.Id))
+                    if (!KontoExists(edytujKonto.Id))
                     {
                         return NotFound();
                     }
@@ -118,8 +133,8 @@ namespace Portfel.Intranet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", konto.UzytkownikId);
-            return View(konto);
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);
+            return View(edytujKonto);
         }
 
         // GET: Konto/Delete/5

@@ -1,20 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portfel.App.Models;
 using System.Diagnostics;
+using Portfel.Data;
 
 namespace Portfel.App.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly PortfelContexts _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(PortfelContexts context)
         {
-            _logger = logger;
+            _context = context; // tu inicjalizujemy baze danych
         }
-
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
+            //ViewBag.ModelSymboleGieldowe =
+            //(
+            //    from symbol in _context.SymbolGieldowy
+            //    select symbol
+            //).ToList();
             return View();
         }
 
@@ -31,6 +37,15 @@ namespace Portfel.App.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Symbole()
+        {
+            ViewBag.ModelSymboleGieldowe =
+            (
+                from symbol in _context.SymbolGieldowy
+                select symbol
+            ).ToList();
+            return View();
         }
     }
 }

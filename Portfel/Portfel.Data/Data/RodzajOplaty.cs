@@ -17,6 +17,6 @@ namespace Portfel.Data.Data
         public bool Promowany { get; set; }
 
         //danego rodzaju jest wiele oplat
-        public virtual ICollection<Transakcja> Transakcja { get; set; }
+        public virtual ICollection<Transakcja> Transakcja { get; set; } = new List<Transakcja>();
     }
 }

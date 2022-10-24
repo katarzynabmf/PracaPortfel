@@ -15,6 +15,6 @@ namespace Portfel.Data.Data
         public string Nazwa { get; set; }
 
         //danego rodzaju jest wiele transakcji
-        public virtual ICollection<Transakcja> Transakcja { get; set; }
+        public virtual ICollection<Transakcja> Transakcja { get; set; } = new List<Transakcja>();
     }
 }
