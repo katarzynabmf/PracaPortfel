@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
+using Auth0.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 

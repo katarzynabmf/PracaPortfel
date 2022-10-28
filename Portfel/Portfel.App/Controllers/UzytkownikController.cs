@@ -4,6 +4,7 @@ using Portfel.App.Models;
 using Portfel.Data;
 using Portfel.Data.Data;
 using System.Security.Claims;
+using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -45,13 +46,17 @@ namespace Portfel.App.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(RejestracjaPomyslna));
                 }
-               // return View("StronaLogowania");
+                return View("StronaLogowania");
             }
             else
             {
                 return View("RejestracjaNiepomyslna");
             }
         }
+
+
+
+
         public IActionResult StronaLogowania()
         {
             return View("StronaLogowania");
