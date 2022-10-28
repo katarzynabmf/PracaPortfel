@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Portfel.App.Models;
 using Portfel.Data;
 using Portfel.Data.Data;
-using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Portfel.App.Controllers
@@ -58,8 +56,10 @@ namespace Portfel.App.Controllers
 
 
 
-        public IActionResult StronaLogowania()
+        public IActionResult StronaLogowania(string? returnUrl = null)
         {
+            if (returnUrl != null) 
+                ViewData["ReturnUrl"] = returnUrl;
             return View("StronaLogowania");
         }
 
@@ -89,7 +89,7 @@ namespace Portfel.App.Controllers
                     return Redirect("/");
                 }
             }
-
+            
             return View();
         }
         private async Task<bool> ValidateLogin(string email, string haslo)
@@ -146,6 +146,12 @@ namespace Portfel.App.Controllers
 
             //return View("MojeTransakcje", mT);
             return View("MojeTransakcje", tr);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
         }
     }
 }

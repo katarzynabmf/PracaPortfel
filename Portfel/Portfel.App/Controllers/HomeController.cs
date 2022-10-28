@@ -2,7 +2,6 @@
 using Portfel.App.Models;
 using System.Diagnostics;
 using Portfel.Data;
-using Portfel.Data.Data;
 
 namespace Portfel.App.Controllers
 {

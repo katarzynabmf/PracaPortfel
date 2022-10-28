@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
-using Auth0.AspNetCore.Authentication;
 
 const string CookieScheme = "YourSchemeName";
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +17,7 @@ builder.Services.AddAuthentication(CookieScheme) // Sets the default scheme to c
     .AddCookie(CookieScheme, options =>
     {
         options.AccessDeniedPath = "/account/denied";
-        options.LoginPath = "/uzytkownik/logowanie";
+        options.LoginPath = "/uzytkownik/StronaLogowania";
     });
 
 var app = builder.Build();
