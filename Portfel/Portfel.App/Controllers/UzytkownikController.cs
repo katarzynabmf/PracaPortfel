@@ -124,8 +124,8 @@ namespace Portfel.App.Controllers
             //    .ToList(); //dziala
 
             var tr = _context.Transakcja
-                .Include(t => t.Konto.Uzytkownik)
-                .Where(t => t.Konto.Uzytkownik.Email == "aa")
+                //.Include(t => t.Konto.Uzytkownik)
+                .Where(t => t.Konto.Uzytkownik.Id == uzytkownik.Id)
                 .ToList();//dziala
             //var tr = _context.Transakcja
             //    .Include(t => t.Konto.Uzytkownik)
