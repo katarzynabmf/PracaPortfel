@@ -2,6 +2,7 @@
 using Portfel.App.Models;
 using System.Diagnostics;
 using Portfel.Data;
+using Portfel.Data.Data;
 
 namespace Portfel.App.Controllers
 {
@@ -16,11 +17,11 @@ namespace Portfel.App.Controllers
         }
         public IActionResult Index(int? id)
         {
-            //ViewBag.ModelSymboleGieldowe =
-            //(
-            //    from symbol in _context.SymbolGieldowy
-            //    select symbol
-            //).ToList();
+            ViewBag.ModelSymboleGieldowe =
+            (
+                from symbol in _context.SymbolGieldowy
+                select symbol
+            ).ToList();
             return View();
         }
 
@@ -40,12 +41,13 @@ namespace Portfel.App.Controllers
         }
         public IActionResult Symbole()
         {
+            var symbole = from s in _context.SymbolGieldowy select s;
             ViewBag.ModelSymboleGieldowe =
             (
                 from symbol in _context.SymbolGieldowy
                 select symbol
             ).ToList();
-            return View();
+            return View(symbole);
         }
     }
 }
