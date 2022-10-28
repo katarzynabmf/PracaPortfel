@@ -64,10 +64,11 @@ namespace Portfel.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logowanie(string email, string haslo, string returnUrl = null)
+        public async Task<IActionResult> Logowanie(string email, string haslo, string redirectUrl, string test)
+        //public async Task<IActionResult> Logowanie(DaneLogowania daneLogowania)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
+           
+          //  redirectUrl = "/Uzytkownik/MojeTransakcje";
             // Normally Identity handles sign in, but you can do it directly
             if (await ValidateLogin(email, haslo))
             {
@@ -80,9 +81,9 @@ namespace Portfel.App.Controllers
                 await HttpContext.SignInAsync(
                     new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
 
-                if (Url.IsLocalUrl(returnUrl))
+                if (Url.IsLocalUrl(redirectUrl))
                 {
-                    return Redirect(returnUrl);
+                    return Redirect(redirectUrl);
                 }
                 else
                 {

@@ -3,7 +3,10 @@
     ViewData["Title"] = "Logowanie";
     Layout = "Index";
 }*@
-@model Portfel.Data.Data.Uzytkownik
+@model DaneLogowania
+@{
+    //Model.RedirectUrl = ViewData["ReturnUrl"]?.ToString() ?? string.Empty;
+}
 
 @{
     ViewData["Title"] = "Logowanie";
@@ -36,6 +39,9 @@
                                         <span asp-validation-for="Haslo" class="text-danger"></span>
                                     </div>
 
+                                    <input data-val="true" data-val-required="The RedirectUrl field is required." id="RedirectUrl" name="RedirectUrl" type="hidden" value="@(ViewData["ReturnUrl"]?.ToString() ?? "")" />
+
+
                                     <input type="submit" value="Login" class="btn btn-primary btn-user btn-block" />
                                     @*<a href="index.html" class="btn btn-google btn-user btn-block">
                 <i class="fab fa-google fa-fw"></i> Register with Google
@@ -57,7 +63,7 @@
         </div>
     </section>
 
-        @{
+      @*  @{
             <script type="text/javascript">
         var viewBagValue = "@((string)ViewBag.loginFailed)"
         if (viewBagValue != null && viewBagValue != '') {
@@ -67,7 +73,7 @@
         }
 
         @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}*@
 
 </body>
 
