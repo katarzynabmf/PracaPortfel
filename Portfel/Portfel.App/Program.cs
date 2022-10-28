@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
 using Auth0.AspNetCore.Authentication;
 
+const string CookieScheme = "YourSchemeName";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +11,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("PortfelContexts");
 builder.Services.AddDbContext<PortfelContexts>(opts => opts.UseSqlServer(connectionString));
+
+builder.Services.AddMvc();
+
+builder.Services.AddAuthentication(CookieScheme) // Sets the default scheme to cookies
+    .AddCookie(CookieScheme, options =>
+    {
+        options.AccessDeniedPath = "/account/denied";
+        options.LoginPath = "/uzytkownik/logowanie";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +36,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

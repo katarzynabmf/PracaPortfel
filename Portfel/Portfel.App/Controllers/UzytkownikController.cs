@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfel.App.Models;
 using Portfel.Data;
 using Portfel.Data.Data;
-using System.Security.Claims;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Portfel.App.Controllers
 {
@@ -63,28 +64,42 @@ namespace Portfel.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logowanie(string Email, string Haslo)
+        public async Task<IActionResult> Logowanie(string email, string haslo, string returnUrl = null)
         {
-            var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == Email);
-            var ctx = HttpContext.User;
-            if (uzytkownik == null)
+            ViewData["ReturnUrl"] = returnUrl;
+
+            // Normally Identity handles sign in, but you can do it directly
+            if (ValidateLogin(email, haslo))
             {
-                TempData["loginFailed"] = "Nieprawidlowe dane logowania lub konto nie jest aktywne";
-                return RedirectToAction("Index");
+                var claims = new List<Claim>
+                {
+                    new Claim("user", email),
+                    new Claim("role", "Member")
+                };
+
+                await HttpContext.SignInAsync(
+                    new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return Redirect("/");
+                }
             }
 
-
-            if (uzytkownik.Haslo == Haslo)
-            {
-                return RedirectToAction("MojeTransakcje", "Uzytkownik");
-            }
-            else
-            {
-                TempData["loginFailed"] = "Nieprawidłowe dane logowania";
-                return RedirectToAction("Index");
-            }
+            return View();
         }
+        private bool ValidateLogin(string userName, string password)
+        {
+            // For this sample, all logins are successful.
+            return true;
+        }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> MojeTransakcje()
         {
             var transakcje = from t in _context.Transakcja select t;
