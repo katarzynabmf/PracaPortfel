@@ -69,7 +69,7 @@ namespace Portfel.App.Controllers
             ViewData["ReturnUrl"] = returnUrl;
 
             // Normally Identity handles sign in, but you can do it directly
-            if (ValidateLogin(email, haslo))
+            if (await ValidateLogin(email, haslo))
             {
                 var claims = new List<Claim>
                 {
@@ -92,10 +92,16 @@ namespace Portfel.App.Controllers
 
             return View();
         }
-        private bool ValidateLogin(string userName, string password)
+        private async Task<bool> ValidateLogin(string email, string haslo)
         {
-            // For this sample, all logins are successful.
-            return true;
+            var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == email);
+            var ctx = HttpContext.User;
+            if (uzytkownik == null)
+            {
+                return false;
+            }
+
+            return uzytkownik.Haslo == haslo;
         }
 
         [HttpGet]
