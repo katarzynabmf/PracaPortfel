@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Portfel.Data.Data.Konto>
+
+
+<h1>Moje konta</h1>
+<h2>Witaj zalogowany </h2>
+
+<p>
+    <a asp-action="DodajKonto">Dodaj nowe konto</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Waluta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gotowka)
+        </th>
+  
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Waluta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gotowka)
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>

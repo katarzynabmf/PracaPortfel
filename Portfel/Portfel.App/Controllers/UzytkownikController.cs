@@ -6,6 +6,7 @@ using Portfel.Data;
 using Portfel.Data.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Portfel.App.Controllers
 {
@@ -64,7 +65,7 @@ namespace Portfel.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logowanie(string email, string haslo, string redirectUrl, string test)
+        public async Task<IActionResult> Logowanie(string email, string haslo, string redirectUrl)
         //public async Task<IActionResult> Logowanie(DaneLogowania daneLogowania)
         {
            
@@ -87,11 +88,11 @@ namespace Portfel.App.Controllers
                 }
                 else
                 {
-                    return Redirect("/");
+                    return Redirect("MojeKonta");
                 }
             }
             
-            return View();
+            return View("RejestracjaNiepomyslna");
         }
         private async Task<bool> ValidateLogin(string email, string haslo)
         {
@@ -104,6 +105,63 @@ namespace Portfel.App.Controllers
 
             return uzytkownik.Haslo == haslo;
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> MojeKonta()
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
+            //var konto = _context.Konto
+            //    .Include(k => k.Uzytkownik)
+            //    .Where(k => k.UzytkownikId == uzytkownik.Id)
+            //    .ToList();//dziala
+
+            ////var mK = new MojeKonta
+            ////{
+            ////    Konta = konto,
+            ////};
+
+            //return View("MojeKonta", konto);
+
+
+            var portfelContext = _context.Konto.Include(k => k.Uzytkownik)
+                .Where(k => k.UzytkownikId == uzytkownik.Id);
+            return View("MojeKonta",await portfelContext.ToListAsync());
+
+        }
+
+
+        public IActionResult DodajKonto()
+        {
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+            return View("DodajKonto");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DodajKonto([Bind("Nazwa,Waluta,Gotowka")] StworzKontoRequest stworzKonto)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(new Konto()
+                {
+                    Nazwa = stworzKonto.Nazwa,
+                    Gotowka = stworzKonto.Gotowka,
+                    Waluta = stworzKonto.Waluta,
+                    UzytkownikId = uzytkownik.Id
+                });
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(MojeKonta));
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", stworzKonto.UzytkownikId);
+            return View("MojeKonta");
+        }
+
+
 
         [HttpGet]
         [Authorize]

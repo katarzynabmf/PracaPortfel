@@ -7,15 +7,12 @@
 @{
     //Model.RedirectUrl = ViewData["ReturnUrl"]?.ToString() ?? string.Empty;
 }
-
 @{
-    ViewData["Title"] = "Logowanie";
+    //ViewData["Title"] = "Logowanie";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<body style="background: linear-gradient(90deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%); font-family: rubik; ">
-    <h1>LOGOWANIE</h1>  
-
-<section class="ftco-section">
+}<body>
+@*<body style="background: linear-gradient(90deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%); font-family: rubik; ">*@
+@*<section class="ftco-section">
     <div class="container">
         <div class="my-5">
             <div class="card o-hidden border-0 shadow-lg my-5">
@@ -27,33 +24,28 @@
                             <div class="p-5">
                                 <p id="loginFailedMsg" class="text-danger"></p>
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Logowanie</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Zaloguj się</h1>
                                 </div>
                                 <form asp-action="Logowanie" asp-controller="Uzytkownik" class="user">
                                     <div class="form-group col-sm-12">
-                                        <input asp-for="Email" class="form-control form-control-user" placeholder="Email" />
+                                        <input asp-for="Email" id="form3Example1cg" class="form-control form-control-lg" placeholder="Email" />
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group col-sm-12">
-                                        <input type="password" asp-for="Haslo" class="form-control form-control-user" placeholder="Hasło" />
+                                        <input type="password" asp-for="Haslo" id="form3Example3cg" class="form-control form-control-lg" placeholder="Hasło" />
                                         <span asp-validation-for="Haslo" class="text-danger"></span>
                                     </div>
 
                                     <input data-val="true" data-val-required="The RedirectUrl field is required." id="RedirectUrl" name="RedirectUrl" type="hidden" value="@(ViewData["ReturnUrl"]?.ToString() ?? "")" />
 
-
-                                    <input type="submit" value="Login" class="btn btn-primary btn-user btn-block" />
-                                    @*<a href="index.html" class="btn btn-google btn-user btn-block">
-                <i class="fab fa-google fa-fw"></i> Register with Google
-            </a>
-            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-            </a>*@
+                                    <div class="d-flex justify-content-center">
+                                        <input type="submit" value="Zaloguj" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" />
+                                    </div>
                                 </form>
                                 <hr>
-                              @*  <div class="text-center">
+                                <div class="text-center">
                                     <a class="small" asp-controller="Uzytkownik" asp-action="ResetujHaslo">Nie pamiętasz hasła?</a>
-                                </div>*@
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -61,8 +53,46 @@
             </div>
         </div>
         </div>
-    </section>
+    </section>*@
+      <section class="vh-100 bg-image"
+  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-7">Zaloguj się</h2>
+                <h3 class=" text-center mb-9"> Nie masz konta? <a asp-action="StronaRejestracji">Zarejestruj się</a> </h3>
+                <form asp-action="Logowanie" asp-controller="Uzytkownik" >
+                  
+                    <div class="form mb-4">
+                        <input type="text" asp-for="Email" placeholder="Email" id="form3Example1cg" class="form-control form-control-lg"  />
+                        <span asp-validation-for="Email"></span>
+                       
+                       
+                    </div>
+                    <div class="form mb-4">
+                        <input type="password" asp-for="Haslo" placeholder="Hasło" id="form3Example3cg" class="form-control form-control-lg" />
+                        <span asp-validation-for="Haslo"></span>
 
+                    </div>
+    
+                    <input data-val="true" data-val-required="The RedirectUrl field is required." id="RedirectUrl" name="RedirectUrl" type="hidden" value="@(ViewData["ReturnUrl"]?.ToString() ?? "")" />
+
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" value="Zaloguj" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" />
+                    </div>
+                                                       
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       @*  @{
             <script type="text/javascript">
         var viewBagValue = "@((string)ViewBag.loginFailed)"
@@ -74,6 +104,10 @@
 
         @section Scripts {
             @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}*@
+<!-- MDB -->
 
 </body>
 
+<br/>
+<br/><br/>
+<br/>
