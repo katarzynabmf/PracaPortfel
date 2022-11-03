@@ -131,7 +131,22 @@ namespace Portfel.App.Controllers
 
         }
 
+        public async Task<IActionResult> SzczegolyKonta(int? id)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
+            //var transakcje = _context.Transakcja.Include(t => t.Konto.Uzytkownik).
+            //    Where(t => t.KontoId == id).ToList();
+
+            var transakcje =  _context.Transakcja.
+                Include(t=>t.RodzajTransakcji).
+                Include(t=>t.RodzajOplaty).
+                Include(t=>t.SymbolGieldowy).
+                Where(t => t.KontoId == id).ToList();
+
+            return View("SzczegolyKonta", transakcje);
+        }
         public IActionResult DodajKonto()
         {
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
@@ -161,10 +176,41 @@ namespace Portfel.App.Controllers
             return View("MojeKonta");
         }
 
+        public IActionResult DodajTransakcje()
+        {
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+            return View("DodajTransakcje");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DodajTransakcje([Bind("Date, RodzajTransakcjiId, Waluta, SymbolGieldowyId, Kwota, Ilosc, RodzajOplatyId, Komentarz")] StworzTransakcjaRequest stworzTransakcja)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(new Transakcja()
+                {
+                    Date = stworzTransakcja.Date,
+                    RodzajTransakcjiId = stworzTransakcja.RodzajTransakcjiId,
+                    Waluta = stworzTransakcja.Waluta,
+                    SymbolGieldowyId = stworzTransakcja.SymbolGieldowyId,
+                    Kwota = stworzTransakcja.Kwota,
+                    Ilosc = stworzTransakcja.Ilosc,
+                    RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
+                    Komentarz = stworzTransakcja.Komentarz
+                });
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(MojeTransakcje));
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", stworzTransakcja.KontoId);
+            return View("SzczegolyKonta");
+        }
 
 
-        [HttpGet]
-        [Authorize]
+
         public async Task<IActionResult> MojeTransakcje()
         {
             var transakcje = from t in _context.Transakcja select t;

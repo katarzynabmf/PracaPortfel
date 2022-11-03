@@ -25,7 +25,7 @@
             @Html.DisplayNameFor(model => model.Gotowka)
         </th>
   
-        <th></th>
+        <th>Szczegóły</th>
     </tr>
     </thead>
     <tbody>
@@ -40,7 +40,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Gotowka)
             </td>
-
+            <td>
+                <a asp-action="SzczegolyKonta" asp-controller="Uzytkownik" 
+                   asp-route-id="@item.Id"
+                   class="btn btn-success btn-block 
+                    btn-lg gradient-custom-4 text-body"
+                >Szczegóły konta</a>
+            </td>
         </tr>
     }
     </tbody>
