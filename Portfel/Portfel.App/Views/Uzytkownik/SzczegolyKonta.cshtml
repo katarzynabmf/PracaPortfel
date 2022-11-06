@@ -1,5 +1,6 @@
-﻿@*@model KontoZTransakcjami*@
-@model IEnumerable<Portfel.Data.Data.Transakcja>
+﻿@model SzczegolyKonta
+@*@model IEnumerable<Portfel.Data.Data.Transakcja>*@
+
 
 <h1>Tutaj są szczegóły konta</h1>
 
@@ -19,11 +20,51 @@
 }*@
 
 <p>
-    <a asp-action="DodajTransakcje" class="btn btn-success btn-block 
+    <a asp-action="DodajTransakcje" asp-controller="Uzytkownik" asp-route-id="@Model.IdKonta"
+       class="btn btn-success btn-block 
                     btn-lg gradient-custom-4 text-body">Dodaj transakcje</a>
+ 
 </p>
 
 <table class="table">
+    <thead>
+        <tr>
+
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Transakcje) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RodzajTransakcji.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Waluta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SymbolGieldowy.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kwota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ilosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RodzajOplaty.Nazwa)
+            </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Komentarz)
+        </td>
+        </tr>
+            }
+}
+@*<table class="table">
     <thead>
         <tr>
 
@@ -82,10 +123,5 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Komentarz)
             </td>
-         @*   <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
-        </tr>
-}
+        </tr>*@
+     

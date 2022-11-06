@@ -112,7 +112,7 @@ namespace Portfel.App.Controllers
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var konto = _context.Konto
+            //var konto = _context.IdKonta
             //    .Include(k => k.Uzytkownik)
             //    .Where(k => k.UzytkownikId == uzytkownik.Id)
             //    .ToList();//dziala
@@ -131,12 +131,12 @@ namespace Portfel.App.Controllers
 
         }
 
-        public async Task<IActionResult> SzczegolyKonta(int? id)
+        public async Task<IActionResult> SzczegolyKonta(int id)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var transakcje = _context.Transakcja.Include(t => t.Konto.Uzytkownik).
+            //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
             //    Where(t => t.KontoId == id).ToList();
 
             var transakcje =  _context.Transakcja.
@@ -144,8 +144,7 @@ namespace Portfel.App.Controllers
                 Include(t=>t.RodzajOplaty).
                 Include(t=>t.SymbolGieldowy).
                 Where(t => t.KontoId == id).ToList();
-
-            return View("SzczegolyKonta", transakcje);
+            return View("SzczegolyKonta", new SzczegolyKonta(id, transakcje){});
         }
         public IActionResult DodajKonto()
         {
@@ -176,30 +175,32 @@ namespace Portfel.App.Controllers
             return View("MojeKonta");
         }
 
-        public IActionResult DodajTransakcje()
+        public IActionResult DodajTransakcje(int id)
         {
+            var kontoId = _context.Konto.FindAsync(id);
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
             return View("DodajTransakcje");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DodajTransakcje([Bind("Date, RodzajTransakcjiId, Waluta, SymbolGieldowyId, Kwota, Ilosc, RodzajOplatyId, Komentarz")] StworzTransakcjaRequest stworzTransakcja)
+        public async Task<IActionResult> DodajTransakcje(int id, [Bind("KontoId, Waluta, Kwota, Ilosc, Komentarz")] StworzTransakcjaRequest stworzTransakcja)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
-
+            var konto = _context.Konto.FindAsync(id);
             if (ModelState.IsValid)
             {
                 _context.Add(new Transakcja()
                 {
-                    Date = stworzTransakcja.Date,
-                    RodzajTransakcjiId = stworzTransakcja.RodzajTransakcjiId,
+                    KontoId = id,
+                    Date = DateTime.Now,
+                    RodzajTransakcjiId = 2,
                     Waluta = stworzTransakcja.Waluta,
-                    SymbolGieldowyId = stworzTransakcja.SymbolGieldowyId,
+                    SymbolGieldowyId = 3,
                     Kwota = stworzTransakcja.Kwota,
                     Ilosc = stworzTransakcja.Ilosc,
-                    RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
+                    RodzajOplatyId = 4,
                     Komentarz = stworzTransakcja.Komentarz
                 });
                 await _context.SaveChangesAsync();
@@ -219,26 +220,26 @@ namespace Portfel.App.Controllers
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
             //var tr = _context.Transakcja
-            //    .Include(t => t.Konto.Uzytkownik)
-            //    .Where(t => t.Konto.Uzytkownik.Email == uzytkownik.Email)
+            //    .Include(t => t.IdKonta.Uzytkownik)
+            //    .Where(t => t.IdKonta.Uzytkownik.Email == uzytkownik.Email)
             //    .ToList();
 
             //var tr = _context.Transakcja
-            //    .Include(t => t.Konto.Uzytkownik)
-            //    .Where(t => t.Konto.Uzytkownik.Id == 3)
+            //    .Include(t => t.IdKonta.Uzytkownik)
+            //    .Where(t => t.IdKonta.Uzytkownik.Id == 3)
             //    .ToList(); //dziala
 
             var tr = _context.Transakcja
-                //.Include(t => t.Konto.Uzytkownik)
+                //.Include(t => t.IdKonta.Uzytkownik)
                 .Where(t => t.Konto.Uzytkownik.Id == uzytkownik.Id)
                 .ToList();//dziala
             //var tr = _context.Transakcja
-            //    .Include(t => t.Konto.Uzytkownik)
-            //    .Where(t => t.Konto.Uzytkownik.Email == uzytkownik.Email)
+            //    .Include(t => t.IdKonta.Uzytkownik)
+            //    .Where(t => t.IdKonta.Uzytkownik.Email == uzytkownik.Email)
             //    .ToList();
 
             //var transakcja = _context.Transakcja
-            //    .Include(t => t.Konto.UzytkownikId)
+            //    .Include(t => t.IdKonta.UzytkownikId)
 
             //    .Where(t => t.KontoId == uzytkownik.Id)
             //    .ToList();
