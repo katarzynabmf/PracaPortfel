@@ -135,13 +135,14 @@ namespace Portfel.App.Controllers
 
             //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
             //    Where(t => t.KontoId == id).ToList();
-
+            var konto = _context.Konto.Where(k => k.Id == id).FirstOrDefault();
+            var nazwaKonta = konto.Nazwa;
             var transakcje =  _context.Transakcja.
                 Include(t=>t.RodzajTransakcji).
                 Include(t=>t.RodzajOplaty).
                 Include(t=>t.SymbolGieldowy).
                 Where(t => t.KontoId == id).ToList();
-            return View("SzczegolyKonta", new SzczegolyKonta(id, transakcje){});
+            return View("SzczegolyKonta", new SzczegolyKonta(id,nazwaKonta, transakcje){});
         }
         public IActionResult DodajKonto()
         {
@@ -189,7 +190,7 @@ namespace Portfel.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DodajTransakcje(int id, [Bind("KontoId, Waluta, Kwota, Ilosc, Komentarz")] StworzTransakcjaRequest stworzTransakcja)
+        public async Task<IActionResult> DodajTransakcje(int id, [Bind("KontoId,RodzajTransakcji, Waluta, Kwota, Ilosc, Komentarz")] StworzTransakcjaRequest stworzTransakcja)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
@@ -200,12 +201,12 @@ namespace Portfel.App.Controllers
                 {
                     KontoId = id,
                     Date = DateTime.Now,
-                    RodzajTransakcjiId = 2,
+                    RodzajTransakcjiId = 6,
                     Waluta = stworzTransakcja.Waluta,
-                    SymbolGieldowyId = 3,
+                    SymbolGieldowyId = 6,
                     Kwota = stworzTransakcja.Kwota,
                     Ilosc = stworzTransakcja.Ilosc,
-                    RodzajOplatyId = 4,
+                    RodzajOplatyId = 6,
                     Komentarz = stworzTransakcja.Komentarz
                 });
                 await _context.SaveChangesAsync();
@@ -220,7 +221,12 @@ namespace Portfel.App.Controllers
 
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", stworzTransakcja.KontoId);
-            return View("SzczegolyKonta");
+            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", stworzTransakcja.KontoId);
+            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", stworzTransakcja.RodzajOplatyId);
+            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", stworzTransakcja.RodzajTransakcjiId);
+            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", stworzTransakcja.SymbolGieldowyId);
+            //return View("SzczegolyKonta");
+            return View(stworzTransakcja);
         }
 
 

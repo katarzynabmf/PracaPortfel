@@ -15,5 +15,6 @@ namespace Portfel.Data
         public DbSet<SymbolGieldowy> SymbolGieldowy { get; set; }
         public DbSet<Transakcja> Transakcja { get; set; }
         public DbSet<Uzytkownik> Uzytkownik { get; set; }
+        public DbSet<Aktualnosc> Aktualnosc { get; set; }
     }
 }
