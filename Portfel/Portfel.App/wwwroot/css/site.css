@@ -34,3 +34,101 @@ body {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
 }
+
+.szerokiButton {
+
+
+}
+.gradient_Tlo {
+   
+    background: linear-gradient(121.84deg, #811e68 17.02%, #671d5f 50.23%, #4f2455 83.43%);
+}
+.button_maly {
+    box-shadow: inset 0px 1px 0px 0px #e184f3;
+    background-color: #b02c8f;
+    border-radius: 6px;
+    border: 1px solid #a511c0;
+    display: inline-block;
+    cursor: pointer;
+    color: #f0ebf0;
+    font-family: Arial;
+}
+.myButton {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background-color:#872167;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.myButton:hover {
+	background-color:#671d60;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #9b14b3;
+    background-color: #9e237f;
+    position: relative;
+    top: 1px;
+}
+.odleglosc {
+    padding: 4rem 3rem;
+}
+.button_logowanie_rejestracja {
+    width: 100%;
+    height: 40px;
+    background-color: #872166;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-family: Source Sans Pro;
+    font-size: .875rem;
+    font-weight: 600;
+}
+.tytul_logowanie {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+}
+.naglowek_logowanie {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 16px;
+    
+}
+.myButton {
+    background-color: #872167;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 13px 32px;
+    text-decoration: none;
+    width: 100%;
+    padding: 0.75rem 1.6875rem 0.6875rem;
+    font-size: .875rem;
+    line-height: 1.6;
+}
+
+.myButton:hover {
+    background-color: #671d60;
+}
+
+.myButton:active {
+    position: relative;
+    top: 1px;
+}

@@ -54,9 +54,6 @@ namespace Portfel.App.Controllers
             }
         }
 
-
-
-
         public IActionResult StronaLogowania(string? returnUrl = null)
         {
             if (returnUrl != null) 
@@ -175,10 +172,18 @@ namespace Portfel.App.Controllers
             return View("MojeKonta");
         }
 
-        public IActionResult DodajTransakcje(int id)
+        //public IActionResult DodajTransakcje(int id)
+        //{
+        //    var kontoId = _context.Konto.FindAsync(id);
+        //    ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+        //    return View("DodajTransakcje");
+        //}
+
+        public IActionResult DodajTransakcje()
         {
-            var kontoId = _context.Konto.FindAsync(id);
-            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa");
+            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa");
+            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa");
             return View("DodajTransakcje");
         }
 
@@ -205,6 +210,14 @@ namespace Portfel.App.Controllers
                 });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MojeTransakcje));
+                //return RedirectToAction(nameof(SzczegolyKonta), id);
+                //var transakcje = _context.Transakcja.
+                //    Include(t => t.RodzajTransakcji).
+                //    Include(t => t.RodzajOplaty).
+                //    Include(t => t.SymbolGieldowy).
+                //    Where(t => t.KontoId == id).ToList();
+                //return View("SzczegolyKonta", new SzczegolyKonta(id, transakcje) { });
+
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", stworzTransakcja.KontoId);
             return View("SzczegolyKonta");

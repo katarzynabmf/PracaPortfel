@@ -2,42 +2,50 @@
 @*@model IEnumerable<Portfel.Data.Data.Transakcja>*@
 
 
-<h1>Tutaj są szczegóły konta</h1>
+<h1>Konto @Model.IdKonta.</h1>
 
-@*@foreach (var item in Model.Transakcje) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ilosc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Waluta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Komentarz)
-        </td>
-
-    </tr>
-}*@
 
 <p>
     <a asp-action="DodajTransakcje" asp-controller="Uzytkownik" asp-route-id="@Model.IdKonta"
        class="btn btn-success btn-block 
                     btn-lg gradient-custom-4 text-body">Dodaj transakcje</a>
- 
 </p>
 
 <table class="table">
     <thead>
         <tr>
-
+            <td>
+                <div>Data dodania</div>
+            </td>
+            <td>
+                <div>Rodzaj transakcji</div>
+            </td>
+            <td>
+                <div>Waluta</div>
+            </td>
+            <td>
+                <div>Symbol giełdowy</div>
+            </td>
+            <td>
+                <div>Kwota</div>
+            </td>
+            <td>
+                <div>Ilość</div>
+            </td>
+            <td>
+                <div>Rodzaj opłaty</div>
+            </td>
+            <td>
+                <div>Komentarz</div>
+            </td>
 
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Transakcje) {
-        <tr>
-
-            <td>
+@foreach (var item in Model.Transakcje) 
+    {
+    <tr>
+        <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
@@ -62,66 +70,5 @@
             @Html.DisplayFor(modelItem => item.Komentarz)
         </td>
         </tr>
-            }
-}
-@*<table class="table">
-    <thead>
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RodzajTransakcji)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Waluta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SymbolGieldowy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Kwota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ilosc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RodzajOplaty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Komentarz)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RodzajTransakcji.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Waluta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SymbolGieldowy.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kwota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ilosc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RodzajOplaty.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Komentarz)
-            </td>
-        </tr>*@
-     
+    }
+</table>
