@@ -2,6 +2,7 @@
 using Portfel.App.Models;
 using System.Diagnostics;
 using Portfel.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Portfel.App.Controllers
 {
@@ -14,14 +15,34 @@ namespace Portfel.App.Controllers
         {
             _context = context; // tu inicjalizujemy baze danych
         }
-        public IActionResult Index(int? id)
+        public IActionResult Index()
         {
             ViewBag.ModelSymboleGieldowe =
             (
                 from symbol in _context.SymbolGieldowy
                 select symbol
             ).ToList();
+
+            ViewBag.ModelAktualnosci =
+            (
+                from aktualnosc in _context.Aktualnosc
+                select aktualnosc 
+            ).ToList();
+
             return View();
+            //ViewBag.ModelAktualnosci =
+            //(
+            //    from aktualnosc in _context.Aktualnosc
+            //    select aktualnosc
+            //).ToList();
+
+            //return View();
+
+        }
+
+        public async Task<ActionResult> Szczegoly(int id)
+        {
+            return View(await _context.Aktualnosc.Where(t => t.Id == id).FirstOrDefaultAsync());
         }
 
         public IActionResult Privacy()
@@ -47,6 +68,16 @@ namespace Portfel.App.Controllers
                 select symbol
             ).ToList();
             return View(symbole);
+        }
+        public IActionResult Aktualnosci()
+        {
+            var aktualnosci = from a in _context.Aktualnosc select a;
+            ViewBag.ModelAktualnosci =
+            (
+                from a in _context.Aktualnosc
+                select a
+            ).ToList();
+            return View(aktualnosci);
         }
     }
 }

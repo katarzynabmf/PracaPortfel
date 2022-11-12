@@ -1,0 +1,51 @@
+﻿@model Portfel.Data.Data.Aktualnosc
+
+@{
+    ViewData["Title"] = "Szczegóły";
+}
+
+<h1>Szczegóły</h1>
+
+<div>
+    <h4>Aktualność</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayName("Tytuł")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tytul)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Treść")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tresc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Data dodania")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataDodania)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Url zdjęcia")
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var item in Model.FotoUrl.Split(","))
+            {
+                <img src="@item"/>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Priorytet)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Priorytet)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary" role="button">Edytuj</a>
+    <a asp-action="Index" class="btn btn-info" role="button">Wróć do listy</a>
+</div>

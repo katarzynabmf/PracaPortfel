@@ -31,6 +31,6 @@ namespace Portfel.Data.Data
         public DateTime DataDodania { get; set; }
         public string FotoUrl { get; set; }
         public uint Priorytet { get; set; }
-        public bool Aktywna { get; set; }
+        public bool Aktywna { get; set; } = true;
     }
 }

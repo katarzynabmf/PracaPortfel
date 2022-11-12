@@ -29,6 +29,7 @@ namespace Portfel.Data.Data
         public int? RodzajOplatyId { get; set; }
         public virtual RodzajOplaty RodzajOplaty { get; set; }
         public string Komentarz { get; set; }
+        public bool Aktywna { get; set; } = true;
     }
     public class StworzTransakcjaRequest
     {

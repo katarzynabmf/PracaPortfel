@@ -132,3 +132,7 @@ body {
     position: relative;
     top: 1px;
 }
+
+.kolor_tekstu_tabeli {
+    color: whitesmoke;
+}

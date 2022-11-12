@@ -7,37 +7,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
-<section class="odleglosc">
-  <div >
+<section id="contact" class="contact">
     <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="tytul_logowanie">Zaloguj się do konta</h2>
-                <h3 class="naglowek_logowanie"> Nie masz konta? <a asp-action="StronaRejestracji">Zarejestruj się</a> </h3>
-                <form asp-action="Logowanie" asp-controller="Uzytkownik" >
-                    <div class="form mb-4">
-                        <input type="text" asp-for="Email" placeholder="Email" id="form3Example1cg" class="form-control form-control-lg"  />
-                        <span asp-validation-for="Email"></span>
-                    </div>
-                    <div class="form mb-4">
-                        <input type="password" asp-for="Haslo" placeholder="Hasło" id="form3Example3cg" class="form-control form-control-lg" />
-                        <span asp-validation-for="Haslo"></span>
-                    </div>
-                    <input data-val="true" data-val-required="The RedirectUrl field is required." id="RedirectUrl" name="RedirectUrl" type="hidden" value="@(ViewData["ReturnUrl"]?.ToString() ?? "")" />
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-5 ">
+                        <div class="info-item d-flex">
+                            <i class="bi bi-phone flex-shrink-0"></i>
+                            <div>
+                                <h4>Zaloguj się</h4>
+                                <p>Nie masz konta? <a asp-action="StronaRejestracji" style="color: white">Zarejestruj się</a> </p>
+                            </div>
+                        </div><!-- End Info Item -->
+                        <form asp-action="Logowanie" asp-controller="Uzytkownik" >
+                            <div class="form-group mt-3">
+                                <input type="text" asp-for="Email" placeholder="Email" id="form3Example1cg" class="form-control form-control-lg"  />
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="password" asp-for="Haslo" placeholder="Hasło" id="form3Example3cg" class="form-control form-control-lg" />
+                                <span asp-validation-for="Haslo"></span>
+                            </div>
+                            <input data-val="true" data-val-required="The RedirectUrl field is required." id="RedirectUrl" name="RedirectUrl" type="hidden" value="@(ViewData["ReturnUrl"]?.ToString() ?? "")" />
 
-                    <div class="d-flex justify-content-center">
-                        <input type="submit" value="Zaloguj" class="myButton" />
+                            <div class="text-center">
+                                <input type="submit" value="Zaloguj się" style="background: var(--color-primary);
+                                                                                border: 0;
+                                                                                padding: 14px 45px;
+                                                                                color: #fff;
+                                                                                transition: 0.4s;
+                                                                                border-radius: 50px;
+                                                                                margin-top: 8px;"/>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>
+
       @*  @{
             <script type="text/javascript">
         var viewBagValue = "@((string)ViewBag.loginFailed)"
@@ -51,7 +61,5 @@
             @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}*@
 <!-- MDB -->
 
-
-<br/>
-<br/><br/>
-<br/>
+    
+                        

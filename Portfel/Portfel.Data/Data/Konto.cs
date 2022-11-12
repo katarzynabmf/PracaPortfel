@@ -14,7 +14,9 @@ namespace Portfel.Data.Data
         public double Gotowka { get; set; }
 
         public int? UzytkownikId { get; set; }
-        public Uzytkownik Uzytkownik { get; set; } 
+        public Uzytkownik Uzytkownik { get; set; }
+        public bool Aktywna { get; set; } = true;
+
     }
 
     public class EdytujKontoRequest
