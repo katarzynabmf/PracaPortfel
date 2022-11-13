@@ -26,6 +26,7 @@ namespace Portfel.App.Controllers
             ViewBag.ModelAktualnosci =
             (
                 from aktualnosc in _context.Aktualnosc
+                orderby aktualnosc.DataDodania descending 
                 select aktualnosc 
             ).ToList();
 
@@ -50,6 +51,18 @@ namespace Portfel.App.Controllers
             return View();
         }
         public IActionResult Pomoc()
+        {
+            return View();
+        }
+        public IActionResult Kont()
+        {
+            return View();
+        }
+        public IActionResult Polityka()
+        {
+            return View();
+        }
+        public IActionResult Regulamin()
         {
             return View();
         }
