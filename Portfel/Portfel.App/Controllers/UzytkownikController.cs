@@ -131,6 +131,10 @@ namespace Portfel.App.Controllers
         public async Task<IActionResult> SzczegolyKonta(int id)
         {
             var user = HttpContext.User.Identity;
+            if (user.Name == null)
+            {
+                return View("StronaLogowania");
+            }
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
             //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
@@ -231,7 +235,11 @@ namespace Portfel.App.Controllers
             var transakcje = from t in _context.Transakcja select t;
            
             var user = HttpContext.User.Identity;
-            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+            if (user.Name == null)
+            {
+                return View("StronaLogowania");
+            }
+                var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
             //var tr = _context.Transakcja
             //    .Include(t => t.IdKonta.Uzytkownik)
