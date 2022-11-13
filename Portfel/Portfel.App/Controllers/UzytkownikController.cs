@@ -127,7 +127,7 @@ namespace Portfel.App.Controllers
             return View("MojeKonta",await portfelContext.ToListAsync());
 
         }
-
+        
         public async Task<IActionResult> SzczegolyKonta(int id)
         {
             var user = HttpContext.User.Identity;
@@ -147,6 +147,78 @@ namespace Portfel.App.Controllers
                 Include(t=>t.SymbolGieldowy).
                 Where(t => t.KontoId == id).ToList();
             return View("SzczegolyKonta", new SzczegolyKonta(id,nazwaKonta, transakcje){});
+        }
+        // GET: Konto/Edit/5
+        public async Task<IActionResult> EdytujKonto(int id)
+        {
+            if (id == null || _context.Konto == null)
+            {
+                return NotFound();
+            }
+
+            var konto = await _context.Konto.FindAsync(id);
+            if (konto == null)
+            {
+                return NotFound();
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", konto.UzytkownikId);
+            return View(konto);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EdytujKonto(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] EdytujKontoRequest edytujKonto)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+            var portfelContext = _context.Konto.Include(k => k.Uzytkownik)
+                .Where(k => k.UzytkownikId == uzytkownik.Id);
+
+
+            if (user.Name == null)
+            {
+                return View("StronaLogowania");
+            }
+            if (id != edytujKonto.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var konto = await _context.Konto.FindAsync(id);
+                    if (konto == null)
+                    {
+                        return NotFound();
+                    }
+                    konto.Nazwa = edytujKonto.Nazwa;
+                    konto.Gotowka = edytujKonto.Gotowka;
+                    konto.Waluta = edytujKonto.Waluta;
+                    konto.UzytkownikId = edytujKonto.UzytkownikId;
+                    _context.Update(konto);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!KontoExists(edytujKonto.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return View("MojeKonta", await portfelContext.ToListAsync());
+            }
+  
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);
+            return View("MojeKonta", await portfelContext.ToListAsync());
+        }
+        private bool KontoExists(int id)
+        {
+            return _context.Konto.Any(e => e.Id == id);
         }
         public IActionResult DodajKonto()
         {

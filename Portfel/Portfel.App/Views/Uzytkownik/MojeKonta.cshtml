@@ -49,6 +49,10 @@
                        asp-route-id="@item.Id"
                        style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
                     >Szczegóły konta</a>
+                    <a asp-action="EdytujKonto" asp-controller="Uzytkownik" 
+                       asp-route-id="@item.Id"
+                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                    >Edytuj konto</a>
                 </td>
             </tr>
         }
