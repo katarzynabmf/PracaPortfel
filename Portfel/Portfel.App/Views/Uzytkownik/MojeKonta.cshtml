@@ -4,49 +4,55 @@
 @{
 }
 @model IEnumerable<Portfel.Data.Data.Konto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="about" class="about" style="margin-bottom: 55px;">
+<div class="container" data-aos="fade-up">
 
-
-<h1>Moje konta</h1>
-<h2>Witaj zalogowany</h2>
-
-<p>
-    <a asp-action="DodajKonto">Dodaj nowe konto</a>
-</p>
-<table class="table align-middle mb-0 bg-white table-striped table-hover">
-    <thead class="bg-light">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Waluta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gotowka)
-        </th>
-  
-        <th>Szczegóły</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
+    <div class="section-header">
+        <h2>Moje konta</h2>
+        <p>
+            <a asp-action="DodajKonto" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Dodaj nowe konto</a>
+        </p>
+    </div>
+    <table class="table align-middle mb-0 bg-white table-striped table-hover">
+        <thead class="bg-light">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Waluta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gotowka)
-            </td>
-            <td>
-                <a asp-action="SzczegolyKonta" asp-controller="Uzytkownik" 
-                   asp-route-id="@item.Id"
-                   class = "button_maly"
-                >Szczegóły konta</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Nazwa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Waluta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gotowka)
+            </th>
+  
+            <th>Szczegóły</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Waluta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gotowka)
+                </td>
+                <td>
+                    <a asp-action="SzczegolyKonta" asp-controller="Uzytkownik" 
+                       asp-route-id="@item.Id"
+                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                    >Szczegóły konta</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</section>

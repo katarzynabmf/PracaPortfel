@@ -20,6 +20,7 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
   -moz-osx-font-smoothing: grayscale;
 }
 
+.bi-person-add::before { content: "\F89A"; }
 .bi-123::before { content: "\f67f"; }
 .bi-alarm-fill::before { content: "\f101"; }
 .bi-alarm::before { content: "\f102"; }

@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Portfel.Data.Data.Transakcja>
 <h1>Wszytskie transakcje</h1>
@@ -17,3 +18,48 @@
         <tr>@item.RodzajTransakcji</tr><br>
     </tr>
 }
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>Transakcje</h2>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RodzajOplaty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kwota)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RodzajTransakcji)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Komentarz)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RodzajOplaty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kwota)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RodzajTransakcji)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Komentarz)
+                    </td>
+     
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>

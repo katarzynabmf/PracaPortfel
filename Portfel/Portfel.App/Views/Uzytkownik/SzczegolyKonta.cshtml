@@ -1,11 +1,81 @@
 ﻿@model SzczegolyKonta
-@*@model IEnumerable<Portfel.Data.Data.Transakcja>*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
 
-<h1>Konto @Model.NazwaKonta</h1>
-
-
-<p>
+        <div class="section-header">
+            <h2>@Model.NazwaKonta</h2>
+            <p>
+                <a asp-action="DodajTransakcje" asp-controller="Uzytkownik" asp-route-id="@Model.IdKonta" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Dodaj transakcję</a>
+            </p>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+            <tr>
+                <th>
+                    <div>Data dodania</div>
+                </th>
+                <th>
+                    <div>Rodzaj transakcji</div>
+                </th>
+                <th>
+                    <div>Waluta</div>
+                </th>
+                <th>
+                    <div>Symbol giełdowy</div>
+                </th>
+                <th>
+                    <div>Kwota</div>
+                </th>
+                <th>
+                    <div>Ilość</div>
+                </th>
+                <th>
+                    <div>Rodzaj opłaty</div>
+                </th>
+                <th>
+                    <div>Komentarz</div>
+                </th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Transakcje) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RodzajTransakcji.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Waluta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SymbolGieldowy.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kwota)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ilosc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RodzajOplaty.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Komentarz)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+@*<p>
     <a asp-action="DodajTransakcje" asp-controller="Uzytkownik" asp-route-id="@Model.IdKonta"
        class="btn btn-success btn-block 
                     btn-lg gradient-custom-4 text-body">Dodaj transakcje</a>
@@ -72,3 +142,4 @@
         </tr>
     }
 </table>
+*@
