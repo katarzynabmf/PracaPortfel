@@ -39,7 +39,7 @@
                 <th>
                     <div>Komentarz</div>
                 </th>
-                
+                <th>Akcje</th>
             </tr>
             </thead>
             <tbody>
@@ -68,6 +68,12 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Komentarz)
+                    </td>
+                    <td>
+                        <a asp-action="EdytujTransakcje" asp-controller="Uzytkownik" 
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                        >Edytuj transakcje</a>
                     </td>
                 </tr>
             }

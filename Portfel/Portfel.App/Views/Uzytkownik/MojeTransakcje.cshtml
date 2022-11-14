@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Portfel.Data.Data.Transakcja>
-<h1>Wszytskie transakcje</h1>
+@*<h1>Wszytskie transakcje</h1>
 <h2>Witaj </h2>
 @foreach (var item in Model)
 {
@@ -39,6 +39,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Komentarz)
                 </th>
+                <th>Akcje</th>
             </tr>
             </thead>
             <tbody>
@@ -56,10 +57,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Komentarz)
                     </td>
-     
+            
                 </tr>
             }
             </tbody>
         </table>
     </div>
-</section>
+</section>*@
