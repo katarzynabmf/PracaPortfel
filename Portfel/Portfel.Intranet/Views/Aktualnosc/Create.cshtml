@@ -3,33 +3,34 @@
 @{
     ViewData["Title"] = "Dodaj aktualności";
 }
-<h4>Aktualność</h4>
-<hr/>
-<div class="row">
-    <div class="col-lg-8 offset-lg-2">
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Utwórz aktualność</h1>
+                            </div>
         <form enctype="multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-warning">Powrót</a>
-                <input type="submit" value="Zapisz" class="btn btn-primary"/>
-            </div>
+
             <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Pozycja" class="control-label">Pozycja</label>
-                        <input asp-for="Pozycja" class="form-control"/>
+                       
+                        <input asp-for="Pozycja" class="form-control form-control-user"  placeholder="Pozycja"/>
                         <span asp-validation-for="Pozycja" class="text-danger"></span>
                     </div>
-                </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Tytul" class="control-label">Tytuł</label>
-                        <input asp-for="Tytul" class="form-control"/>
+                       
+                        <input asp-for="Tytul" class="form-control form-control-user"  placeholder="Tytuł"/>
                         <span asp-validation-for="Tytul" class="text-danger"></span>
                     </div>
-                </div>
             </div>
 
             <div class="row">
@@ -54,22 +55,39 @@
                 </div>
             </div>    
             <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="FotoUrl" class="control-label">FotoUrl</label>
-                        <input asp-for="FotoUrl" class="form-control"/>
+                        <input asp-for="FotoUrl" class="form-control form-control-user" placeholder="Foto URL" />
                         <span asp-validation-for="FotoUrl" class="text-danger"></span>
                     </div>
-                </div>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
                 </label>
             </div>
+             <div class="form-group">
+                                    <input type="submit" value="Utwórz aktualność" class="btn btn-primary btn-user btn-block" />
+                                </div>
         </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
