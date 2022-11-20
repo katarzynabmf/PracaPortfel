@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfel.Data;
 
@@ -11,9 +12,10 @@ using Portfel.Data;
 namespace Portfel.Data.Migrations
 {
     [DbContext(typeof(PortfelContexts))]
-    partial class PortfelContextsModelSnapshot : ModelSnapshot
+    [Migration("20221120133848_OpisDoSymboluGieldowego")]
+    partial class OpisDoSymboluGieldowego
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

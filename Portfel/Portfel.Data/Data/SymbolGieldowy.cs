@@ -8,6 +8,8 @@ namespace Portfel.Data.Data
         public int Id { get; set; }
         [Required]
         public string Nazwa { get; set; }
+        [MaxLength(255)]
+        public string Opis { get; set; }
         [Display(Name = "Czy Aktywny")]
         public bool Aktywna { get; set; } = true;
         //danego symbolu jest wiele transakcji
