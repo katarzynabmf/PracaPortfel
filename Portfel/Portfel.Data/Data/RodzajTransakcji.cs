@@ -8,6 +8,7 @@ namespace Portfel.Data.Data
         public int Id { get; set; }
         [Required]
         public string Nazwa { get; set; }
+        [Display(Name = "Czy Aktywny")]
         public bool Aktywna { get; set; } = true;
         //danego rodzaju jest wiele transakcji
         public virtual ICollection<Transakcja> Transakcja { get; set; } = new List<Transakcja>();

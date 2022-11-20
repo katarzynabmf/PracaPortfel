@@ -19,9 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nazwa)
             </th>
-            <th>
+          @*  <th>
                 @Html.DisplayNameFor(model => model.Promowany)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Aktywna)
             </th>
@@ -34,16 +34,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwa)
             </td>
-            <td>
+     @*       <td>
                 @Html.DisplayFor(modelItem => item.Promowany)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Aktywna)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
+                  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-circle btn-sm delete" title="Usuń"><i class="fas fa-trash"> </i</a>
             </td>
         </tr>
 }

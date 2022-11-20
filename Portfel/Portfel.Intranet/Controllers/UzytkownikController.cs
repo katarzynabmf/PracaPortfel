@@ -49,7 +49,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email")] Uzytkownik uzytkownik)
+        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email,Aktywna")] Uzytkownik uzytkownik)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Imie,Haslo,Email")] Uzytkownik uzytkownik)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Imie,Haslo,Email, Aktywna")] Uzytkownik uzytkownik)
         {
             if (id != uzytkownik.Id)
             {
@@ -141,7 +141,7 @@ namespace Portfel.Intranet.Controllers
             var uzytkownik = await _context.Uzytkownik.FindAsync(id);
             if (uzytkownik != null)
             {
-                _context.Uzytkownik.Remove(uzytkownik);
+                uzytkownik.Aktywna = false;
             }
             
             await _context.SaveChangesAsync();

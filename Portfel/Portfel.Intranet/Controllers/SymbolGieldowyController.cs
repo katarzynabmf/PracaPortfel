@@ -49,7 +49,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nazwa")] SymbolGieldowy symbolGieldowy)
+        public async Task<IActionResult> Create([Bind("Id,Nazwa, Aktywna")] SymbolGieldowy symbolGieldowy)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa")] SymbolGieldowy symbolGieldowy)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Aktywna")] SymbolGieldowy symbolGieldowy)
         {
             if (id != symbolGieldowy.Id)
             {
@@ -141,7 +141,7 @@ namespace Portfel.Intranet.Controllers
             var symbolGieldowy = await _context.SymbolGieldowy.FindAsync(id);
             if (symbolGieldowy != null)
             {
-                _context.SymbolGieldowy.Remove(symbolGieldowy);
+                symbolGieldowy.Aktywna = false;
             }
             
             await _context.SaveChangesAsync();

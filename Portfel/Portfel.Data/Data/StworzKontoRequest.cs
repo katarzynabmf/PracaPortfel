@@ -7,4 +7,5 @@ public class StworzKontoRequest
     public double Gotowka { get; set; }
 
     public int? UzytkownikId { get; set; }
+    public bool Aktywna { get; set; }
 }

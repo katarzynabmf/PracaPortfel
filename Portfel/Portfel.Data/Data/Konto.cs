@@ -12,9 +12,10 @@ namespace Portfel.Data.Data
         [Required]
         public string Waluta { get; set; }
         public double Gotowka { get; set; }
-
+        [Display(Name = "Użytkownik")]
         public int? UzytkownikId { get; set; }
         public Uzytkownik Uzytkownik { get; set; }
+        [Display(Name = "Czy Aktywne")]
         public bool Aktywna { get; set; } = true;
 
     }
@@ -25,7 +26,7 @@ namespace Portfel.Data.Data
         public string Nazwa { get; set; }
         public string Waluta { get; set; }
         public double Gotowka { get; set; }
-
         public int? UzytkownikId { get; set; }
+        public bool Aktywna { get; set; }
     }
 }

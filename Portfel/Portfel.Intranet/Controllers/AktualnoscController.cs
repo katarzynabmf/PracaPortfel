@@ -41,8 +41,8 @@ namespace Portfel.Intranet.Controllers
         public async Task<IActionResult> UsuwaniePotwierdzone(int id)
         {
             var aktualnosc = await _context.Aktualnosc.FindAsync(id);
-            _context.Aktualnosc.Remove(aktualnosc);
-            //aktualnosc.Aktywna = false;
+          //  _context.Aktualnosc.Remove(aktualnosc);
+            aktualnosc.Aktywna = false;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

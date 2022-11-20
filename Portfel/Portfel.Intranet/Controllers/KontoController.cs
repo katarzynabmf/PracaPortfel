@@ -53,7 +53,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nazwa,Waluta,Gotowka,UzytkownikId")] StworzKontoRequest stworzKonto)
+        public async Task<IActionResult> Create([Bind("Nazwa,Waluta,Gotowka,UzytkownikId,Aktywna")] StworzKontoRequest stworzKonto)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,8 @@ namespace Portfel.Intranet.Controllers
                     Nazwa = stworzKonto.Nazwa,
                     Gotowka = stworzKonto.Gotowka,
                     Waluta = stworzKonto.Waluta,
-                    UzytkownikId = stworzKonto.UzytkownikId
+                    UzytkownikId = stworzKonto.UzytkownikId,
+                    Aktywna = true
                 });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -93,7 +94,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] EdytujKontoRequest edytujKonto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId,Aktywna")] EdytujKontoRequest edytujKonto)
         {
             if (id != edytujKonto.Id)
             {
@@ -113,6 +114,8 @@ namespace Portfel.Intranet.Controllers
                     konto.Gotowka = edytujKonto.Gotowka;
                     konto.Waluta = edytujKonto.Waluta;
                     konto.UzytkownikId = edytujKonto.UzytkownikId;
+                    konto.Aktywna = edytujKonto.Aktywna;
+
                     _context.Update(konto);
                     await _context.SaveChangesAsync();
                 }
@@ -164,7 +167,8 @@ namespace Portfel.Intranet.Controllers
             var konto = await _context.Konto.FindAsync(id);
             if (konto != null)
             {
-                _context.Konto.Remove(konto);
+                // _context.Konto.Remove(konto);
+                konto.Aktywna = false;
             }
             
             await _context.SaveChangesAsync();

@@ -49,7 +49,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nazwa")] RodzajTransakcji rodzajTransakcji)
+        public async Task<IActionResult> Create([Bind("Id,Nazwa, Aktywna")] RodzajTransakcji rodzajTransakcji)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa")] RodzajTransakcji rodzajTransakcji)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nazwa, Aktywna")] RodzajTransakcji rodzajTransakcji)
         {
             if (id != rodzajTransakcji.Id)
             {
@@ -141,7 +141,8 @@ namespace Portfel.Intranet.Controllers
             var rodzajTransakcji = await _context.RodzajTransakcji.FindAsync(id);
             if (rodzajTransakcji != null)
             {
-                _context.RodzajTransakcji.Remove(rodzajTransakcji);
+                // _context.RodzajTransakcji.Remove(rodzajTransakcji);
+                rodzajTransakcji.Aktywna = false;
             }
             
             await _context.SaveChangesAsync();

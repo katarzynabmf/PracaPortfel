@@ -141,9 +141,10 @@ namespace Portfel.Intranet.Controllers
             var rodzajOplaty = await _context.RodzajOplaty.FindAsync(id);
             if (rodzajOplaty != null)
             {
-                _context.RodzajOplaty.Remove(rodzajOplaty);
+              //  _context.RodzajOplaty.Remove(rodzajOplaty);
+                rodzajOplaty.Aktywna = false;
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

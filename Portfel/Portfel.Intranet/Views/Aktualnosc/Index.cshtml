@@ -51,7 +51,7 @@
                                     @Html.DisplayFor(modelItem => item.Aktywna)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
                                     <a data-dt=" @item.Id" data-controller="Aktualnosc" data-action="UsuwaniePotwierdzone" data-body-message="Czy jesteś pewien?" class="btn btn-danger btn-circle btn-sm delete" title="Usuń"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
