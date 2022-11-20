@@ -36,6 +36,7 @@ namespace Portfel.Data.Data
         public string Komentarz { get; set; }
         [Display(Name = "Czy Aktywna")]
         public bool Aktywna { get; set; } = true;
+        public DateTime DataUtworzenia { get; set; }
     }
     public class StworzTransakcjaRequest
     {

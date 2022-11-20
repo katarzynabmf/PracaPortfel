@@ -20,7 +20,7 @@ namespace Portfel.Data.Data
 
         public string Nazwa { get; set; }
         public bool Aktywna { get; set; } = true;
-        public bool Promowany { get; set; }
+     
 
         //danego rodzaju jest wiele oplat
         
@@ -30,7 +30,7 @@ namespace Portfel.Data.Data
 
         public string Nazwa { get; set; }
         public bool Aktywna { get; set; } = true;
-        public bool Promowany { get; set; }
+    
 
        
     }
