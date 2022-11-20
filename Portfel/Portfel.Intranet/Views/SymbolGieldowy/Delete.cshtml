@@ -22,6 +22,12 @@
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.Nazwa)
         </dd>
+         <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
     </dl>
     
     <form asp-action="Delete">
