@@ -32,7 +32,8 @@ namespace Portfel.Data.Data
         [Display(Name = "Rodzaj opłaty")]
         public int? RodzajOplatyId { get; set; }
         public virtual RodzajOplaty RodzajOplaty { get; set; }
-      //  public int IloscRodzajuOplaty { get; set; }
+        //  public int IloscRodzajuOplaty { get; set; }
+        public int IloscRodzajuOplaty { get; set; }
         public string Komentarz { get; set; }
         [Display(Name = "Czy Aktywna")]
         public bool Aktywna { get; set; } = true;
