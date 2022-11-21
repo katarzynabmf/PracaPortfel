@@ -125,10 +125,11 @@
                                  
                 @{
                     var x = (ViewData["TransakcjeDodane"] as List<KeyValuePair<string, int>>);
-                                var y = x.Select(p => p.Key).ToArray<string>();
-                    }
+                    var y = x.Select(p => p.Key).ToArray<string>();
+                    var z = (ViewData["TransakcjeDodane"] as List<KeyValuePair<string, int>>).Select(p => p.Value).ToArray<int>();
+                }
                     @Html.Hidden("TransakcjeDodaneKeys",$"[{string.Join(',',y)}]",new { @class = "someclass" })
-                                 @Html.Hidden("TransakcjeDodaneValues",(ViewData["TransakcjeDodane"] as List<KeyValuePair<string, int>>).Select(p => p.Value).ToArray<int>(),new { @class = "someclass" })
+                                 @Html.Hidden("TransakcjeDodaneValues",$"[{string.Join(',',z)}]",new { @class = "someclass" })
                                 <div class="card-body">
                                     <div class="chart-area">
                                         <canvas id="myAreaChart"></canvas>
