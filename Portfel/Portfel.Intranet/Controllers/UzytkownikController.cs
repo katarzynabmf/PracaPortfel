@@ -49,10 +49,11 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email,Aktywna")] Uzytkownik uzytkownik)
+        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email,Aktywna,DataUtworzenia")] Uzytkownik uzytkownik)
         {
             if (ModelState.IsValid)
             {
+                uzytkownik.DataUtworzenia = DateTime.Now;
                 _context.Add(uzytkownik);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

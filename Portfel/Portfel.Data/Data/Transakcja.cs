@@ -54,6 +54,7 @@ namespace Portfel.Data.Data
         public int Ilosc { get; set; }
 
         public int? RodzajOplatyId { get; set; }
+        public int IloscRodzajuOplaty { get; set; }
         public string Komentarz { get; set; }
         public bool Aktywna { get; set; } = true;
     }
@@ -72,6 +73,7 @@ namespace Portfel.Data.Data
         public int Ilosc { get; set; }
 
         public int? RodzajOplatyId { get; set; }
+        public int IloscRodzajuOplaty { get; set; }
         public string Komentarz { get; set; }
         public bool Aktywna { get; set; } 
     }

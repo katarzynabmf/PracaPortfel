@@ -21,8 +21,11 @@ namespace Portfel.Intranet.Controllers
         {
 
             ViewBag.UzytkownicyIlosc = _context.Uzytkownik.Where(u => u.Aktywna == true).Count();
+            ViewBag.UzytkownicyIloscDzisiaj = _context.Uzytkownik.Where(u => u.Aktywna == true && u.DataUtworzenia.Date == DateTime.Today).Count();
             ViewBag.UzytkownicyNieaktywni = _context.Uzytkownik.Where(u => u.Aktywna == false).Count();
-            ViewBag.TransakcjeIlosc = _context.Transakcja.Where(u => u.Aktywna == true).Count();
+            ViewBag.UzytkownicyAktywni = _context.Uzytkownik.Where(u => u.Aktywna == true).Count();
+            ViewBag.TransakcjeIlosc = _context.Transakcja.Where(t => t.Aktywna == true).Count();
+            ViewBag.TransakcjeIloscDzisiaj = _context.Transakcja.Where(t => t.Aktywna == true && t.DataUtworzenia.Date == DateTime.Today).Count();
             return View();
         }
 
@@ -36,5 +39,8 @@ namespace Portfel.Intranet.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+      
+
     }
 }

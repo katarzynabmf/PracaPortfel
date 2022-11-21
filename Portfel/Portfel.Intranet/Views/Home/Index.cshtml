@@ -3,10 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
 
        <!-- Begin Page Content -->
@@ -14,7 +10,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Satystyki</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Statystyki</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -66,15 +62,9 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@ViewBag.UzytkownicyIloscDzisiaj</div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
+                                 
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -93,7 +83,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                Liczba transakcji dodanych dzisiaj</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TransakcjeIloscDzisiaj</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -162,16 +152,18 @@
                                     </div>*@
                                 </div>
                                 <!-- Card Body -->
+                                @Html.Hidden("Aktywni",ViewData["UzytkownicyAktywni"],new { @class = "someclass" })
+                                @Html.Hidden("Nieaktywni",ViewData["UzytkownicyNieaktywni"],new { @class = "someclass" })
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart"></canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary" >@ViewBag.TransakcjeIlosc</i> Aktywni
+                                            <i class="fas fa-circle text-primary" ></i> Aktywni
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success">@ViewBag.TransakcjeIlosc</i> Nieaktywni
+                                            <i class="fas fa-circle text-success"></i> Nieaktywni
                                         </span>
 
                                     </div>
@@ -338,3 +330,4 @@
 
         
             <!-- End of Main Content -->
+          

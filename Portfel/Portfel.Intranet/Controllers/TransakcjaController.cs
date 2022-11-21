@@ -59,7 +59,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz, Aktywna")] StworzTransakcjaRequest stworzTransakcja)
+        public async Task<IActionResult> Create([Bind("KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,IloscRodzajuOplaty,Komentarz, Aktywna")] StworzTransakcjaRequest stworzTransakcja)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,8 @@ namespace Portfel.Intranet.Controllers
                         Kwota = stworzTransakcja.Kwota,
                         Ilosc = stworzTransakcja.Ilosc,
                         RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
-                        Komentarz = stworzTransakcja.Komentarz,
+                    IloscRodzajuOplaty = stworzTransakcja.IloscRodzajuOplaty,
+                    Komentarz = stworzTransakcja.Komentarz,
                         Aktywna = true
                     }
                 );
@@ -113,7 +114,7 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz, Aktywna")] EdytujTransakcjaRequest edytujTransakcja)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,IloscRodzajuOplaty,Komentarz, Aktywna")] EdytujTransakcjaRequest edytujTransakcja)
         {
             if (id != edytujTransakcja.Id)
             {
@@ -138,6 +139,7 @@ namespace Portfel.Intranet.Controllers
                     transakcja.Kwota = edytujTransakcja.Kwota;
                     transakcja.Ilosc = edytujTransakcja.Ilosc;
                     transakcja.RodzajOplatyId = edytujTransakcja.RodzajOplatyId;
+                    transakcja.IloscRodzajuOplaty = edytujTransakcja.IloscRodzajuOplaty;
                     transakcja.Komentarz = edytujTransakcja.Komentarz;
                     transakcja.Aktywna = edytujTransakcja.Aktywna;
 
