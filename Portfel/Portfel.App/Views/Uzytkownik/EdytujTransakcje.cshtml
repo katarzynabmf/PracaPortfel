@@ -65,6 +65,11 @@
                             <span asp-validation-for="RodzajOplatyId" class="text-danger"></span>
                         </div>
                         <div class="form mb-4">
+                            <label asp-for="IloscRodzajuOplaty" class="control-label"></label>
+                            <input asp-for="IloscRodzajuOplaty" class="form-control" asp-items="ViewBag.IloscRodzajuOplaty"></input>
+                            <span asp-validation-for="IloscRodzajuOplaty" class="text-danger"></span>
+                        </div>
+                        <div class="form mb-4">
                             <label asp-for="Komentarz" class="control-label"></label>
                             <input asp-for="Komentarz" class="form-control"/>
                             <span asp-validation-for="Komentarz" class="text-danger"></span>

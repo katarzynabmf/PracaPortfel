@@ -1,0 +1,51 @@
+﻿@model Portfel.Data.Data.Konto
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>Usuń konto</h2>
+        </div>
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;  border-color: white;
+                                         box-shadow: 0px 2px 25px rgb(0 0 0 / 10%);">
+                        <div class="card-body p-5">
+                            <div class="info-item d-flex">
+                            </div><!-- End Info Item -->
+                            <div class="form mb-4">
+                                <label asp-for="Nazwa"></label>
+                                <input asp-for="Nazwa" id="form3Example1cg" class="form-control form-control-lg" readonly />
+                                <span asp-validation-for="Nazwa"></span>
+                            </div>
+                            <div class="form mb-4">
+                                <label asp-for="Waluta"></label>
+                                <input asp-for="Waluta" id="form3Example1cg" class="form-control form-control-lg" readonly />
+                                <span asp-validation-for="Waluta" class="text-danger"></span>
+                            </div>
+                            <div class="form mb-4">
+                                <label asp-for="Gotowka"></label>
+                                <input asp-for="Gotowka" id="form3Example4cg" class="form-control form-control-lg" readonly />
+                                <span asp-validation-for="Gotowka" class="text-danger"></span>
+                            </div>
+                            <form asp-action=UsunKonto>
+                                <input type="hidden" asp-for="Id" />
+                                <input type="submit" value="Usuń" style="background: red; border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;" />
+                                <a asp-area="" asp-controller="Uzytkownik" asp-action="MojeKonta" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Wróć do listy</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -45,10 +45,15 @@
                     <input asp-for="Ilosc" id="form3Example1cg" class="form-control form-control-lg"/>
                     <span asp-validation-for="Ilosc" class="text-danger"></span>
                 </div>
-                <div class="form mb-4">
-                    <label asp-for="RodzajOplatyId" class="control-label"></label>
-                    <select asp-for="RodzajOplatyId" class ="form-control form-control-lg" asp-items="ViewBag.RodzajOplatyId"></select>
-                </div>
+                    <div class="form mb-4">
+                        <label asp-for="RodzajOplatyId" class="control-label"></label>
+                        <select asp-for="RodzajOplatyId" class ="form-control form-control-lg" asp-items="ViewBag.RodzajOplatyId"></select>
+                    </div>
+                    <div class="form mb-4">
+                        <label asp-for="IloscRodzajuOplaty" class="control-label"></label>
+                        <input asp-for="IloscRodzajuOplaty" id="form3Example1cg" class="form-control form-control-lg"/>
+                        <span asp-validation-for="IloscRodzajuOplaty" class="text-danger"></span>
+                    </div>
                 <div class="form mb-4">
                     <label asp-for="Komentarz" class="control-label"></label>
                     <textarea rows="5" asp-for="Komentarz" id="form3Example1cg" class="form-control form-control-lg"></textarea>

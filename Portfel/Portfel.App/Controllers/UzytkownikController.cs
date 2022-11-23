@@ -123,7 +123,7 @@ namespace Portfel.App.Controllers
 
 
             var portfelContext = _context.Konto.Include(k => k.Uzytkownik)
-                .Where(k => k.UzytkownikId == uzytkownik.Id);
+                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna==true);
             return View("MojeKonta",await portfelContext.ToListAsync());
 
         }
@@ -216,6 +216,55 @@ namespace Portfel.App.Controllers
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);
             return View("MojeKonta", await portfelContext.ToListAsync());
         }
+
+        // GET: Konto/Delete/5
+        public async Task<IActionResult> UsunKonto(int id)
+        {
+            if (id == null || _context.Konto == null)
+            {
+                return NotFound();
+            }
+
+            var konto = await _context.Konto
+                .Include(k => k.Uzytkownik)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (konto == null)
+            {
+                return NotFound();
+            }
+
+            return View(konto);
+        }
+
+        // POST: Konto/Delete/5
+        [HttpPost, ActionName("UsunKonto")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+            var portfelContext = _context.Konto.Include(k => k.Uzytkownik)
+                .Where(k => k.UzytkownikId == uzytkownik.Id);
+            if (_context.Konto == null)
+            {
+                return Problem("Entity set 'PortfelContext.Konto'  is null.");
+            }
+            var konto = await _context.Konto.FindAsync(id);
+            if (konto != null)
+            {
+                // _context.Konto.Remove(konto);
+                konto.Aktywna = false;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(MojeKonta));
+
+           // return View("MojeKonta", await portfelContext.ToListAsync());
+        }
+
+
+
+
         private bool KontoExists(int id)
         {
             return _context.Konto.Any(e => e.Id == id);
@@ -246,7 +295,7 @@ namespace Portfel.App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EdytujTransakcje(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,Komentarz")] EdytujTransakcjaRequest edytujTransakcja)
+        public async Task<IActionResult> EdytujTransakcje(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,IloscRodzajuOplaty, Komentarz")] EdytujTransakcjaRequest edytujTransakcja)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
@@ -282,6 +331,7 @@ namespace Portfel.App.Controllers
                     transakcja.Kwota = edytujTransakcja.Kwota;
                     transakcja.Ilosc = edytujTransakcja.Ilosc;
                     transakcja.RodzajOplatyId = edytujTransakcja.RodzajOplatyId;
+                    transakcja.IloscRodzajuOplaty = edytujTransakcja.IloscRodzajuOplaty;
                     transakcja.Komentarz = edytujTransakcja.Komentarz;
 
                     _context.Update(transakcja);

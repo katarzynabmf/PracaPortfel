@@ -53,6 +53,10 @@
                        asp-route-id="@item.Id"
                        style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
                     >Edytuj konto</a>
+                    <a asp-action="UsunKonto" asp-controller="Uzytkownik" 
+                       asp-route-id="@item.Id"
+                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                    >Usuń konto</a>
                 </td>
             </tr>
         }
