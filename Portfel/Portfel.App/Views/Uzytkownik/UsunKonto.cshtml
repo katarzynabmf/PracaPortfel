@@ -32,11 +32,13 @@
                                 <input asp-for="Gotowka" id="form3Example4cg" class="form-control form-control-lg" readonly />
                                 <span asp-validation-for="Gotowka" class="text-danger"></span>
                             </div>
-                            <form asp-action=UsunKonto>
-                                <input type="hidden" asp-for="Id" />
-                                <input type="submit" value="Usuń" style="background: red; border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;" />
-                                <a asp-area="" asp-controller="Uzytkownik" asp-action="MojeKonta" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Wróć do listy</a>
-                            </form>
+                            <div class="d-flex justify-content-center">
+                                <form asp-action=UsunKonto>
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="submit" value="Usuń" style="background: red; border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;" />
+                                    <a asp-area="" asp-controller="Uzytkownik" asp-action="MojeKonta" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Wróć do listy</a>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

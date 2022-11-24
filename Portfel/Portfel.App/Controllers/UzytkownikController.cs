@@ -145,7 +145,7 @@ namespace Portfel.App.Controllers
                 Include(t=>t.RodzajTransakcji).
                 Include(t=>t.RodzajOplaty).
                 Include(t=>t.SymbolGieldowy).
-                Where(t => t.KontoId == id).ToList();
+                Where(t => t.KontoId == id && t.Aktywna==true).ToList();
             return View("SzczegolyKonta", new SzczegolyKonta(id,nazwaKonta, transakcje){});
         }
         // GET: Konto/Edit/5
@@ -263,6 +263,50 @@ namespace Portfel.App.Controllers
         }
 
 
+        // GET: Transakcja/Delete/5
+        public async Task<IActionResult> UsunTransakcje(int id)
+        {
+            if (id == null || _context.Transakcja == null)
+            {
+                return NotFound();
+            }
+
+            var transakcja = await _context.Transakcja
+                .Include(t => t.Konto)
+                .Include(t => t.RodzajOplaty)
+                .Include(t => t.RodzajTransakcji)
+                .Include(t => t.SymbolGieldowy)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (transakcja == null)
+            {
+                return NotFound();
+            }
+            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa", transakcja.KontoId);
+            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", transakcja.RodzajOplatyId);
+            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", transakcja.RodzajTransakcjiId);
+            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", transakcja.SymbolGieldowyId);
+            return View(transakcja);
+        }
+
+        // POST: Transakcja/Delete/5
+        [HttpPost, ActionName("UsunTransakcje")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UsunT(int id)
+        {
+            if (_context.Transakcja == null)
+            {
+                return Problem("Entity set 'PortfelContext.Transakcja'  is null.");
+            }
+            var transakcja = await _context.Transakcja.FindAsync(id);
+            if (transakcja != null)
+            {
+                transakcja.Aktywna = false;
+            }
+
+            var konto = transakcja.KontoId;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("SzczegolyKonta", "Uzytkownik", new { id = konto });
+        }
 
 
         private bool KontoExists(int id)
@@ -423,7 +467,7 @@ namespace Portfel.App.Controllers
                     Include(t => t.RodzajTransakcji).
                     Include(t => t.RodzajOplaty).
                     Include(t => t.SymbolGieldowy).
-                    Where(t => t.KontoId == id).ToList();
+                    Where(t => t.KontoId == id && t.Aktywna==true).ToList();
                 var nazwaKonta = konto.Nazwa;
                 return View("SzczegolyKonta", new SzczegolyKonta(id,nazwaKonta, transakcje) { });
 
@@ -434,7 +478,8 @@ namespace Portfel.App.Controllers
             ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", stworzTransakcja.RodzajTransakcjiId);
             ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", stworzTransakcja.SymbolGieldowyId);
             //return View("SzczegolyKonta");
-            return View(stworzTransakcja);
+            //  return View(stworzTransakcja);
+            return RedirectToAction("SzczegolyKonta", "Uzytkownik", new { id = stworzTransakcja.KontoId });
         }
 
 
