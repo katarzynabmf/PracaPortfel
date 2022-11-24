@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Portfel.Data\Portfel.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\aktualnosc\" />
+  </ItemGroup>
+
 </Project>

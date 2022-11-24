@@ -28,6 +28,7 @@ namespace Portfel.Data.Data
 
         [Required(ErrorMessage = "Data dodania jest wymagana")]
         [Display(Name = "Data dodania")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime DataDodania { get; set; }
         public string FotoUrl { get; set; }
         public uint Priorytet { get; set; }
