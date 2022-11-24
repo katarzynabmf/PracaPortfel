@@ -11,6 +11,7 @@ namespace Portfel.Data.Data
         public int? KontoId { get; set; }
         public Konto Konto { get; set; }
         [Display(Name = "Data zakupu")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; set; }
 
         [Required]

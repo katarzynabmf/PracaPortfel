@@ -49,6 +49,7 @@
             @foreach (var item in Model.Transakcje) {
                 <tr>
                     <td>
+                        @* @Html.DisplayFor(modelItem => item.Date.ToString(string.Format("dd/MM/yyyy")))*@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td>
