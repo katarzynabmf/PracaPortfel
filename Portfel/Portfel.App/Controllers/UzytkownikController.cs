@@ -109,21 +109,17 @@ namespace Portfel.App.Controllers
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var konto = _context.IdKonta
-            //    .Include(k => k.Uzytkownik)
-            //    .Where(k => k.UzytkownikId == uzytkownik.Id)
-            //    .ToList();//dziala
+            var wartoscKonta = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id);
 
-            ////var mK = new MojeKonta
-            ////{
-            ////    Konta = konto,
-            ////};
+          //  var kontoUzytk = wartoscKonta.
+            ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.Gotowka).FirstOrDefault();
 
-            //return View("MojeKonta", konto);
+            // ViewBag.SumaKonto = 
 
-
-            var portfelContext = _context.Konto.Include(k => k.Uzytkownik)
-                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna==true);
+            var portfelContext = _context.Konto
+                .Include(k => k.Uzytkownik)
+                .Include(k => k.Transakcje)
+                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna == true);
             return View("MojeKonta",await portfelContext.ToListAsync());
 
         }
@@ -146,6 +142,7 @@ namespace Portfel.App.Controllers
                 Include(t=>t.RodzajOplaty).
                 Include(t=>t.SymbolGieldowy).
                 Where(t => t.KontoId == id && t.Aktywna==true).ToList();
+          
             return View("SzczegolyKonta", new SzczegolyKonta(id,nazwaKonta, transakcje){});
         }
         // GET: Konto/Edit/5
@@ -210,7 +207,7 @@ namespace Portfel.App.Controllers
                         throw;
                     }
                 }
-                return View("MojeKonta", await portfelContext.ToListAsync());
+                return RedirectToAction("MojeKonta", await portfelContext.ToListAsync());
             }
   
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Portfel.Data.Data
@@ -18,6 +19,16 @@ namespace Portfel.Data.Data
         [Display(Name = "Czy Aktywne")]
         public bool Aktywna { get; set; } = true;
 
+        public double SumaNaKoncie
+        {
+            get
+            {
+                return Gotowka + Transakcje.Sum(transakcja => transakcja.Ilosc * transakcja.Kwota);
+            }
+        }
+
+        [InverseProperty("Konto")]
+        public ICollection<Transakcja> Transakcje { get; set; }
     }
 
     public class EdytujKontoRequest

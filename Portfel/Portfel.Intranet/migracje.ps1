@@ -1,0 +1,1 @@
+dotnet ef migrations add SumaKonta -p ../Portfel.Data
