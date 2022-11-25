@@ -16,5 +16,13 @@ namespace Portfel.Data
         public DbSet<Transakcja> Transakcja { get; set; }
         public DbSet<Uzytkownik> Uzytkownik { get; set; }
         public DbSet<Aktualnosc> Aktualnosc { get; set; }
+        public DbSet<Data.Portfel> Portfele { get; set; }
+        public DbSet<Data.Aktywo> Aktywa { get; set; }
+        public DbSet<Data.TransakcjaNew> TransakcjeNew { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Data.Portfel>().HasQueryFilter(portfel => portfel.Aktywna);
+        }
     }
 }

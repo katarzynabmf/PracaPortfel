@@ -18,5 +18,6 @@ namespace Portfel.Data.Data
         public DateTime DataUtworzenia { get; set; }
         //dla danego uzytkownika jest wiele kont
         public virtual ICollection<Konto> Konto { get; set; } = new List<Konto>();
+        public virtual ICollection<Portfel> Portfele { get; set; } = new List<Portfel>();
     }
 }

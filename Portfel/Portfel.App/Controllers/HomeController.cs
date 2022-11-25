@@ -14,6 +14,7 @@ namespace Portfel.App.Controllers
         public HomeController(PortfelContexts context)
         {
             _context = context; // tu inicjalizujemy baze danych
+            _context = new PortfelContexts(new DbContextOptions<PortfelContexts>());
         }
         public IActionResult Index()
         {
