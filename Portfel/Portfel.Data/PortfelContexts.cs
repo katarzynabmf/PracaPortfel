@@ -19,6 +19,7 @@ namespace Portfel.Data
         public DbSet<Data.Portfel> Portfele { get; set; }
         public DbSet<Data.Aktywo> Aktywa { get; set; }
         public DbSet<Data.TransakcjaNew> TransakcjeNew { get; set; }
+        public DbSet<Pozycja> Pozycje { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -69,8 +69,13 @@ namespace Portfel.Data.Serwisy
                 if (istniejacaPozycja.Ilosc + zmianaIlosci < 0)
                     throw new InvalidOperationException();
                 istniejacaPozycja.Ilosc += (uint) zmianaIlosci;
+        
                 if(kierunek == Kierunek.Kupno)
                     istniejacaPozycja.SredniaCenaZakupu = (istniejacaPozycja.SredniaCenaZakupu + nowaPozycja.SredniaCenaZakupu) / 2;
+                if (istniejacaPozycja.Ilosc == 0)
+                {
+                    _context.Pozycje.Remove(istniejacaPozycja);
+                }
             }
             else
             {
