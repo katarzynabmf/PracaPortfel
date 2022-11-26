@@ -26,7 +26,7 @@ namespace Portfel.Data.Serwisy
             _context.SaveChanges();
         }
 
-        public void WyplacSrodkiNaKonto(decimal kwota, Data.Portfel portfel)
+        public void WyplacSrodkiZKonta(decimal kwota, Data.Portfel portfel)
         {
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wyplata, kwota);
             portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
@@ -41,6 +41,12 @@ namespace Portfel.Data.Serwisy
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel);
         }
 
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel)
+        {
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel);
+
+        }
+
         private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek, Data.Portfel portfel)
         {
             var aktywo = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
@@ -48,7 +54,7 @@ namespace Portfel.Data.Serwisy
             portfel.Transakcje.Add(transakcja.Entity);
             var kwotaTransakcji = cena * ilosc;
 
-            var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Obciazenie, kwotaTransakcji);
+            var operacjaGotowkowa = new OperacjaGotowkowa(kierunek == Kierunek.Kupno ? TypOperacjiGotowkowej.Obciazenie : TypOperacjiGotowkowej.Uznanie, kwotaTransakcji);
             portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
@@ -59,11 +65,18 @@ namespace Portfel.Data.Serwisy
             var istniejacaPozycja = portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa);
             if (istniejacaPozycja is not null)
             {
-                istniejacaPozycja.Ilosc += nowaPozycja.Ilosc;
-                istniejacaPozycja.SredniaCenaZakupu = (istniejacaPozycja.SredniaCenaZakupu + nowaPozycja.SredniaCenaZakupu) / 2;
+                var zmianaIlosci = nowaPozycja.Ilosc * (kierunek == Kierunek.Sprzedaz ? -1 : 1);
+                if (istniejacaPozycja.Ilosc + zmianaIlosci < 0)
+                    throw new InvalidOperationException();
+                istniejacaPozycja.Ilosc += (uint) zmianaIlosci;
+                if(kierunek == Kierunek.Kupno)
+                    istniejacaPozycja.SredniaCenaZakupu = (istniejacaPozycja.SredniaCenaZakupu + nowaPozycja.SredniaCenaZakupu) / 2;
             }
             else
             {
+                if (kierunek == Kierunek.Sprzedaz)
+                    throw new InvalidOperationException("Brak aktywow tego typu w systemie.");
+                
                 portfel.Pozycje.Add(nowaPozycja);
             }
             _context.SaveChanges();

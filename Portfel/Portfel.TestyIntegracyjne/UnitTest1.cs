@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
 using Portfel.Data.Data;
+using Portfel.Data.Migrations;
 using Portfel.Data.Serwisy;
 
 namespace Portfel.TestyIntegracyjne
@@ -21,17 +22,40 @@ namespace Portfel.TestyIntegracyjne
             uzytkownik.Entity.Portfele.Add(portfel.Entity);
             contextInMemory.SaveChanges();
 
-            var portfelSerwis = new PortfelSerwis(contextInMemory);
-            portfelSerwis.WplacSrodkiNaKonto(123, portfel.Entity);
-
-            contextInMemory.Aktywa.Add(new Aktywo(){Nazwa = "PZU", Symbol = "PZU", CenaAktualna = 100});
+            contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "PZU", Symbol = "PZU", CenaAktualna = 100 });
             contextInMemory.SaveChanges();
 
-            portfelSerwis.KupAktywo("PZU", 10, 10, portfel.Entity);
-            portfelSerwis.KupAktywo("PZU", 1, 1, portfel.Entity);
+            // ----------------------------------------------------------------------
 
-            var uzytkownicy = contextInMemory.Uzytkownik.Include(u => u.Portfele).ToList();
-            Assert.NotEmpty(uzytkownicy);
+            var portfelSerwis = new PortfelSerwis(contextInMemory);
+            portfelSerwis.WplacSrodkiNaKonto(123, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(123, 0);
+
+            portfelSerwis.KupAktywo("PZU", 10, 10, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(23, 1);
+
+            portfelSerwis.KupAktywo("PZU", 1, 1, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(22, 1);
+
+            portfelSerwis.SprzedajAktywo("PZU", 11, 100, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(1122, 0);
+
+            portfelSerwis.WyplacSrodkiZKonta(500, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(622, 0);
+
+            //var uzytkownicy = contextInMemory.Uzytkownik.Include(u => u.Portfele).ToList();
+            Assert.NotEmpty(portfel.Entity.Pozycje);
+        }
+
+        
+    }
+
+    public static class PortfelAsercje
+    {
+        public static void StanPortfelaAssert(this Data.Data.Portfel portfel, decimal iloscGotowki, int iloscAktyw)
+        {
+            Assert.Equal(iloscGotowki, portfel.KontoGotowkowe.StanKonta);
+            Assert.Equal(iloscAktyw, portfel.Pozycje.Count);
         }
     }
 }
