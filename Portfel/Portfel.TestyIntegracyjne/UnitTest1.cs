@@ -23,6 +23,7 @@ namespace Portfel.TestyIntegracyjne
             contextInMemory.SaveChanges();
 
             contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "PZU", Symbol = "PZU", CenaAktualna = 100 });
+            contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Alior", Symbol = "ALR", CenaAktualna = 100 });
             contextInMemory.SaveChanges();
 
             // ----------------------------------------------------------------------
@@ -43,11 +44,26 @@ namespace Portfel.TestyIntegracyjne
             portfelSerwis.WyplacSrodkiZKonta(500, portfel.Entity);
             portfel.Entity.StanPortfelaAssert(622, 0);
 
-            //var uzytkownicy = contextInMemory.Uzytkownik.Include(u => u.Portfele).ToList();
-            Assert.NotEmpty(portfel.Entity.Pozycje);
-        }
+            // ----------------------------------------------------------------------------
 
-        
+            portfelSerwis.KupAktywo("ALR", 10, 10, portfel.Entity);
+            portfel.Entity.StanPortfelaAssert(522, 1);
+
+            Assert.Throws<InvalidOperationException>(() => portfelSerwis.SprzedajAktywo("ALR", 20, 100, portfel.Entity));
+            portfel.Entity.StanPortfelaAssert(522, 1);
+
+            // ----------------------------------------------------------------------------
+
+            Assert.Throws<InvalidOperationException>(() => portfelSerwis.KupAktywo("PZU", 1, 700, portfel.Entity));
+            portfel.Entity.StanPortfelaAssert(522, 1);
+            //----------------------------------------------------------------------
+            Assert.Throws<ArgumentException>(() => portfelSerwis.KupAktywo("PZU", 1, -700, portfel.Entity));
+            portfel.Entity.StanPortfelaAssert(522, 1);
+            //----------------------------------------------------------------------
+
+            Assert.Throws<ArgumentException>(() => portfelSerwis.WplacSrodkiNaKonto(-100, portfel.Entity));
+            portfel.Entity.StanPortfelaAssert(522, 1);
+        }
     }
 
     public static class PortfelAsercje

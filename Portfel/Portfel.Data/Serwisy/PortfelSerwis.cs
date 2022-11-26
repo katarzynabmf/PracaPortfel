@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,10 @@ namespace Portfel.Data.Serwisy
 
         public void WplacSrodkiNaKonto(decimal kwota, Data.Portfel portfel)
         {
+            if (kwota <= 0)
+            {
+                throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
+            }
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota);
             portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
@@ -28,6 +33,10 @@ namespace Portfel.Data.Serwisy
 
         public void WyplacSrodkiZKonta(decimal kwota, Data.Portfel portfel)
         {
+            if (kwota <= 0)
+            {
+                throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
+            }
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wyplata, kwota);
             portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
@@ -49,6 +58,38 @@ namespace Portfel.Data.Serwisy
 
         private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek, Data.Portfel portfel)
         {
+            if (cena <= 0)
+            {
+                throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 ceny");
+            }
+       
+
+
+            //policz stan portfela po operacji - bez zapisu do BD
+            var aktywoPolicz = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
+            var transakcjaPolicz = _context.TransakcjeNew.Add(new TransakcjaNew(aktywoPolicz, kierunek, cena, ilosc));
+            portfel.Transakcje.Add(transakcjaPolicz.Entity);
+            var kwotaTransakcjiPolicz = cena * ilosc;
+
+            if (kwotaTransakcjiPolicz > portfel.KontoGotowkowe.StanKonta && kierunek == Kierunek.Kupno)
+            {
+                throw new InvalidOperationException("Brak wystarczających środków na koncie.");
+            }
+
+            var nowaPozycjaPolicz = new Pozycja() { Aktywo = aktywoPolicz, Ilosc = ilosc, SredniaCenaZakupu = cena };
+            var istniejacaPozycjaPolicz = portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa);
+
+            if (kierunek == Kierunek.Sprzedaz)
+            {
+                if (istniejacaPozycjaPolicz.Ilosc < nowaPozycjaPolicz.Ilosc )
+                {
+                   throw new InvalidOperationException("Brak wystarczającej ilości aktywa.");
+                }
+            }
+
+
+            //zapisz stan portfela po operacji
+
             var aktywo = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
             var transakcja = _context.TransakcjeNew.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc));
             portfel.Transakcje.Add(transakcja.Entity);
