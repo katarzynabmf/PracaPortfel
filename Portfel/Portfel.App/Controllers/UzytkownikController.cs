@@ -15,8 +15,8 @@ namespace Portfel.App.Controllers
     public class UzytkownikController : Controller
     {
        
-        private readonly PortfelContexts _context;
-        public UzytkownikController(PortfelContexts context)
+        private readonly PortfelContext _context;
+        public UzytkownikController(PortfelContext context)
         {
             _context = context; // tu inicjalizujemy baze danych
         }

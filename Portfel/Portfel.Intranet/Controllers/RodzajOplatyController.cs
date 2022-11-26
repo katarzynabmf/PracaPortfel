@@ -7,9 +7,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class RodzajOplatyController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public RodzajOplatyController(PortfelContexts context)
+        public RodzajOplatyController(PortfelContext context)
         {
             _context = context;
         }

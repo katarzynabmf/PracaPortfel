@@ -8,9 +8,9 @@ namespace Portfel.Intranet.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public HomeController(ILogger<HomeController> logger, PortfelContexts context)
+        public HomeController(ILogger<HomeController> logger, PortfelContext context)
         {
             _logger = logger;
             _context = context;

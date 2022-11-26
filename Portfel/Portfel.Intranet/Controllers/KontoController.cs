@@ -8,9 +8,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class KontoController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public KontoController(PortfelContexts context)
+        public KontoController(PortfelContext context)
         {
             _context = context;
         }

@@ -11,7 +11,7 @@ using Portfel.Data;
 
 namespace Portfel.Data.Migrations
 {
-    [DbContext(typeof(PortfelContexts))]
+    [DbContext(typeof(PortfelContext))]
     [Migration("20221022192358_m1")]
     partial class m1
     {

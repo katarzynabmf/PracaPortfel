@@ -8,27 +8,27 @@ namespace Portfel.TestyIntegracyjne
 {
     public class UnitTest1
     {
-        private PortfelContexts contextInMemory;
+        private PortfelContext _contextInMemory;
         
         [Fact]
         public void Test1()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<PortfelContexts>();
+            var optionsBuilder = new DbContextOptionsBuilder<PortfelContext>();
             optionsBuilder.UseInMemoryDatabase("Portfel");
-            contextInMemory = new PortfelContexts(optionsBuilder.Options);
+            _contextInMemory = new PortfelContext(optionsBuilder.Options);
 
-            var uzytkownik = contextInMemory.Uzytkownik.Add(new Uzytkownik(){DataUtworzenia = DateTime.Now, Email = "x", Haslo = "x", Imie = "y"});
-            var portfel = contextInMemory.Portfele.Add(new Data.Data.Portfel() { Nazwa = "Testowy", Waluta = "PLN" });
+            var uzytkownik = _contextInMemory.Uzytkownik.Add(new Uzytkownik(){DataUtworzenia = DateTime.Now, Email = "x", Haslo = "x", Imie = "y", Portfele = new List<Data.Data.Portfel>()});
+            var portfel = _contextInMemory.Portfele.Add(new Data.Data.Portfel() { Nazwa = "Testowy", Waluta = "PLN" });
             uzytkownik.Entity.Portfele.Add(portfel.Entity);
-            contextInMemory.SaveChanges();
+            _contextInMemory.SaveChanges();
 
-            contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "PZU", Symbol = "PZU", CenaAktualna = 100 });
-            contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Alior", Symbol = "ALR", CenaAktualna = 100 });
-            contextInMemory.SaveChanges();
+            _contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "PZU", Symbol = "PZU", CenaAktualna = 100 });
+            _contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Alior", Symbol = "ALR", CenaAktualna = 100 });
+            _contextInMemory.SaveChanges();
 
             // ----------------------------------------------------------------------
 
-            var portfelSerwis = new PortfelSerwis(contextInMemory);
+            var portfelSerwis = new PortfelSerwis(_contextInMemory);
             portfelSerwis.WplacSrodkiNaKonto(123, portfel.Entity);
             portfel.Entity.StanPortfelaAssert(123, 0);
 

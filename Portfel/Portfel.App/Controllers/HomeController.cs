@@ -8,13 +8,13 @@ namespace Portfel.App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(PortfelContexts context)
+        public HomeController(PortfelContext context)
         {
             _context = context; // tu inicjalizujemy baze danych
-            _context = new PortfelContexts(new DbContextOptions<PortfelContexts>());
+            _context = new PortfelContext(new DbContextOptions<PortfelContext>());
         }
         public IActionResult Index()
         {

@@ -10,7 +10,7 @@ using Portfel.Data;
 
 namespace Portfel.Data.Migrations
 {
-    [DbContext(typeof(PortfelContexts))]
+    [DbContext(typeof(PortfelContext))]
     partial class PortfelContextsModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

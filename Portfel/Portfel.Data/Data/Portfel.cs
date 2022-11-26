@@ -80,11 +80,17 @@ namespace Portfel.Data.Data
 
     public class OperacjaGotowkowa : ObiektBazodanowy
     {
-        public OperacjaGotowkowa(TypOperacjiGotowkowej typOperacjiGotowkowej, decimal kwota)
+        public OperacjaGotowkowa()
+        {
+            
+        }
+        public OperacjaGotowkowa(TypOperacjiGotowkowej typOperacjiGotowkowej, decimal kwota,
+            KontoGotowkowe kontoGotowkowe)
         {
             Kwota = kwota;
             TypOperacjiGotowkowej = typOperacjiGotowkowej;
             DataOperacji = DateTime.Now;
+            KontoGotowkowe = kontoGotowkowe;
         }
 
         public void Wykonaj()

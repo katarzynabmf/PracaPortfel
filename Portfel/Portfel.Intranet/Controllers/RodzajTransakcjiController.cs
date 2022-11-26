@@ -7,9 +7,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class RodzajTransakcjiController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public RodzajTransakcjiController(PortfelContexts context)
+        public RodzajTransakcjiController(PortfelContext context)
         {
             _context = context;
         }

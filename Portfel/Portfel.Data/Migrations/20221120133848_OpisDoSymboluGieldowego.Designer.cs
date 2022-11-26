@@ -11,7 +11,7 @@ using Portfel.Data;
 
 namespace Portfel.Data.Migrations
 {
-    [DbContext(typeof(PortfelContexts))]
+    [DbContext(typeof(PortfelContext))]
     [Migration("20221120133848_OpisDoSymboluGieldowego")]
     partial class OpisDoSymboluGieldowego
     {

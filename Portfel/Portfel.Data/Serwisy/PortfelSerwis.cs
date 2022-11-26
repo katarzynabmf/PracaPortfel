@@ -10,9 +10,9 @@ namespace Portfel.Data.Serwisy
 {
     public class PortfelSerwis
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public PortfelSerwis(PortfelContexts context)
+        public PortfelSerwis(PortfelContext context)
         {
             _context = context;
         }
@@ -23,8 +23,8 @@ namespace Portfel.Data.Serwisy
             {
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
             }
-            var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota);
-            portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota, portfel.KontoGotowkowe);
+            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);
@@ -37,8 +37,8 @@ namespace Portfel.Data.Serwisy
             {
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
             }
-            var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wyplata, kwota);
-            portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wyplata, kwota, portfel.KontoGotowkowe);
+            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);
@@ -95,8 +95,8 @@ namespace Portfel.Data.Serwisy
             portfel.Transakcje.Add(transakcja.Entity);
             var kwotaTransakcji = cena * ilosc;
 
-            var operacjaGotowkowa = new OperacjaGotowkowa(kierunek == Kierunek.Kupno ? TypOperacjiGotowkowej.Obciazenie : TypOperacjiGotowkowej.Uznanie, kwotaTransakcji);
-            portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            var operacjaGotowkowa = new OperacjaGotowkowa(kierunek == Kierunek.Kupno ? TypOperacjiGotowkowej.Obciazenie : TypOperacjiGotowkowej.Uznanie, kwotaTransakcji, portfel.KontoGotowkowe);
+            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);
@@ -121,7 +121,7 @@ namespace Portfel.Data.Serwisy
             else
             {
                 if (kierunek == Kierunek.Sprzedaz)
-                    throw new InvalidOperationException("Brak aktywow tego typu w systemie.");
+                    throw new InvalidOperationException("Brak aktywów tego typu w systemie.");
                 
                 portfel.Pozycje.Add(nowaPozycja);
             }

@@ -8,9 +8,9 @@ namespace Portfel.Intranet.Controllers
 {
     public class AktualnoscController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
 
-        public AktualnoscController(PortfelContexts context)
+        public AktualnoscController(PortfelContext context)
         {
             _context = context;
         }
