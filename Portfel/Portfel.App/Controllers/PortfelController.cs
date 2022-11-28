@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfel.Data;
-using Portfel.App.Models;
-using Portfel.Data;
 using Portfel.Data.Data;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Portfel.App.Controllers
@@ -37,12 +33,11 @@ namespace Portfel.App.Controllers
 
             // ViewBag.SumaKonto = 
 
-            var portfelContext = _context.Portfele
+            var porfele = _context.Portfele
                 .Include(k => k.Uzytkownik)
-                .Include(k => k.Transakcje)
-                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna == true);
-            // return View("MojePortfele", await portfelContext.ToListAsync());
-            return View("MojePortfele");
+                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna == true).ToList();
+             //return View("MojePortfele", await portfelContext.ToListAsync());
+            return View("MojePortfele", porfele);
         }
         public IActionResult DodajPortfel()
         {
