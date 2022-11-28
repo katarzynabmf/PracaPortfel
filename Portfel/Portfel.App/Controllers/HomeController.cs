@@ -11,18 +11,19 @@ namespace Portfel.App.Controllers
         private readonly PortfelContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(PortfelContext context)
+        public HomeController (PortfelContext context)
         {
+           
             _context = context; // tu inicjalizujemy baze danych
-            _context = new PortfelContext(new DbContextOptions<PortfelContext>());
+            //_context = new PortfelContext(new DbContextOptions<PortfelContext>());
         }
         public IActionResult Index()
         {
-            ViewBag.ModelSymboleGieldowe =
-            (
-                from symbol in _context.SymbolGieldowy
-                select symbol
-            ).ToList();
+            //ViewBag.ModelSymboleGieldowe =
+            //(
+            //    from symbol in _context.SymbolGieldowy
+            //    select symbol
+            //).ToList();
 
             ViewBag.ModelAktualnosci =
             (

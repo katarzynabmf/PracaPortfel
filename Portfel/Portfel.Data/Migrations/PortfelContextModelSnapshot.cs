@@ -11,13 +11,13 @@ using Portfel.Data;
 namespace Portfel.Data.Migrations
 {
     [DbContext(typeof(PortfelContext))]
-    partial class PortfelContextsModelSnapshot : ModelSnapshot
+    partial class PortfelContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -60,6 +60,33 @@ namespace Portfel.Data.Migrations
                     b.ToTable("Aktualnosc");
                 });
 
+            modelBuilder.Entity("Portfel.Data.Data.Aktywo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("CenaAktualna")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Aktywa");
+                });
+
             modelBuilder.Entity("Portfel.Data.Data.Konto", b =>
                 {
                     b.Property<int>("Id")
@@ -90,6 +117,122 @@ namespace Portfel.Data.Migrations
                     b.HasIndex("UzytkownikId");
 
                     b.ToTable("Konto");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.KontoGotowkowe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("StanKonta")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KontoGotowkowe");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.OperacjaGotowkowa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataOperacji")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("KontoGotowkoweId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Kwota")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TypOperacjiGotowkowej")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KontoGotowkoweId");
+
+                    b.ToTable("OperacjaGotowkowa");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Portfel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("KontoGotowkoweId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UzytkownikId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Waluta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KontoGotowkoweId")
+                        .IsUnique();
+
+                    b.HasIndex("UzytkownikId");
+
+                    b.ToTable("Portfele");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Pozycja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("AktywoId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Ilosc")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("PortfelId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SredniaCenaZakupu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AktywoId");
+
+                    b.HasIndex("PortfelId");
+
+                    b.ToTable("Pozycje");
                 });
 
             modelBuilder.Entity("Portfel.Data.Data.RodzajOplaty", b =>
@@ -221,6 +364,45 @@ namespace Portfel.Data.Migrations
                     b.ToTable("Transakcja");
                 });
 
+            modelBuilder.Entity("Portfel.Data.Data.TransakcjaNew", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Aktywna")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("AktywoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cena")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DataTransakcji")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Kierunek")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Komentarz")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PortfelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AktywoId");
+
+                    b.HasIndex("PortfelId");
+
+                    b.ToTable("TransakcjeNew");
+                });
+
             modelBuilder.Entity("Portfel.Data.Data.Uzytkownik", b =>
                 {
                     b.Property<int>("Id")
@@ -261,10 +443,53 @@ namespace Portfel.Data.Migrations
                     b.Navigation("Uzytkownik");
                 });
 
+            modelBuilder.Entity("Portfel.Data.Data.OperacjaGotowkowa", b =>
+                {
+                    b.HasOne("Portfel.Data.Data.KontoGotowkowe", "KontoGotowkowe")
+                        .WithMany("OperacjeGotowkowe")
+                        .HasForeignKey("KontoGotowkoweId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KontoGotowkowe");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Portfel", b =>
+                {
+                    b.HasOne("Portfel.Data.Data.KontoGotowkowe", "KontoGotowkowe")
+                        .WithOne("Portfel")
+                        .HasForeignKey("Portfel.Data.Data.Portfel", "KontoGotowkoweId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Portfel.Data.Data.Uzytkownik", "Uzytkownik")
+                        .WithMany("Portfele")
+                        .HasForeignKey("UzytkownikId");
+
+                    b.Navigation("KontoGotowkowe");
+
+                    b.Navigation("Uzytkownik");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Pozycja", b =>
+                {
+                    b.HasOne("Portfel.Data.Data.Aktywo", "Aktywo")
+                        .WithMany()
+                        .HasForeignKey("AktywoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Portfel.Data.Data.Portfel", null)
+                        .WithMany("Pozycje")
+                        .HasForeignKey("PortfelId");
+
+                    b.Navigation("Aktywo");
+                });
+
             modelBuilder.Entity("Portfel.Data.Data.Transakcja", b =>
                 {
                     b.HasOne("Portfel.Data.Data.Konto", "Konto")
-                        .WithMany()
+                        .WithMany("Transakcje")
                         .HasForeignKey("KontoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -292,6 +517,45 @@ namespace Portfel.Data.Migrations
                     b.Navigation("SymbolGieldowy");
                 });
 
+            modelBuilder.Entity("Portfel.Data.Data.TransakcjaNew", b =>
+                {
+                    b.HasOne("Portfel.Data.Data.Aktywo", "Aktywo")
+                        .WithMany()
+                        .HasForeignKey("AktywoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Portfel.Data.Data.Portfel", "Portfel")
+                        .WithMany("Transakcje")
+                        .HasForeignKey("PortfelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Aktywo");
+
+                    b.Navigation("Portfel");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Konto", b =>
+                {
+                    b.Navigation("Transakcje");
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.KontoGotowkowe", b =>
+                {
+                    b.Navigation("OperacjeGotowkowe");
+
+                    b.Navigation("Portfel")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Portfel.Data.Data.Portfel", b =>
+                {
+                    b.Navigation("Pozycje");
+
+                    b.Navigation("Transakcje");
+                });
+
             modelBuilder.Entity("Portfel.Data.Data.RodzajOplaty", b =>
                 {
                     b.Navigation("Transakcja");
@@ -310,6 +574,8 @@ namespace Portfel.Data.Migrations
             modelBuilder.Entity("Portfel.Data.Data.Uzytkownik", b =>
                 {
                     b.Navigation("Konto");
+
+                    b.Navigation("Portfele");
                 });
 #pragma warning restore 612, 618
         }
