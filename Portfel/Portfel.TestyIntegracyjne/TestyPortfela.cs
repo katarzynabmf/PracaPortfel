@@ -6,7 +6,7 @@ using Portfel.Data.Serwisy;
 
 namespace Portfel.TestyIntegracyjne
 {
-    public class UnitTest1
+    public class TestyPortfela
     {
         private PortfelContext _contextInMemory;
         
