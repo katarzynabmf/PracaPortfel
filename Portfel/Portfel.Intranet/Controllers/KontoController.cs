@@ -61,7 +61,7 @@ namespace Portfel.Intranet.Controllers
                 {
                     Nazwa = stworzKonto.Nazwa,
                     Gotowka = stworzKonto.Gotowka,
-                    Waluta = stworzKonto.Waluta,
+                    //Waluta = stworzKonto.Waluta, todo
                     UzytkownikId = stworzKonto.UzytkownikId,
                     Aktywna = true
                 });

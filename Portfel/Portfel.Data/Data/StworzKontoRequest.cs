@@ -3,7 +3,7 @@
 public class StworzKontoRequest
 {
     public string Nazwa { get; set; }
-    public string Waluta { get; set; }
+ //   public string Waluta { get; set; }
     public double Gotowka { get; set; }
 
     public int? UzytkownikId { get; set; }

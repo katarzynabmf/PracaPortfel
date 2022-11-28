@@ -102,6 +102,7 @@ namespace Portfel.App.Controllers
 
             return uzytkownik.Haslo == haslo;
         }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> MojeKonta()
@@ -111,9 +112,9 @@ namespace Portfel.App.Controllers
 
             var wartoscKonta = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id);
 
-          //  var kontoUzytk = wartoscKonta.
-            ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.Gotowka).FirstOrDefault();
-
+            //  var kontoUzytk = wartoscKonta.
+              ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.Gotowka).FirstOrDefault();
+           // ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.SumaNaKoncie).FirstOrDefault();
             // ViewBag.SumaKonto = 
 
             var portfelContext = _context.Konto
@@ -163,7 +164,7 @@ namespace Portfel.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EdytujKonto(int id, [Bind("Id,Nazwa,Waluta,Gotowka,UzytkownikId")] EdytujKontoRequest edytujKonto)
+        public async Task<IActionResult> EdytujKonto(int id, [Bind("Id,Nazwa,Gotowka,UzytkownikId")] EdytujKontoRequest edytujKonto)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
@@ -211,7 +212,8 @@ namespace Portfel.App.Controllers
             }
   
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);
-            return View("MojeKonta", await portfelContext.ToListAsync());
+              return View("MojeKonta", await portfelContext.ToListAsync());
+            //return RedirectToAction("MojeKonta", await portfelContext.ToListAsync());
         }
 
         // GET: Konto/Delete/5
@@ -406,7 +408,7 @@ namespace Portfel.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DodajKonto([Bind("Nazwa,Waluta,Gotowka")] StworzKontoRequest stworzKonto)
+        public async Task<IActionResult> DodajKonto([Bind("Nazwa,Gotowka")] StworzKontoRequest stworzKonto)
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
@@ -417,7 +419,7 @@ namespace Portfel.App.Controllers
                 {
                     Nazwa = stworzKonto.Nazwa,
                     Gotowka = stworzKonto.Gotowka,
-                    Waluta = stworzKonto.Waluta,
+                    Waluta = "pln",
                     UzytkownikId = uzytkownik.Id
                 });
                 await _context.SaveChangesAsync();
