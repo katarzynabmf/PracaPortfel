@@ -1,9 +1,8 @@
 ﻿namespace Portfel.App.Models
 {
-    public class WplataNaPortfelRequest
+    public class WyplataZPortfelaRequest
     {
         public decimal Kwota { get; set; }
     }
 
- 
 }

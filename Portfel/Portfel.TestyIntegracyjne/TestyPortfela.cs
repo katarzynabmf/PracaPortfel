@@ -18,7 +18,7 @@ namespace Portfel.TestyIntegracyjne
             _contextInMemory = new PortfelContext(optionsBuilder.Options);
 
             var uzytkownik = _contextInMemory.Uzytkownik.Add(new Uzytkownik(){DataUtworzenia = DateTime.Now, Email = "x", Haslo = "x", Imie = "y", Portfele = new List<Data.Data.Portfel>()});
-            var portfel = _contextInMemory.Portfele.Add(new Data.Data.Portfel() { Nazwa = "Testowy", Waluta = "PLN" });
+            var portfel = _contextInMemory.Portfele.Add(new Data.Data.Portfel("Testowy", uzytkownik.Entity));
             uzytkownik.Entity.Portfele.Add(portfel.Entity);
             _contextInMemory.SaveChanges();
 

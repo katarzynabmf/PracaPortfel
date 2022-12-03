@@ -105,6 +105,81 @@ namespace Portfel.App.Controllers
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
             return View("MojePortfele");
         }
+        public IActionResult WyplacKwote()
+        {
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+            return View("WyplacKwote");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult WyplacKwote([FromRoute] int id, [Bind("Kwota")] WyplataZPortfelaRequest wyplata)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+            if (ModelState.IsValid)
+            {
+                _portfelSerwis.WyplacSrodkiZKonta((decimal)wyplata.Kwota, id);
+                return RedirectToAction(nameof(MojePortfele));
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
+            return View("MojePortfele");
+        }
+        public IActionResult KupAktywo()
+        {
+            ViewData["AktywoId"] = new SelectList(_context.Aktywa, "Id", "Nazwa");
+            return View("KupAktywo");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> KupAktywo(int id, [Bind("AktywoId, Cena, Ilosc, Komentarz")] KupAktywoRequest kupAktywo)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == user.Name);
+            var portfel = await _context.Portfele.FindAsync(id);
+            var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == kupAktywo.AktywoId).Symbol;
+            if (ModelState.IsValid)
+            {
+                _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, (decimal)kupAktywo.Cena, id);
+                return RedirectToAction(nameof(MojePortfele));
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
+            return View("MojePortfele");
+
+
+          //  return View("MojePortfele");
+
+            //if (ModelState.IsValid)
+            //{
+            //    await _context.AddAsync(new TransakcjaNew()
+            //    {
+            //        PortfelId = id,
+            //        AktywoId = kupAktywo.AktywoId,
+            //        DataTransakcji = DateTime.Now,
+            //        Kierunek = Kierunek.Kupno,
+            //        Cena = kupAktywo.Cena,
+            //        Ilosc = kupAktywo.Ilosc,
+            //        Komentarz = kupAktywo.Komentarz
+            //    }
+            //    );
+            //    await _context.SaveChangesAsync();
+            //    //return RedirectToAction(nameof(MojeTransakcje));
+            //    //return RedirectToAction(nameof(SzczegolyKonta), id);
+            //    var transakcje = _context.TransakcjeNew.
+            //        Include(t => t.Aktywo).
+            //        Where(t => t.PortfelId == id && t.Aktywna == true).ToList();
+            //    var nazwaPortfela = portfel.Nazwa;
+            //   // return View("MojePortfele", new SzczegolyKonta(id, nazwaPortfela, transakcje) { });
+            //   return RedirectToAction("MojePortfele");
+            //}
+            //ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", kupAktywo.PortfelId);
+            //ViewData["PortfelId"] = new SelectList(_context.Portfele, "Id", "Nazwa", kupAktywo.PortfelId);
+
+            ////return View("SzczegolyKonta");
+            ////  return View(stworzTransakcja);
+            //return RedirectToAction("MojePortfele", "Portfel", new { id = kupAktywo.PortfelId });
+
+        }
+
 
 
     }

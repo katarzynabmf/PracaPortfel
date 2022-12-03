@@ -10,7 +10,7 @@ public class TestyAktywow
     private PortfelContext _contextInMemory;
 
     [Fact]
-    public async Task Test()
+    public void Test()
     {
         var optionsBuilder = new DbContextOptionsBuilder<PortfelContext>();
         optionsBuilder.UseInMemoryDatabase("Portfel");
@@ -23,9 +23,13 @@ public class TestyAktywow
 
         _contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Apple", Symbol = "AAPL", CenaAktualna = 100 });
         _contextInMemory.SaveChanges();
+    }
 
+    [Fact]
+    public async Task Ajfdjodsj()
+    {
         // ----------------------------------------------------------------------
-        var aktywaSerwis = new SymboleSerwis(_contextInMemory);
-        await aktywaSerwis.ZaktualizujCeny();
+        //var aktywaSerwis = new SymboleSerwis(_contextInMemory);
+        //await aktywaSerwis.ZaktualizujCeny();
     }
 }
