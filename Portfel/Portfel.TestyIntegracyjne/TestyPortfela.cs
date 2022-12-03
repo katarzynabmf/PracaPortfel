@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
 using Portfel.Data.Data;
-using Portfel.Data.Migrations;
+//using Portfel.Data.Migrations; todo
 using Portfel.Data.Serwisy;
 
 namespace Portfel.TestyIntegracyjne

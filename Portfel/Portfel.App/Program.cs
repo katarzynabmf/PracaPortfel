@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
+using Portfel.Data.Serwisy;
 
 const string CookieScheme = "YourSchemeName";
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("PortfelContext");
 builder.Services.AddDbContext<PortfelContext>(opts => opts.UseSqlServer(connectionString));
+builder.Services.AddTransient<IPortfelSerwis, PortfelSerwis>();
 
 builder.Services.AddMvc();
 

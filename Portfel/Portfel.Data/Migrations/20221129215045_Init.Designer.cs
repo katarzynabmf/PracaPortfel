@@ -12,8 +12,8 @@ using Portfel.Data;
 namespace Portfel.Data.Migrations
 {
     [DbContext(typeof(PortfelContext))]
-    [Migration("20221128170834_NowaWersjaPortfela")]
-    partial class NowaWersjaPortfela
+    [Migration("20221129215045_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,12 +132,18 @@ namespace Portfel.Data.Migrations
                     b.Property<bool>("Aktywna")
                         .HasColumnType("bit");
 
+                    b.Property<int>("PortfelId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("StanKonta")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("KontoGotowkowe");
+                    b.HasIndex("PortfelId")
+                        .IsUnique();
+
+                    b.ToTable("KontaGotowkowe");
                 });
 
             modelBuilder.Entity("Portfel.Data.Data.OperacjaGotowkowa", b =>
@@ -181,9 +187,6 @@ namespace Portfel.Data.Migrations
                     b.Property<bool>("Aktywna")
                         .HasColumnType("bit");
 
-                    b.Property<int>("KontoGotowkoweId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nazwa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -196,9 +199,6 @@ namespace Portfel.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KontoGotowkoweId")
-                        .IsUnique();
 
                     b.HasIndex("UzytkownikId");
 
@@ -393,7 +393,7 @@ namespace Portfel.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PortfelId")
+                    b.Property<int?>("PortfelId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -445,6 +445,17 @@ namespace Portfel.Data.Migrations
                     b.Navigation("Uzytkownik");
                 });
 
+            modelBuilder.Entity("Portfel.Data.Data.KontoGotowkowe", b =>
+                {
+                    b.HasOne("Portfel.Data.Data.Portfel", "Portfel")
+                        .WithOne("KontoGotowkowe")
+                        .HasForeignKey("Portfel.Data.Data.KontoGotowkowe", "PortfelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfel");
+                });
+
             modelBuilder.Entity("Portfel.Data.Data.OperacjaGotowkowa", b =>
                 {
                     b.HasOne("Portfel.Data.Data.KontoGotowkowe", "KontoGotowkowe")
@@ -458,17 +469,9 @@ namespace Portfel.Data.Migrations
 
             modelBuilder.Entity("Portfel.Data.Data.Portfel", b =>
                 {
-                    b.HasOne("Portfel.Data.Data.KontoGotowkowe", "KontoGotowkowe")
-                        .WithOne("Portfel")
-                        .HasForeignKey("Portfel.Data.Data.Portfel", "KontoGotowkoweId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Portfel.Data.Data.Uzytkownik", "Uzytkownik")
                         .WithMany("Portfele")
                         .HasForeignKey("UzytkownikId");
-
-                    b.Navigation("KontoGotowkowe");
 
                     b.Navigation("Uzytkownik");
                 });
@@ -529,9 +532,7 @@ namespace Portfel.Data.Migrations
 
                     b.HasOne("Portfel.Data.Data.Portfel", "Portfel")
                         .WithMany("Transakcje")
-                        .HasForeignKey("PortfelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PortfelId");
 
                     b.Navigation("Aktywo");
 
@@ -546,13 +547,13 @@ namespace Portfel.Data.Migrations
             modelBuilder.Entity("Portfel.Data.Data.KontoGotowkowe", b =>
                 {
                     b.Navigation("OperacjeGotowkowe");
-
-                    b.Navigation("Portfel")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Portfel.Data.Data.Portfel", b =>
                 {
+                    b.Navigation("KontoGotowkowe")
+                        .IsRequired();
+
                     b.Navigation("Pozycje");
 
                     b.Navigation("Transakcje");

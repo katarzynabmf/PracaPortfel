@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
 using Portfel.Data.Data;
-using Portfel.Data.Migrations;
+//using Portfel.Data.Migrations; todo
 
 namespace Portfel.Intranet.Controllers
 {

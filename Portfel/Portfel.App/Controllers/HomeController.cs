@@ -32,6 +32,8 @@ namespace Portfel.App.Controllers
                 select aktualnosc 
             ).ToList();
 
+       
+
             return View();
             //ViewBag.ModelAktualnosci =
             //(
@@ -55,6 +57,16 @@ namespace Portfel.App.Controllers
         public IActionResult Pomoc()
         {
             return View();
+        }
+        public IActionResult Test()
+        {
+            var konta = _context.KontaGotowkowe.Include(p => p.Portfel).ToList();
+            return View(konta);
+        }
+        public IActionResult Test2()
+        {
+            var portfele = _context.Portfele.Include(p => p.KontoGotowkowe).ToList();
+            return View(portfele);
         }
         public IActionResult Kont()
         {

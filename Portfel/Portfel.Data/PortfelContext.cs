@@ -25,10 +25,16 @@ namespace Portfel.Data
         public virtual DbSet<Data.Aktywo> Aktywa { get; set; }
         public virtual DbSet<Data.TransakcjaNew> TransakcjeNew { get; set; }
         public virtual DbSet<Pozycja> Pozycje { get; set; }
+        public virtual DbSet<KontoGotowkowe> KontaGotowkowe { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Data.Portfel>().HasQueryFilter(portfel => portfel.Aktywna);
+           // modelBuilder.Entity<Data.Portfel>().HasOne(p => p.KontoGotowkowe).WithOne(chuj => chuj.Portfel).HasForeignKey<KontoGotowkowe>(p => p.PortfelId);
+           /*modelBuilder.Entity<Data.Portfel>()
+               .HasOne<KontoGotowkowe>(p => p.KontoGotowkowe)
+               .WithOne(k => k.Portfel)
+               .HasForeignKey<KontoGotowkowe>(k => k.PortfelId);*/
         }
     }
 }

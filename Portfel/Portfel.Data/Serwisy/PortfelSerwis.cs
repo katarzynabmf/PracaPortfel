@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Portfel.Data.Data;
 
 namespace Portfel.Data.Serwisy
 {
-    public class PortfelSerwis
+    public class PortfelSerwis : IPortfelSerwis
     {
         private readonly PortfelContext _context;
 
@@ -17,12 +18,23 @@ namespace Portfel.Data.Serwisy
             _context = context;
         }
 
+        public void WplacSrodkiNaKonto(decimal kwota, int portfelId)
+        {
+            //var portfel = _context.Portfele.
+            //    Find(portfelId);
+            var portfel = _context.Portfele
+                .Include(p => p.KontoGotowkowe)
+                .FirstOrDefault(p=>p.Id == portfelId);
+            WplacSrodkiNaKonto(kwota, portfel);
+        }
+
         public void WplacSrodkiNaKonto(decimal kwota, Data.Portfel portfel)
         {
             if (kwota <= 0)
             {
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
             }
+
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota, portfel.KontoGotowkowe);
             //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
@@ -127,5 +139,10 @@ namespace Portfel.Data.Serwisy
             }
             _context.SaveChanges();
         }
+    }
+
+    public interface IPortfelSerwis
+    {
+        void WplacSrodkiNaKonto(decimal kwota, int portfelId);
     }
 }

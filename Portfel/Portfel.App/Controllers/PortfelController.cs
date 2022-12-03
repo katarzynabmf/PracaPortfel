@@ -1,18 +1,25 @@
-﻿using System.Data.Entity;
+﻿
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Portfel.App.Models;
 using Portfel.Data;
 using Portfel.Data.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Portfel.Data.Serwisy;
 
 namespace Portfel.App.Controllers
 {
     public class PortfelController : Controller
     {
         private readonly PortfelContext _context;
-        public PortfelController(PortfelContext context)
+        private readonly IPortfelSerwis _portfelSerwis;
+
+        public PortfelController(PortfelContext context, IPortfelSerwis portfelSerwis)
         {
             _context = context; // tu inicjalizujemy baze danych
+            _portfelSerwis = portfelSerwis;
         }
         public IActionResult Index()
         {
@@ -26,19 +33,14 @@ namespace Portfel.App.Controllers
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            var wartoscKonta = _context.Portfele.Where(k => k.UzytkownikId == uzytkownik.Id);
+            var portfele = _context.Portfele
+                .Include(p => p.Uzytkownik)
+                .Include(p => p.KontoGotowkowe)
+                .Where(p => p.UzytkownikId == uzytkownik.Id && p.Aktywna == true).ToList();
 
-            //  var kontoUzytk = wartoscKonta.
-          //  ViewBag.SumaKonto = _context.Portfele.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.KontoGotowkowe.StanKonta).FirstOrDefault();
-
-            // ViewBag.SumaKonto = 
-
-            var porfele = _context.Portfele
-                .Include(k => k.Uzytkownik)
-                .Where(k => k.UzytkownikId == uzytkownik.Id && k.Aktywna == true).ToList();
-             //return View("MojePortfele", await portfelContext.ToListAsync());
-            return View("MojePortfele", porfele);
+            return View("MojePortfele", portfele);
         }
+
         public IActionResult DodajPortfel()
         {
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
@@ -54,15 +56,56 @@ namespace Portfel.App.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Portfele.Add(new Data.Data.Portfel(
-                    nazwa: stworzPortfel.Nazwa,
-                    uzytkownik: uzytkownik
-                ));
+                //_context.Portfele.Add(new Data.Data.Portfel(
+                //    nazwa: stworzPortfel.Nazwa,
+                //    uzytkownik: uzytkownik
+                //));
+                var portfel = _context.Portfele.Add(new Data.Data.Portfel()
+                {
+                    Nazwa = stworzPortfel.Nazwa,
+                    UzytkownikId = uzytkownik.Id,
+                    Waluta = "usd"
+                });
+
+                //var noweKonto = _context.Add(new KontoGotowkowe()
+                //{
+                //    PortfelId = portfel.Entity.Id
+
+                //});
+
+
+                _context.KontaGotowkowe.Add(new KontoGotowkowe(){Portfel = portfel.Entity});
+
+
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
             return View("MojePortfele");
         }
+
+        public IActionResult WplacKwote()
+        {
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email");
+            return View("WplacKwote");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult WplacKwote([FromRoute] int id, [Bind("Kwota")] WplataNaPortfelRequest wplata)
+        {
+            var user = HttpContext.User.Identity;
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+            if (ModelState.IsValid)
+            {
+                _portfelSerwis.WplacSrodkiNaKonto((decimal)wplata.Kwota, id);
+                return RedirectToAction(nameof(MojePortfele));
+            }
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
+            return View("MojePortfele");
+        }
+
+
     }
 }

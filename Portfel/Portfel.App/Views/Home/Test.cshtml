@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Portfel.Data.Data.KontoGotowkowe>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  @foreach (var item in Model)
+  {
+      <p>Portfel: </p>
+      <h5 class="center">@item.Portfel</h5>
+      <p>Id konta: </p> <p class="light">@item.Id</p>
+      
+      <p>PortfelId: </p>   <p class="light">@item.PortfelId</p>
+      <p>???: </p>   <p class="light">@item.Portfel.Nazwa</p>
+      <p>.......</p>
+  }
