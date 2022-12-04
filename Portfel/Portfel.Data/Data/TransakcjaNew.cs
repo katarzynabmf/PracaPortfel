@@ -40,3 +40,14 @@ public class KupAktywoRequest
     public string Komentarz { get; set; } = "";
     public bool Aktywna { get; set; } = true;
 }
+public class SprzedajAktywoRequest
+{
+    public int? PortfelId { get; set; }
+    public int AktywoId { get; set; }
+    public DateTime DataTransakcji { get; set; }
+    public Kierunek Kierunek { get; set; }
+    public decimal Cena { get; set; }
+    public uint Ilosc { get; set; }
+    public string Komentarz { get; set; } = "";
+    public bool Aktywna { get; set; } = true;
+}

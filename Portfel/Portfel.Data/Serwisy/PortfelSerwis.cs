@@ -64,6 +64,7 @@ namespace Portfel.Data.Serwisy
         {
             var portfel = _context.Portfele
                 .Include(p => p.KontoGotowkowe)
+                .Include(p=>p.Pozycje)
                 .FirstOrDefault(p => p.Id == portfelId);
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel);
         }
@@ -72,7 +73,14 @@ namespace Portfel.Data.Serwisy
         {
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel);
         }
-
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId)
+        {
+            var portfel = _context.Portfele
+                .Include(p => p.KontoGotowkowe)
+                .Include(p => p.Pozycje)
+                .FirstOrDefault(p => p.Id == portfelId);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel);
+        }
         public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel)
         {
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel);
@@ -156,6 +164,7 @@ namespace Portfel.Data.Serwisy
         void WplacSrodkiNaKonto(decimal kwota, int portfelId);
         void WyplacSrodkiZKonta(decimal kwota, int portfelId);
         void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId);
+        void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId);
     }
  
 }
