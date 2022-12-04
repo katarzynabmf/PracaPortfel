@@ -8,13 +8,14 @@ public class TransakcjaNew : ObiektBazodanowy
     {
             
     }
-    public TransakcjaNew(Aktywo aktywo, Kierunek kierunek, decimal cena, uint ilosc)
+    public TransakcjaNew(Aktywo aktywo, Kierunek kierunek, decimal cena, uint ilosc, string komentarz)
     {
         Aktywo = aktywo;
         Kierunek = kierunek;
         Cena = cena;
         Ilosc = ilosc;
         DataTransakcji = DateTime.Now;
+        Komentarz = komentarz;
     }
     public Kierunek Kierunek { get; set; }
     public int AktywoId { get; set; }
@@ -37,7 +38,7 @@ public class KupAktywoRequest
     public Kierunek Kierunek { get; set; }
     public decimal Cena { get; set; }
     public uint Ilosc { get; set; }
-    public string Komentarz { get; set; } = "";
+    public string Komentarz { get; set; } 
     public bool Aktywna { get; set; } = true;
 }
 public class SprzedajAktywoRequest
@@ -48,6 +49,6 @@ public class SprzedajAktywoRequest
     public Kierunek Kierunek { get; set; }
     public decimal Cena { get; set; }
     public uint Ilosc { get; set; }
-    public string Komentarz { get; set; } = "";
+    public string Komentarz { get; set; } 
     public bool Aktywna { get; set; } = true;
 }

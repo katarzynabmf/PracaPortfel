@@ -1,0 +1,64 @@
+﻿@model SzczegolyPortfela
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>@Model.NazwaPortfela</h2>
+            <p>
+                <a asp-action="WszytskieTransakcjeDlaPortfela" asp-controller="Portfel" asp-route-id="@Model.IdPortfela" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Pokaż wszystkie transakcje</a>
+            </p>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+            <tr>
+                <th>
+                    <div>Nazwa aktywa</div>
+                </th>
+                <th>
+                    <div>Ilość aktywa</div>
+                </th>
+                <th>
+                    <div>Średnia cena zakupu</div>
+                </th>
+                <th>
+                    <div>Aktualna cena</div>
+                </th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Pozycje) {
+                <tr>
+           
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Aktywo.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ilosc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SredniaCenaZakupu)
+                    </td>
+                    <td>
+                       AKTUALNA CENA
+               @*     </td>
+                    <td>
+                        <a asp-action="EdytujTransakcje" asp-controller="Uzytkownik" 
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                        >Edytuj</a>
+                        <a asp-action="UsunTransakcje" asp-controller="Uzytkownik" 
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
+                        >Usuń</a>
+                    </td>*@
+
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>

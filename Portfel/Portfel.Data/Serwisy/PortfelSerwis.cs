@@ -60,34 +60,36 @@ namespace Portfel.Data.Serwisy
             _context.Portfele.Update(portfel);
             _context.SaveChanges();
         }
-        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId)
+        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId, string komentarz)
         {
             var portfel = _context.Portfele
                 .Include(p => p.KontoGotowkowe)
                 .Include(p=>p.Pozycje)
+                .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == portfelId);
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);
         }
 
-        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel)
+        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, string komentarz, Data.Portfel portfel)
         {
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);
         }
-        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId)
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,  int portfelId, string komentarz)
         {
             var portfel = _context.Portfele
                 .Include(p => p.KontoGotowkowe)
                 .Include(p => p.Pozycje)
+                .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == portfelId);
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, komentarz, portfel);
         }
-        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel)
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,string komentarz, Data.Portfel portfel)
         {
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, komentarz, portfel);
 
         }
 
-        private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek, Data.Portfel portfel)
+        private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek,string komentarz, Data.Portfel portfel)
         {
             if (cena <= 0)
             {
@@ -106,11 +108,14 @@ namespace Portfel.Data.Serwisy
             }
 
             //var nowaPozycjaPolicz = new Pozycja() { Aktywo = aktywoTransakcji, Ilosc = ilosc, SredniaCenaZakupu = cena };
-            var posiadanaIloscJednostekDanegoAktywa =
-                portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa)?.Ilosc ?? 0;
+            //var posiadanaIloscJednostekDanegoAktywa =
+            //    portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa)?.Ilosc ?? 0;
 
             if (kierunek == Kierunek.Sprzedaz)
             {
+                var posiadanaIloscJednostekDanegoAktywa =
+                    portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa)?.Ilosc ?? 0;
+
                 if (posiadanaIloscJednostekDanegoAktywa < ilosc)
                 {
                    throw new InvalidOperationException("Brak wystarczającej ilości aktywa.");
@@ -122,7 +127,7 @@ namespace Portfel.Data.Serwisy
 
             var aktywo = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
             //var transakcja = _context.TransakcjeNew.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc));
-            portfel.Transakcje.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc));
+            portfel.Transakcje.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc, komentarz));
             var kwotaTransakcji = cena * ilosc;
 
             var operacjaGotowkowa = new OperacjaGotowkowa(kierunek == Kierunek.Kupno ? TypOperacjiGotowkowej.Obciazenie : TypOperacjiGotowkowej.Uznanie, kwotaTransakcji, portfel.KontoGotowkowe);
@@ -163,8 +168,8 @@ namespace Portfel.Data.Serwisy
     {
         void WplacSrodkiNaKonto(decimal kwota, int portfelId);
         void WyplacSrodkiZKonta(decimal kwota, int portfelId);
-        void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId);
-        void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId);
+        void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId, string komenatrz);
+        void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId, string komenatrz);
     }
  
 }

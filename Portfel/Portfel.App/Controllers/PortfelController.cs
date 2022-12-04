@@ -139,7 +139,7 @@ namespace Portfel.App.Controllers
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == kupAktywo.AktywoId).Symbol;
             if (ModelState.IsValid)
             {
-                _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, (decimal)kupAktywo.Cena, id);
+                _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, (decimal)kupAktywo.Cena, id, kupAktywo.Komentarz);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -161,12 +161,58 @@ namespace Portfel.App.Controllers
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == sprzedajAktywo.AktywoId).Symbol;
             if (ModelState.IsValid)
             {
-                _portfelSerwis.SprzedajAktywo(aktywoSymbol, sprzedajAktywo.Ilosc, (decimal)sprzedajAktywo.Cena, id);
+                _portfelSerwis.SprzedajAktywo(aktywoSymbol, sprzedajAktywo.Ilosc,  (decimal)sprzedajAktywo.Cena, id, sprzedajAktywo.Komentarz);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
             return View("MojePortfele");
         }
 
+        public async Task<IActionResult> SzczegolyPortfela(int id)
+        {
+            var user = HttpContext.User.Identity;
+            if (user.Name == null)
+            {
+                return View("~/Views/Uzytkownik/StronaLogowania.cshtml");
+            }
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
+            //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
+            //    Where(t => t.KontoId == id).ToList();
+            var portfel = _context.Portfele.Include(p => p.Pozycje)
+                .ThenInclude(p => p.Aktywo)
+                .FirstOrDefault(p => p.Id == id);
+
+            //  var nazwaPortfela = portfel.Nazwa;
+
+            //var pozycje = _context.Portfele
+            //    .Include(p => p.Uzytkownik)
+            //    .Include(p => p.Pozycje)
+            //    .Include(p => p.KontoGotowkowe)
+            //    .Where(p => p.Id == id ).ToList();
+
+            return View("SzczegolyPortfela", new SzczegolyPortfela(id, portfel.Nazwa, portfel.Pozycje) { });
+        }
+
+
+        public async Task<IActionResult> WszytskieTransakcjeDlaPortfela(int id)
+        {
+            var user = HttpContext.User.Identity;
+            if (user.Name == null)
+            {
+                return View("~/Views/Uzytkownik/StronaLogowania.cshtml");
+            }
+            var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
+            //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
+            //    Where(t => t.KontoId == id).ToList();
+            var portfel = _context.Portfele.Include(p => p.Pozycje)
+                .ThenInclude(p => p.Aktywo)
+                .Include(p=>p.Transakcje)
+                .FirstOrDefault(p => p.Id == id);
+
+
+            return View("WszystkieTransakcje", new WszystkieTransakcjeDlaPortfela(id, portfel.Nazwa, portfel.Transakcje) { });
+        }
     }
 }
