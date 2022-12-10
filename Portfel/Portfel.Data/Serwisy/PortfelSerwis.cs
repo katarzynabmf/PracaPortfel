@@ -86,7 +86,6 @@ namespace Portfel.Data.Serwisy
         public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,string komentarz, Data.Portfel portfel)
         {
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, komentarz, portfel);
-
         }
 
         private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek,string komentarz, Data.Portfel portfel)

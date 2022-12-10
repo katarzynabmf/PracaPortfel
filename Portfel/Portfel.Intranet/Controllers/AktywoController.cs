@@ -183,5 +183,7 @@ namespace Portfel.Intranet.Controllers
             await _symboleSerwis.ZaktualizujCeny();
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }

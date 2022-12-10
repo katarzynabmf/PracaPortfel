@@ -28,8 +28,10 @@ public class TransakcjaNew : ObiektBazodanowy
     public uint Ilosc { get; set; }
     [Display(Name = "Data utworzenia transakcji")]
     public DateTime DataTransakcji { get; set; }
-    public string Komentarz { get; set; } = "";
+    public string Komentarz { get; set; } 
 }
+
+
 
 public class KupAktywoRequest
 {
@@ -37,7 +39,8 @@ public class KupAktywoRequest
     public int AktywoId { get; set; }
     public DateTime DataTransakcji { get; set; }
     public Kierunek Kierunek { get; set; }
-    public decimal Cena { get; set; }
+    [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Wpisz kwotę z dokładnością do 2 miejsc po przecinku.")]
+    public string Cena { get; set; }
     public uint Ilosc { get; set; }
     public string Komentarz { get; set; } 
     public bool Aktywna { get; set; } = true;
@@ -48,7 +51,8 @@ public class SprzedajAktywoRequest
     public int AktywoId { get; set; }
     public DateTime DataTransakcji { get; set; }
     public Kierunek Kierunek { get; set; }
-    public decimal Cena { get; set; }
+    [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Wpisz kwotę z dokładnością do 2 miejsc po przecinku.")]
+    public string Cena { get; set; }
     public uint Ilosc { get; set; }
     public string Komentarz { get; set; } 
     public bool Aktywna { get; set; } = true;

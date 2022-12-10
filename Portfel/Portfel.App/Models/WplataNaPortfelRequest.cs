@@ -1,8 +1,11 @@
-﻿namespace Portfel.App.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Portfel.App.Models
 {
     public class WplataNaPortfelRequest
     {
-        public decimal Kwota { get; set; }
+        [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Wpisz kwotę z dokładnością do 2 miejsc po przecinku.")]
+        public string Kwota { get; set; }
     }
 
  

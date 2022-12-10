@@ -84,7 +84,10 @@ namespace Portfel.App.Controllers
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
             if (ModelState.IsValid)
             {
-                _portfelSerwis.WplacSrodkiNaKonto((decimal)wplata.Kwota, id);
+                var kwota = Convert.ToDecimal(wplata.Kwota, Thread.CurrentThread.CurrentCulture);
+                _portfelSerwis.WplacSrodkiNaKonto(kwota, id);
+
+                //_portfelSerwis.WplacSrodkiNaKonto((decimal)wplata.Kwota, id);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -103,7 +106,10 @@ namespace Portfel.App.Controllers
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
             if (ModelState.IsValid)
             {
-                _portfelSerwis.WyplacSrodkiZKonta((decimal)wyplata.Kwota, id);
+                var kwota = Convert.ToDecimal(wyplata.Kwota, Thread.CurrentThread.CurrentCulture);
+                _portfelSerwis.WplacSrodkiNaKonto(kwota, id);
+
+                //_portfelSerwis.WyplacSrodkiZKonta((decimal)wyplata.Kwota, id);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -122,9 +128,13 @@ namespace Portfel.App.Controllers
             var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == user.Name);
             var portfel = await _context.Portfele.FindAsync(id);
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == kupAktywo.AktywoId).Symbol;
+            var cena = Convert.ToDecimal(kupAktywo.Cena, Thread.CurrentThread.CurrentCulture);
+
+
             if (ModelState.IsValid)
             {
-                _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, (decimal)kupAktywo.Cena, id, kupAktywo.Komentarz);
+               
+                _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, cena, id, kupAktywo.Komentarz);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -144,9 +154,11 @@ namespace Portfel.App.Controllers
             var portfel = await _context.Portfele.FindAsync(id);
            
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == sprzedajAktywo.AktywoId).Symbol;
+
+            var cena = Convert.ToDecimal(sprzedajAktywo.Cena, Thread.CurrentThread.CurrentCulture);
             if (ModelState.IsValid)
             {
-                _portfelSerwis.SprzedajAktywo(aktywoSymbol, sprzedajAktywo.Ilosc,  (decimal)sprzedajAktywo.Cena, id, sprzedajAktywo.Komentarz);
+                _portfelSerwis.SprzedajAktywo(aktywoSymbol, sprzedajAktywo.Ilosc,  cena, id, sprzedajAktywo.Komentarz);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -166,13 +178,16 @@ namespace Portfel.App.Controllers
                 .Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == id);
+            var aktywa = _context.Aktywa.ToList();
 
             var szczegolyPozycji = portfel.Pozycje.Select(p => new PozycjaSzczegoly
             {
                 Ilosc = p.Ilosc,
                 SredniaCenaZakupu = p.SredniaCenaZakupu,
-                NazwaAktywa = p.Aktywo.Nazwa
+                NazwaAktywa = p.Aktywo.Nazwa,
+                WartoscAktywa = p.Aktywo.CenaAktualna
             });
+          
 
             return View("SzczegolyPortfela", new SzczegolyPortfela(id, portfel.Nazwa, szczegolyPozycji) { });
         }
@@ -203,13 +218,25 @@ namespace Portfel.App.Controllers
 
     public class PozycjaSzczegoly
     {
-        public string NazwaAktywa { get; set; }   
-        public decimal WartoscPozycji
+        public string NazwaAktywa { get; set; }
+        public decimal SredniaWartoscPozycji
         {
             get { return Ilosc * SredniaCenaZakupu; }
         }
-
+        public decimal WartoscPozycji
+        {
+            get { return Ilosc * WartoscAktywa; }
+        }
         public uint Ilosc { get; set; }
         public decimal SredniaCenaZakupu { get; set; }
+        public  decimal WartoscAktywa { get; set; }
+
+        public decimal ZyskStrata
+        {
+            get
+            {
+                return ((WartoscAktywa * 100) / SredniaCenaZakupu) - 100;
+            }
+        }
     }
 }
