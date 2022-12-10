@@ -3,6 +3,7 @@ using Portfel.App.Models;
 using System.Diagnostics;
 using Portfel.Data;
 using Microsoft.EntityFrameworkCore;
+using Portfel.Data.Data;
 
 namespace Portfel.App.Controllers
 {
@@ -13,36 +14,14 @@ namespace Portfel.App.Controllers
 
         public HomeController (PortfelContext context)
         {
-           
             _context = context; // tu inicjalizujemy baze danych
-            //_context = new PortfelContext(new DbContextOptions<PortfelContext>());
         }
         public IActionResult Index()
         {
-            //ViewBag.ModelSymboleGieldowe =
-            //(
-            //    from symbol in _context.SymbolGieldowy
-            //    select symbol
-            //).ToList();
-
-            ViewBag.ModelAktualnosci =
-            (
-                from aktualnosc in _context.Aktualnosc
-                orderby aktualnosc.DataDodania descending 
-                select aktualnosc 
-            ).ToList();
-
-       
-
+            IEnumerable<Aktualnosc> aktualnosci = _context.Aktualnosc.ToList();
+            IEnumerable<Aktywo> aktywa = _context.Aktywa.ToList();
+            ViewBag.ModelAktualnosciIIAktywa = new AktualnosciIAktywa(aktualnosci, aktywa);
             return View();
-            //ViewBag.ModelAktualnosci =
-            //(
-            //    from aktualnosc in _context.Aktualnosc
-            //    select aktualnosc
-            //).ToList();
-
-            //return View();
-
         }
 
         public async Task<ActionResult> Szczegoly(int id)
@@ -106,5 +85,11 @@ namespace Portfel.App.Controllers
             ).ToList();
             return View(aktualnosci);
         }
+
+        //public IActionResult AktualnosciPartial()
+        //{
+        //    var aktualnosciIAktywa = new AktualnosciIAktywa(_context.Aktualnosc.ToList(), _context.Aktywa.ToList());
+        //    return PartialView("Aktualnosci", aktualnosciIAktywa);
+        //}
     }
 }

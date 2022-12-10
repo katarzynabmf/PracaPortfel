@@ -10,8 +10,14 @@ namespace Portfel.Data.Data
         [Display(Name = "Imię")]
         public string Imie { get; set; }
         [Required]
+
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)\\S{4,20}$", ErrorMessage = "Hasło musi zawierać co najmniej jedną: dużą i małą literę, cyfrę oraz mieć długość 4-20 znaków")]
+
         public string Haslo { get; set; }
         [Required]
+      
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{1,6}$", ErrorMessage = "Nieprawidłowy adres Email")]
+
         public string Email { get; set; }
         [Display(Name = "Czy Aktywny")]
         public bool Aktywna { get; set; } = true;

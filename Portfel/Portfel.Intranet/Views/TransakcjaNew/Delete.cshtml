@@ -1,0 +1,103 @@
+﻿@model Portfel.Data.Data.Transakcja
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Usuń transakcję</h1>
+                            </div>
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Konto)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Konto.Nazwa)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.RodzajTransakcji)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.RodzajTransakcji.Nazwa)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Waluta)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Waluta)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.SymbolGieldowy)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.SymbolGieldowy.Nazwa)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Kwota)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Kwota)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Ilosc)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Ilosc)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.RodzajOplaty)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.RodzajOplaty.Nazwa)
+        </dd>
+         <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.IloscRodzajuOplaty)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.IloscRodzajuOplaty)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Komentarz)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Komentarz)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+   <input type="submit" value="Usuń" class="btn btn-danger" /> 
+        <button asp-action="Index" class="btn bg-info text-white shadow">Wróć do listy</button>
+    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>

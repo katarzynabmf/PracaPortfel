@@ -6,11 +6,11 @@ using Portfel.Data.Data;
 
 namespace Portfel.Intranet.Controllers
 {
-    public class TransakcjaController : Controller
+    public class TransakcjaNewController : Controller
     {
-        private readonly PortfelContext _context;
+         private readonly PortfelContext _context;
 
-        public TransakcjaController(PortfelContext context)
+        public TransakcjaNewController(PortfelContext context)
         {
             _context = context;
         }
@@ -18,43 +18,19 @@ namespace Portfel.Intranet.Controllers
         // GET: Transakcja
         public async Task<IActionResult> Index()
         {
-            var portfelContext = _context.Transakcja
-                .Include(t => t.Konto)
-                .Include(t => t.RodzajOplaty)
-                .Include(t => t.RodzajTransakcji)
-                .Include(t => t.SymbolGieldowy);
-            return View(await portfelContext.ToListAsync());
-        }
-
-        // GET: Transakcja/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Transakcja == null)
-            {
-                return NotFound();
-            }
-
-            var transakcja = await _context.Transakcja
-                .Include(t => t.Konto)
-                .Include(t => t.RodzajOplaty)
-                .Include(t => t.RodzajTransakcji)
-                .Include(t => t.SymbolGieldowy)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (transakcja == null)
-            {
-                return NotFound();
-            }
-
-            return View(transakcja);
+            var portfelContext = _context.TransakcjeNew
+                .Include(t => t.Aktywo)
+                .Include(t=>t.Portfel).ToListAsync();
+            return View(await portfelContext);
         }
 
         // GET: Transakcja/Create
         public IActionResult Create()
         {
-            ViewData["KontoId"] = new SelectList(_context.Konto, "Id", "Nazwa");
-            ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa");
-            ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa");
-            ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa");
+            ViewData["PortfelId"] = new SelectList(_context.Portfele, "Id", "Nazwa");
+            ViewData["AktywoId"] = new SelectList(_context.Aktywa, "Id", "Nazwa");
+          //  ViewData["Kierunek"] = new SelectList(Kierunek, "Id", "Nazwa");
+            ViewBag.Kierunki = Enum.GetNames(typeof(Kierunek)).ToList();
             return View();
         }
 
@@ -69,19 +45,19 @@ namespace Portfel.Intranet.Controllers
             {
                 _context.Add(new Transakcja()
 
-                    {
-                        KontoId = stworzTransakcja.KontoId,
-                        Date = stworzTransakcja.Date,
-                        RodzajTransakcjiId = stworzTransakcja.RodzajTransakcjiId,
-                        Waluta = stworzTransakcja.Waluta,
-                        SymbolGieldowyId = stworzTransakcja.SymbolGieldowyId,
-                        Kwota = stworzTransakcja.Kwota,
-                        Ilosc = stworzTransakcja.Ilosc,
-                        RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
+                {
+                    KontoId = stworzTransakcja.KontoId,
+                    Date = stworzTransakcja.Date,
+                    RodzajTransakcjiId = stworzTransakcja.RodzajTransakcjiId,
+                    Waluta = stworzTransakcja.Waluta,
+                    SymbolGieldowyId = stworzTransakcja.SymbolGieldowyId,
+                    Kwota = stworzTransakcja.Kwota,
+                    Ilosc = stworzTransakcja.Ilosc,
+                    RodzajOplatyId = stworzTransakcja.RodzajOplatyId,
                     IloscRodzajuOplaty = stworzTransakcja.IloscRodzajuOplaty,
                     Komentarz = stworzTransakcja.Komentarz,
-                        Aktywna = true
-                    }
+                    Aktywna = true
+                }
                 );
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -206,14 +182,14 @@ namespace Portfel.Intranet.Controllers
             {
                 transakcja.Aktywna = false;
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TransakcjaExists(int id)
         {
-          return _context.Transakcja.Any(e => e.Id == id);
+            return _context.Transakcja.Any(e => e.Id == id);
         }
     }
 }

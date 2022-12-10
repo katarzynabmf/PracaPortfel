@@ -21,22 +21,11 @@
                     <form asp-action="WplacKwote">
                         @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
                         <div class="form mb-4">
-                            @* <label asp-for="Imie" class="form-label" for="form3Example1cg">Imię</label>*@
                             <label asp-for="Kwota" ></label>
                             <input asp-for="Kwota" id="form3Example1cg" class="form-control form-control-lg"/>
                             <span asp-validation-for="Kwota"></span>
                             <!--input type="hidden" asp-for="IdPortfela" /-->
                         </div>
-                  @*      <div class="form mb-4">
-                            <label asp-for="Waluta" ></label>
-                            <input asp-for="Waluta" id="form3Example1cg" class="form-control form-control-lg" />
-                            <span asp-validation-for="Waluta" class="text-danger"></span>
-                        </div>*@
-              @*          <div class="form mb-4">
-                            <label asp-for="Gotowka" ></label>
-                            <input asp-for="Gotowka" id="form3Example4cg" class="form-control form-control-lg"/>
-                            <span asp-validation-for="Gotowka" class="text-danger"></span>
-                        </div>*@
                         <div class="d-flex justify-content-center">
                             <input type="submit" value="Wpłać kwotę" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"/>
                         </div>
@@ -50,6 +39,6 @@
 </div>
 </div>
 </section>
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@

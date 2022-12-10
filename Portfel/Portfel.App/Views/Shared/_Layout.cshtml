@@ -3,30 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>@ViewData["Title"] - Portfel.App</title>
+    <title> Portfel.App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  @*  <link rel="stylesheet" href="~/Portfel.App.styles.css" asp-append-version="true" />*@
+
     <!-- MDB icon -->
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
     <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-    <!-- Google Fonts Roboto -->
-   @* <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"/>*@
+
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   @* <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"  media="screen,projection"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">*@
-    <!-- MDB -->
-   @* <link rel="stylesheet" href="~/css/mdb.min.css" />*@
-    
+
     <!-- Favicons -->
     <link href="~/assets/img/favicon.png" rel="icon">
     <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -52,60 +42,10 @@
     * Author: BootstrapMade.com
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
-
 </head>
-@*<body class="gradient_Tlo" style="color: white">*@
+
 <body>
-<!--JavaScript at end of body for optimized loading-->
-  @*  <script type="text/javascript" src="js/materialize.min.js"></script>*@
-@*<header style="background-color: white">
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                 
-                <ul class="navbar-nav flex-grow-1" >
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Portfel</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav text-right">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Pomoc">Pomoc</a>
-                    </li>
-                    @*                       
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Symbole">Symbole</a>
-                        </li>*@
-    @*                @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Uzytkownik" asp-action="MojeKonta">Moje konta</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Uzytkownik" asp-action="Logout">Wyloguj się</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Uzytkownik" asp-action="StronaLogowania">Logowanie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Uzytkownik" asp-action="StronaRejestracji">Rejestracja</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>*@
-
-
-  <header id="header" class="header d-flex align-items-center">
+<header id="header" class="header d-flex align-items-center">
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center" asp-controller="Home" asp-action="Index">
@@ -118,18 +58,12 @@
             <li >
                 <a asp-area="" asp-controller="Home" asp-action="Pomoc">Pomoc</a>
             </li>
-            <li >
-                <a asp-area="" asp-controller="Home" asp-action="Test">Test</a>
-            </li>
-            @*                       
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Symbole">Symbole</a>
-                        </li>*@
+
             @if (User.Identity.IsAuthenticated)
             {
-                <li >
+            @*    <li >
                     <a asp-area="" asp-controller="Uzytkownik" asp-action="MojeKonta">Moje konta</a>
-                </li>
+                </li>*@
                 <li >
                     <a  asp-area="" asp-controller="Uzytkownik" asp-action="Logout">Wyloguj się</a>
                 </li>
@@ -154,16 +88,14 @@
 
     </div>
   </header><!-- End Header -->
-  <!-- End Header -->
-    <div >
+<!-- End Header -->
+
+<div >
         <main role="main">
             @RenderBody()
         </main>
     </div>
-@*<div class="container">
-    @await Html.PartialAsync("Symbole", (IEnumerable<Portfel.Data.Data.SymbolGieldowy>)ViewBag.ModelSymboleGieldowe)
-    <br><br>
-</div>*@
+
 
 
 <!-- ======= Footer ======= -->

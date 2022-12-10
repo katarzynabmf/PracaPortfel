@@ -34,7 +34,7 @@ namespace Portfel.Data.Serwisy
             }
 
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota, portfel.KontoGotowkowe);
-            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);
@@ -54,7 +54,7 @@ namespace Portfel.Data.Serwisy
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
             }
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wyplata, kwota, portfel.KontoGotowkowe);
-            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);

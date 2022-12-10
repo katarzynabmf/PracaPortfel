@@ -65,12 +65,16 @@
   <!-- End Hero Section -->
 
 
-@await Html.PartialAsync("Aktualnosci", (IEnumerable<Portfel.Data.Data.Aktualnosc>)ViewBag.ModelAktualnosci)
+@await Html.PartialAsync("Aktualnosci", (object) ViewBag.ModelAktualnosciIIAktywa);
+<div id="aktualnosci">
 
+</div>
 
-
-
- 
-
-
- 
+@*@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('#aktualnosci').load("/Home/AktualnosciPartial",)
+        });
+    </script>
+}*@

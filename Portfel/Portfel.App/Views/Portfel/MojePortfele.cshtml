@@ -23,15 +23,9 @@
                 <th>
                     Nazwa
                 </th>
-                @*   <th>
-                @Html.DisplayNameFor(model => model.Waluta)
-            </th>*@
                 <th>
                     Stan konta
                 </th>
-                @*   <th>
-                @Html.DisplayNameFor(model => model.SumaNaKoncie)
-            </th>*@
                 <th> Akcje</th>
             </tr>
             </thead>
@@ -41,16 +35,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Nazwa)
                     </td>
-                    @*     <td>
-                    @Html.DisplayFor(modelItem => item.Waluta)
-                </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.KontoGotowkowe.StanKonta)
                     </td>
-                    @*  <td>
-                    @Html.DisplayFor(modelItem => item.SumaNaKoncie)
-                    
-                </td>*@
                     <td>
                         <a asp-action="WplacKwote" asp-controller="Portfel" 
                            asp-route-id="@item.Id"
@@ -73,20 +60,6 @@
                            style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
                         >Szczegóły portfela</a>
                     </td>
-                    @*<td>
-                    <a asp-action="SzczegolyKonta" asp-controller="Uzytkownik" 
-                       asp-route-id="@item.Id"
-                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
-                    >Szczegóły konta</a>
-                    <a asp-action="EdytujKonto" asp-controller="Uzytkownik" 
-                       asp-route-id="@item.Id"
-                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
-                    >Edytuj konto</a>
-                    <a asp-action="UsunKonto" asp-controller="Uzytkownik" 
-                       asp-route-id="@item.Id"
-                       style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
-                    >Usuń konto</a>
-                </td>*@
                 </tr>
             }
             </tbody>

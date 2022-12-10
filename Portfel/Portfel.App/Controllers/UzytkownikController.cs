@@ -85,7 +85,8 @@ namespace Portfel.App.Controllers
                 }
                 else
                 {
-                    return Redirect("MojeKonta");
+                    //return Redirect("MojeKonta");
+                    return RedirectToAction("MojePortfele", "Portfel");
                 }
             }
             

@@ -56,28 +56,13 @@ namespace Portfel.App.Controllers
 
             if (ModelState.IsValid)
             {
-                //_context.Portfele.Add(new Data.Data.Portfel(
-                //    nazwa: stworzPortfel.Nazwa,
-                //    uzytkownik: uzytkownik
-                //));
                 var portfel = _context.Portfele.Add(new Data.Data.Portfel()
                 {
                     Nazwa = stworzPortfel.Nazwa,
                     UzytkownikId = uzytkownik.Id,
                     Waluta = "usd"
                 });
-
-                //var noweKonto = _context.Add(new KontoGotowkowe()
-                //{
-                //    PortfelId = portfel.Entity.Id
-
-                //});
-
-
                 _context.KontaGotowkowe.Add(new KontoGotowkowe(){Portfel = portfel.Entity});
-
-
-
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MojePortfele));
             }
@@ -177,21 +162,19 @@ namespace Portfel.App.Controllers
             }
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
-            //    Where(t => t.KontoId == id).ToList();
-            var portfel = _context.Portfele.Include(p => p.Pozycje)
+            var portfel = _context.Portfele
+                .Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == id);
 
-            //  var nazwaPortfela = portfel.Nazwa;
+            var szczegolyPozycji = portfel.Pozycje.Select(p => new PozycjaSzczegoly
+            {
+                Ilosc = p.Ilosc,
+                SredniaCenaZakupu = p.SredniaCenaZakupu,
+                NazwaAktywa = p.Aktywo.Nazwa
+            });
 
-            //var pozycje = _context.Portfele
-            //    .Include(p => p.Uzytkownik)
-            //    .Include(p => p.Pozycje)
-            //    .Include(p => p.KontoGotowkowe)
-            //    .Where(p => p.Id == id ).ToList();
-
-            return View("SzczegolyPortfela", new SzczegolyPortfela(id, portfel.Nazwa, portfel.Pozycje) { });
+            return View("SzczegolyPortfela", new SzczegolyPortfela(id, portfel.Nazwa, szczegolyPozycji) { });
         }
 
 
@@ -209,10 +192,24 @@ namespace Portfel.App.Controllers
             var portfel = _context.Portfele.Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .Include(p=>p.Transakcje)
+                .Include(p => p.KontoGotowkowe)
+                .ThenInclude(p => p.OperacjeGotowkowe)
                 .FirstOrDefault(p => p.Id == id);
-
-
-            return View("WszystkieTransakcje", new WszystkieTransakcjeDlaPortfela(id, portfel.Nazwa, portfel.Transakcje) { });
+            
+            return View("WszystkieTransakcje", new WszystkieTransakcjeDlaPortfela(id, portfel.Nazwa, portfel.Transakcje, portfel.KontoGotowkowe.Id, portfel.KontoGotowkowe.OperacjeGotowkowe) { });
         }
+
+    }
+
+    public class PozycjaSzczegoly
+    {
+        public string NazwaAktywa { get; set; }   
+        public decimal WartoscPozycji
+        {
+            get { return Ilosc * SredniaCenaZakupu; }
+        }
+
+        public uint Ilosc { get; set; }
+        public decimal SredniaCenaZakupu { get; set; }
     }
 }

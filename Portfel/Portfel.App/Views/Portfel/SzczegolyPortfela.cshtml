@@ -24,6 +24,9 @@
                     <div>Średnia cena zakupu</div>
                 </th>
                 <th>
+                    <div>Wartść pozycji</div>
+                </th>
+                <th>
                     <div>Aktualna cena</div>
                 </th>
                 <th>Akcje</th>
@@ -34,13 +37,16 @@
                 <tr>
            
                     <td>
-                        @Html.DisplayFor(modelItem => item.Aktywo.Nazwa)
+                        @Html.DisplayFor(modelItem => item.NazwaAktywa)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Ilosc)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SredniaCenaZakupu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WartoscPozycji)
                     </td>
                     <td>
                        AKTUALNA CENA

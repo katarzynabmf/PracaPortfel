@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Portfel.Data.Data.TransakcjaNew>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-primary">Transakcje</h1>
+                 @*       <a asp-action="Create" title="Dodaj" class="d-sm-inline-block btn btn-primary shadow-sm"><i
+                                class="fas fa-plus-square fa-sm text-white-50"></i> Dodaj</a>*@
+                    </div>
+</div>
+      <div class="card-body">
+            <div class="table-responsive">
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kierunek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktywo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                Ilość
+            </th>
+            <th>
+                Data dodania
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.Waluta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SymbolGieldowy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kwota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ilosc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RodzajOplaty)
+            </th>*@
+             <th>
+                                @Html.DisplayNameFor(model => model.Aktywna)
+                            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komentarz)
+            </th>
+           @* <th class="text-center th-action">Akcja</th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kierunek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aktywo.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ilosc)
+            </td>
+            <td>
+                @item.DataTransakcji.ToShortDateString()
+            </td>
+          @*  <td>
+                @Html.DisplayFor(modelItem => item.Waluta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SymbolGieldowy.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kwota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ilosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RodzajOplaty.Nazwa)
+            </td>*@
+             <td>
+                                    @Html.DisplayFor(modelItem => item.Aktywna)
+                                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Komentarz)
+            </td>
+           @* <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
+                  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-circle btn-sm delete" title="Usuń"><i class="fas fa-trash"> </i</a>  
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
