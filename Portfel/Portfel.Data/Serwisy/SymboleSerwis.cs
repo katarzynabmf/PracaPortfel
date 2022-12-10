@@ -20,7 +20,7 @@ namespace Portfel.Data.Serwisy
         public async Task ZaktualizujCeny()
         {
             var httpClient = new HttpClient();
-            var aktywa = _context.Aktywa.ToList();
+            var aktywa = _context.Aktywa.ToList().Take(3);
             foreach (var aktywo in aktywa)
             {
                 var previousWorkDay = PreviousWorkDay(DateTime.Now).ToString("yyyy-MM-dd");

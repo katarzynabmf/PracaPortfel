@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfel.Data;
 using Portfel.Data.Data;
+using Portfel.Data.Serwisy;
 
 namespace Portfel.Intranet.Controllers
 {
     public class AktywoController : Controller
     {
         private readonly PortfelContext _context;
+        private readonly SymboleSerwis _symboleSerwis;
 
-        public AktywoController(PortfelContext context)
+        public AktywoController(PortfelContext context, SymboleSerwis symboleSerwis)
         {
             _context = context;
+            _symboleSerwis = symboleSerwis;
         }
 
         // GET: SymbolGieldowy
@@ -172,6 +175,13 @@ namespace Portfel.Intranet.Controllers
         private bool AktywoExists(int id)
         {
             return _context.Aktywa.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> AktualizacjaCeny()
+        {
+
+            await _symboleSerwis.ZaktualizujCeny();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

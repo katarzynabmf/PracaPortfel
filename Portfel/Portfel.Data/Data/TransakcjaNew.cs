@@ -26,6 +26,7 @@ public class TransakcjaNew : ObiektBazodanowy
     public decimal Cena { get; set; }
     [Range(1, uint.MaxValue)]
     public uint Ilosc { get; set; }
+    [Display(Name = "Data utworzenia transakcji")]
     public DateTime DataTransakcji { get; set; }
     public string Komentarz { get; set; } = "";
 }

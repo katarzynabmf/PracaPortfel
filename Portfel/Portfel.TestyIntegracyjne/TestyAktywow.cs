@@ -26,7 +26,7 @@ public class TestyAktywow
     }
 
     [Fact]
-    public async Task Ajfdjodsj()
+    public async Task Ajfdjodsj() //todo
     {
         // ----------------------------------------------------------------------
         //var aktywaSerwis = new SymboleSerwis(_contextInMemory);

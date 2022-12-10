@@ -1,5 +1,6 @@
 using Portfel.Data;
 using Microsoft.EntityFrameworkCore;
+using Portfel.Data.Serwisy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("PortfelContext");
 builder.Services.AddDbContext<PortfelContext>(opts => opts.UseSqlServer(connectionString));
+builder.Services.AddTransient<SymboleSerwis>(provider =>
+{
+    var context = provider.GetService<PortfelContext>();
+    return new SymboleSerwis(context);
+});
 
 var app = builder.Build();
 

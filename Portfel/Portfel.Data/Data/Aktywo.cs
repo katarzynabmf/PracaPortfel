@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Portfel.Data.Data;
 
@@ -17,6 +18,7 @@ public class AktywoViewModel
     public bool Aktywna { get; set; }
     public string Symbol { get; set; }
     public string Nazwa { get; set; }
+    [Display(Name = "Aktualna cena")]
 
     [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Valid Decimal number with maximum 2 decimal places.")]
     public string CenaAktualna { get; set; }
