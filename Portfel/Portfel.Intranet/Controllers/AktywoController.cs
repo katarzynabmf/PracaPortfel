@@ -11,11 +11,13 @@ namespace Portfel.Intranet.Controllers
     {
         private readonly PortfelContext _context;
         private readonly SymboleSerwis _symboleSerwis;
+        private IEnumerable<Aktywo> _aktywa;
 
         public AktywoController(PortfelContext context, SymboleSerwis symboleSerwis)
         {
             _context = context;
             _symboleSerwis = symboleSerwis;
+            
         }
 
         // GET: SymbolGieldowy
@@ -103,11 +105,6 @@ namespace Portfel.Intranet.Controllers
             {
                 try
                 {
-                    //var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-                    //var ci = new CultureInfo(currentCulture)
-                    //{
-                    //    NumberFormat = { NumberDecimalSeparator = "," }
-                    //};
                     _context.Update(new Aktywo()
                     {
                         Nazwa = aktywoViewModel.Nazwa,
@@ -183,7 +180,42 @@ namespace Portfel.Intranet.Controllers
             await _symboleSerwis.ZaktualizujCeny();
             return RedirectToAction(nameof(Index));
         }
+        public IEnumerable<Aktywo> GetAktywa()
+        {
+            _aktywa = _context.Aktywa.ToList();
+            return _aktywa;
+        }
 
+        public Aktywo GetAktywo(int id)
+        {
+            _aktywa = _context.Aktywa.ToList();
+            return _aktywa.FirstOrDefault(p => p.Id == id);
+        }
 
+        [HttpPost]
+        public Aktywo PostAktywo(string symbol, string nazwa, decimal cenaAktualna)
+        {
+            var aktywo = new Aktywo()
+            {
+                Nazwa = nazwa,
+                Symbol = symbol,
+                CenaAktualna = cenaAktualna,
+                Aktywna = true
+            };
+            _context.Add(aktywo);
+            _context.SaveChangesAsync();
+            return aktywo;
+        }
+
+        [HttpPost]
+        public Aktywo PatchAktywo(string symbol, decimal nowaCena)
+        {
+            var aktywoDoEdycji = _context.Aktywa.Single(aktywo => aktywo.Symbol == symbol);
+            aktywoDoEdycji.CenaAktualna = nowaCena;
+
+            var zaktualizowaneAktywo = _context.Update(aktywoDoEdycji);
+            _context.SaveChangesAsync();
+            return zaktualizowaneAktywo.Entity;
+        }
     }
 }
