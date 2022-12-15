@@ -35,23 +35,32 @@ namespace Portfel.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email")] Uzytkownik uzytkownik)
+        public async Task<IActionResult> Create([Bind("Id,Imie,Haslo,Email")] Uzytkownik uzytkownik, string powtorzHaslo)
         {
             var nowyUzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(u => u.Email == uzytkownik.Email);
-            if (nowyUzytkownik == null)
+
+            if (uzytkownik.Haslo == powtorzHaslo)
             {
-                if (ModelState.IsValid)
+                if (nowyUzytkownik == null)
                 {
-                    await _context.AddAsync(uzytkownik);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(RejestracjaPomyslna));
+                    if (ModelState.IsValid)
+                    {
+                        await _context.AddAsync(uzytkownik);
+                        await _context.SaveChangesAsync();
+                        ViewBag.LoginMessage = "Konto zostało utworzone.";
+                        return View("StronaLogowania");
+                    }
+                    return View("StronaRejestracji");
                 }
-                return View("StronaLogowania");
+                else
+                {
+                    ViewBag.RegisterErrorMessage = "Mail już jest zajęty. Zaloguj się lub użyj innego maila.";
+                    return View("StronaRejestracji");
+                }
             }
-            else
-            {
-                return View("RejestracjaNiepomyslna");
-            }
+            ViewBag.PasswordErrorMessage = "Podane hasła różnią się od siebie.";
+            return View("StronaRejestracji");
+
         }
 
         public IActionResult StronaLogowania(string? returnUrl = null)
@@ -63,11 +72,7 @@ namespace Portfel.App.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Logowanie(string email, string haslo, string redirectUrl)
-        //public async Task<IActionResult> Logowanie(DaneLogowania daneLogowania)
         {
-           
-          //  redirectUrl = "/Uzytkownik/MojeTransakcje";
-            // Normally Identity handles sign in, but you can do it directly
             if (await ValidateLogin(email, haslo))
             {
                 var claims = new List<Claim>
@@ -85,12 +90,11 @@ namespace Portfel.App.Controllers
                 }
                 else
                 {
-                    //return Redirect("MojeKonta");
                     return RedirectToAction("MojePortfele", "Portfel");
                 }
             }
-            
-            return View("RejestracjaNiepomyslna");
+            ViewBag.LoginErrorMessage = "Mail lub hasło jest niepoprawne.";
+            return View("StronaLogowania");
         }
         private async Task<bool> ValidateLogin(string email, string haslo)
         {
@@ -113,10 +117,7 @@ namespace Portfel.App.Controllers
 
             var wartoscKonta = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id);
 
-            //  var kontoUzytk = wartoscKonta.
-              ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.Gotowka).FirstOrDefault();
-           // ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.SumaNaKoncie).FirstOrDefault();
-            // ViewBag.SumaKonto = 
+            ViewBag.SumaKonto = _context.Konto.Where(k => k.UzytkownikId == uzytkownik.Id).Select(k => k.Gotowka).FirstOrDefault();
 
             var portfelContext = _context.Konto
                 .Include(k => k.Uzytkownik)

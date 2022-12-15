@@ -87,7 +87,7 @@ namespace Portfel.Testy
             {
                 new Aktywo{Symbol = "PKO"},
             }.AsQueryable();
-            //mockowanie encji Portfel
+            //mockowanie encji Aktywo
             var AktywaMockSet = new Mock<DbSet<Aktywo>>();
             AktywaMockSet.As<IQueryable<Aktywo>>().Setup(m => m.Provider).Returns(aktywa.Provider);
             AktywaMockSet.As<IQueryable<Aktywo>>().Setup(m => m.Expression).Returns(aktywa.Expression);
@@ -95,7 +95,7 @@ namespace Portfel.Testy
             AktywaMockSet.As<IQueryable<Aktywo>>().Setup(m => m.GetEnumerator()).Returns(() => aktywa.GetEnumerator());
 
             var transakcje = new List<TransakcjaNew>().AsQueryable();
-            //mockowanie encji Portfel
+            //mockowanie encji 
             var TransakcjeNewMockSet = new Mock<DbSet<TransakcjaNew>>();
             TransakcjeNewMockSet.As<IQueryable<TransakcjaNew>>().Setup(m => m.Provider).Returns(transakcje.Provider);
             TransakcjeNewMockSet.As<IQueryable<TransakcjaNew>>().Setup(m => m.Expression).Returns(transakcje.Expression);

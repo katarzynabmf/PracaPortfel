@@ -44,6 +44,7 @@
                                     <input asp-for="Email" type="text" placeholder="Email" id="form3Example3cg" class="form-control form-control-lg"/>
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
+                                <p style="color: red">@ViewBag.RegisterErrorMessage</p>
                                 <div class="form mb-4">
                                     @*      <label asp-for="Haslo" class="form-label" for="form3Example1cg">Hasło</label>*@
                                     <input asp-for="Haslo" type="password" placeholder="Hasło" id="form3Example4cg" class="form-control form-control-lg"/>
@@ -54,6 +55,7 @@
                                     <input type="password" placeholder="Powtórz hasło" class="form-control form-control-lg" id="powtorzHaslo" name="powtorzHaslo">
 
                                 </div>
+                                <p style="color: red">@ViewBag.PasswordErrorMessage</p>
                                 <p>Rejestrując się, potwierdzam, że przeczytałem(-am) i akceptuję Warunki korzystania z Portfela. Przyjmuję również do wiadomości, że Portfel będzie od czasu do czasu wysyłać mi wiadomości marketingowe i że w każdej chwili mogę wyłączyć te powiadomienia w ustawieniach mojego konta. Zarządzamy danymi osobowymi w sposób określony w naszej Informacji o ochronie prywatności.</p>
                                 <div  class="d-flex justify-content-center">
                                     <input id="re3"  type="submit" value="Zarejestruj się" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"/>

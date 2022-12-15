@@ -54,17 +54,28 @@ namespace Portfel.App.Controllers
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            if (ModelState.IsValid)
+            var nazwaNowegoPortfela =
+                _context.Portfele.FirstOrDefault(p => p.Nazwa == stworzPortfel.Nazwa && p.Uzytkownik.Email == uzytkownik.Email);
+
+            if (nazwaNowegoPortfela == null)
             {
-                var portfel = _context.Portfele.Add(new Data.Data.Portfel()
+                if (ModelState.IsValid)
                 {
-                    Nazwa = stworzPortfel.Nazwa,
-                    UzytkownikId = uzytkownik.Id,
-                    Waluta = "usd"
-                });
-                _context.KontaGotowkowe.Add(new KontoGotowkowe(){Portfel = portfel.Entity});
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(MojePortfele));
+                    var portfel = _context.Portfele.Add(new Data.Data.Portfel()
+                    {
+                        Nazwa = stworzPortfel.Nazwa,
+                        UzytkownikId = uzytkownik.Id,
+                        Waluta = "usd"
+                    });
+                    _context.KontaGotowkowe.Add(new KontoGotowkowe() { Portfel = portfel.Entity });
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(MojePortfele));
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Podaj inną nazwę portfela, taka już istnieje.";
+                return View("DodajPortfel");
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
             return View("MojePortfele");
@@ -87,7 +98,6 @@ namespace Portfel.App.Controllers
                 var kwota = Convert.ToDecimal(wplata.Kwota, Thread.CurrentThread.CurrentCulture);
                 _portfelSerwis.WplacSrodkiNaKonto(kwota, id);
 
-                //_portfelSerwis.WplacSrodkiNaKonto((decimal)wplata.Kwota, id);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -187,8 +197,6 @@ namespace Portfel.App.Controllers
                 NazwaAktywa = p.Aktywo.Nazwa,
                 WartoscAktywa = p.Aktywo.CenaAktualna
             });
-          
-
             return View("SzczegolyPortfela", new SzczegolyPortfela(id, portfel.Nazwa, szczegolyPozycji) { });
         }
 
@@ -202,8 +210,6 @@ namespace Portfel.App.Controllers
             }
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var transakcje = _context.Transakcja.Include(t => t.IdKonta.Uzytkownik).
-            //    Where(t => t.KontoId == id).ToList();
             var portfel = _context.Portfele.Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .Include(p=>p.Transakcje)
@@ -230,7 +236,6 @@ namespace Portfel.App.Controllers
         public uint Ilosc { get; set; }
         public decimal SredniaCenaZakupu { get; set; }
         public  decimal WartoscAktywa { get; set; }
-
         public decimal ZyskStrata
         {
             get

@@ -10,11 +10,11 @@
 <section id="about" class="about" style="margin-bottom: 55px;">
     <div class="container" data-aos="fade-up">
 
-        <div class="section-header">
+        <div class="section-header" style="padding-bottom: 0px">
             <h2>@Model.NazwaPortfela</h2>
         </div>
-        <div class="section-header">
-            <h5>Zakup/sprzedaż aktyw</h5>
+        <div class="section-header"  style="padding-bottom: 0px">
+            <h5>Zakup/sprzedaż aktyw </h5>
             <h2></h2>
         </div>
         <table class="table align-middle mb-0 bg-white table-striped table-hover">
@@ -75,26 +75,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Komentarz)
                     </td>
-                    <td>
-                        @*       <a asp-action="EdytujTransakcje" asp-controller="Uzytkownik" 
-                           asp-route-id="@item.Id"
-                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
-                        >Edytuj</a>
-                        <a asp-action="UsunTransakcje" asp-controller="Uzytkownik" 
-                           asp-route-id="@item.Id"
-                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"
-                        >Usuń</a>*@
-                    </td>
-
                 </tr>
             }
             </tbody>
         </table>
-        <h2></h2>
-        <div class="section-header">
+        <div class="section-header" style="padding-top: 30px; padding-bottom: 0px">
+            <h2></h2>
             <h5>Operacje gotówkowe</h5>
+            <h2></h2>
         </div>
-        
+       
         <table class="table align-middle mb-0 bg-white table-striped table-hover">
             <thead class="bg-light">
             <tr>
