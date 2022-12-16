@@ -22,11 +22,11 @@
                     </div><!-- End Info Item -->
                     <form asp-action="SprzedajAktywo" asp-controller="Portfel">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="PortfelId" />
+                        <input type="hidden" asp-for="PortfelId" />
+
                     <div class="form mb-4">
                         <label asp-for="AktywoId"></label>
                         <select asp-for="AktywoId" class ="form-control form-control-lg" asp-items="ViewBag.AktywoId"></select>
-
                     </div>
                     <div class="form mb-4">
                     <label asp-for="Cena" class="control-label"></label>
@@ -44,7 +44,7 @@
                     <span asp-validation-for="Komentarz" class="text-danger"></span>
                 </div>
                         <div class="d-flex justify-content-center">
-                            <input type="submit" value="Sprzedaj aktywo" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"/>
+                            <input id="sprzedajAktywo" type="submit" value="Sprzedaj aktywo" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"/>
                         </div>
 
                     </form>

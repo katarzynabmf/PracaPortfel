@@ -24,7 +24,7 @@
                             <input asp-for="Nazwa" id="form3Example1cg" class="form-control form-control-lg"/>
                             <span asp-validation-for="Nazwa"></span>
                         </div>
-                        <p style="color: red">@ViewBag.ErrorMessage</p>
+                        <p id="portfelIstnieje" style="color: red">@ViewBag.ErrorMessage</p>
                         <div class="d-flex justify-content-center">
                             <input id="dodajPortfel" type="submit" value="Dodaj portfel" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;"/>
                         </div>

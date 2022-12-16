@@ -69,7 +69,7 @@ namespace Portfel.Data.Serwisy
                 .FirstOrDefault(p => p.Id == portfelId);
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);
         }
-
+        
         public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, string komentarz, Data.Portfel portfel)
         {
             ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);

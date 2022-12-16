@@ -94,8 +94,8 @@ namespace Portfel.Testy
             AktywaMockSet.As<IQueryable<Aktywo>>().Setup(m => m.ElementType).Returns(aktywa.ElementType);
             AktywaMockSet.As<IQueryable<Aktywo>>().Setup(m => m.GetEnumerator()).Returns(() => aktywa.GetEnumerator());
 
-            var transakcje = new List<TransakcjaNew>().AsQueryable();
             //mockowanie encji 
+            var transakcje = new List<TransakcjaNew>().AsQueryable();
             var TransakcjeNewMockSet = new Mock<DbSet<TransakcjaNew>>();
             TransakcjeNewMockSet.As<IQueryable<TransakcjaNew>>().Setup(m => m.Provider).Returns(transakcje.Provider);
             TransakcjeNewMockSet.As<IQueryable<TransakcjaNew>>().Setup(m => m.Expression).Returns(transakcje.Expression);
@@ -125,7 +125,7 @@ namespace Portfel.Testy
             // when
             var portfelSerwis = new PortfelSerwis(mockContext.Object);
             var portfel = new Data.Data.Portfel() { KontoGotowkowe = new KontoGotowkowe() { StanKonta = 2000, OperacjeGotowkowe = new List<OperacjaGotowkowa>() }, Pozycje = new List<Pozycja>(), Transakcje = new List<TransakcjaNew>() };
-            portfelSerwis.KupAktywo("PKO",10,10,portfel);
+            portfelSerwis.KupAktywo("PKO",10,10,portfel.Id,"");
 
             // then
             mockContext.Verify(context =>

@@ -117,7 +117,7 @@ namespace Portfel.App.Controllers
             if (ModelState.IsValid)
             {
                 var kwota = Convert.ToDecimal(wyplata.Kwota, Thread.CurrentThread.CurrentCulture);
-                _portfelSerwis.WplacSrodkiNaKonto(kwota, id);
+                _portfelSerwis.WyplacSrodkiZKonta(kwota, id);
 
                 //_portfelSerwis.WyplacSrodkiZKonta((decimal)wyplata.Kwota, id);
                 return RedirectToAction(nameof(MojePortfele));
@@ -163,6 +163,8 @@ namespace Portfel.App.Controllers
             var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == user.Name);
             var portfel = await _context.Portfele.FindAsync(id);
            
+
+
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == sprzedajAktywo.AktywoId).Symbol;
 
             var cena = Convert.ToDecimal(sprzedajAktywo.Cena, Thread.CurrentThread.CurrentCulture);
