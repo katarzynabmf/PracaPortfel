@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools.V106.CSS;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using Xunit.Abstractions;

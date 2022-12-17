@@ -93,6 +93,7 @@ namespace Portfel.App.Controllers
         {
             var user = HttpContext.User.Identity;
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
+
             if (ModelState.IsValid)
             {
                 var kwota = Convert.ToDecimal(wplata.Kwota, Thread.CurrentThread.CurrentCulture);
