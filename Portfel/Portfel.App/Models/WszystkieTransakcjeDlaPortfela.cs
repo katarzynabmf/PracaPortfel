@@ -11,6 +11,7 @@ namespace Portfel.App.Models
             Transakcje = transakcje;
             IdKontaGotowkowego = idKontaGotowkowego;
             OperacjeGotowkowe = operacjeGotowkowe;
+           
         }
         public int IdPortfela { get; set; }
         public string NazwaPortfela { get; set; }

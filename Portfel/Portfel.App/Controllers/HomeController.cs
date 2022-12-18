@@ -85,11 +85,5 @@ namespace Portfel.App.Controllers
             ).ToList();
             return View(aktualnosci);
         }
-
-        //public IActionResult AktualnosciPartial()
-        //{
-        //    var aktualnosciIAktywa = new AktualnosciIAktywa(_context.Aktualnosc.ToList(), _context.Aktywa.ToList());
-        //    return PartialView("Aktualnosci", aktualnosciIAktywa);
-        //}
     }
 }

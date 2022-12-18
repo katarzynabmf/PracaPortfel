@@ -4,43 +4,24 @@
     ViewData["Title"] = "Szczegoly";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-                                                                              
-                                                                              <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
-
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
         <div class="row ">
             <div class="col-lg-2"></div>
-                <div class="col-lg-8" style="padding-bottom: 100px;">
-
-                    <article class="blog-details">
-
-                        <div class="post-img">
-                            <img src="~/assets/img/blog/@Model.FotoUrl" alt="" class="img-fluid">
-                        </div>
-
-                        <h2 class="title">@Model.Tytul</h2>
-
-
-                        <div class="content">
-                            <p>
-                                @Html.Raw(Model.Tresc)
-                            </p>
-
-
-                        </div><!-- End post content -->
-                        <a asp-action="Index" class="btn btn-info primary" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px;">Powrót</a>
-
-
-                    </article><!-- End blog post -->
-
-
-
-                </div>
-            <div class="col-lg-2"></div>
-
+            <div class="col-lg-8" style="padding-bottom: 100px;">
+                <article class="blog-details">
+                    <div class="post-img">
+                        <img src="~/assets/img/blog/@Model.FotoUrl" alt="" class="img-fluid">
+                    </div>
+                    <h2 class="title">@Model.Tytul</h2> <div class="content">
+                        <p>
+                            @Html.Raw(Model.Tresc)
+                        </p>
+                    </div>
+                    <a asp-action="Index" class="btn btn-info primary" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px;">Powrót</a>
+                </article>
             </div>
-
-      </div>
-    </section><!-- End Blog Details Section -->
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+</section>

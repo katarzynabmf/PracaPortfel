@@ -32,7 +32,6 @@ namespace Portfel.Data.Data
         [Display(Name = "Użytkownik")]
         public int? UzytkownikId { get; set; }
         public Uzytkownik Uzytkownik { get; set; }
-       // public int KontoGotowkoweId { get; set; }
         public KontoGotowkowe KontoGotowkowe { get; set; } 
         public ICollection<Pozycja> Pozycje { get; set; } = new List<Pozycja>();
         public ICollection<TransakcjaNew> Transakcje { get; set; } = new List<TransakcjaNew>();

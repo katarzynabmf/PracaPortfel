@@ -120,7 +120,6 @@ namespace Portfel.App.Controllers
                 var kwota = Convert.ToDecimal(wyplata.Kwota, Thread.CurrentThread.CurrentCulture);
                 _portfelSerwis.WyplacSrodkiZKonta(kwota, id);
 
-                //_portfelSerwis.WyplacSrodkiZKonta((decimal)wyplata.Kwota, id);
                 return RedirectToAction(nameof(MojePortfele));
             }
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
@@ -141,10 +140,8 @@ namespace Portfel.App.Controllers
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == kupAktywo.AktywoId).Symbol;
             var cena = Convert.ToDecimal(kupAktywo.Cena, Thread.CurrentThread.CurrentCulture);
 
-
             if (ModelState.IsValid)
             {
-               
                 _portfelSerwis.KupAktywo(aktywoSymbol, kupAktywo.Ilosc, cena, id, kupAktywo.Komentarz);
                 return RedirectToAction(nameof(MojePortfele));
             }
@@ -163,9 +160,6 @@ namespace Portfel.App.Controllers
             var user = HttpContext.User.Identity;
             var uzytkownik = await _context.Uzytkownik.FirstOrDefaultAsync(x => x.Email == user.Name);
             var portfel = await _context.Portfele.FindAsync(id);
-           
-
-
             var aktywoSymbol = _context.Aktywa.FirstOrDefault(a => a.Id == sprzedajAktywo.AktywoId).Symbol;
 
             var cena = Convert.ToDecimal(sprzedajAktywo.Cena, Thread.CurrentThread.CurrentCulture);
@@ -177,7 +171,6 @@ namespace Portfel.App.Controllers
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", uzytkownik.Id);
             return View("MojePortfele");
         }
-
         public async Task<IActionResult> SzczegolyPortfela(int id)
         {
             var user = HttpContext.User.Identity;
@@ -186,7 +179,6 @@ namespace Portfel.App.Controllers
                 return View("~/Views/Uzytkownik/StronaLogowania.cshtml");
             }
             var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
-
             var portfel = _context.Portfele
                 .Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
@@ -222,9 +214,7 @@ namespace Portfel.App.Controllers
             
             return View("WszystkieTransakcje", new WszystkieTransakcjeDlaPortfela(id, portfel.Nazwa, portfel.Transakcje, portfel.KontoGotowkowe.Id, portfel.KontoGotowkowe.OperacjeGotowkowe) { });
         }
-
     }
-
     public class PozycjaSzczegoly
     {
         public string NazwaAktywa { get; set; }

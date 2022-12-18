@@ -215,7 +215,6 @@ namespace Portfel.App.Controllers
   
             ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownik, "Id", "Email", edytujKonto.UzytkownikId);
               return View("MojeKonta", await portfelContext.ToListAsync());
-            //return RedirectToAction("MojeKonta", await portfelContext.ToListAsync());
         }
 
         // GET: Konto/Delete/5
@@ -253,14 +252,12 @@ namespace Portfel.App.Controllers
             var konto = await _context.Konto.FindAsync(id);
             if (konto != null)
             {
-                // _context.Konto.Remove(konto);
                 konto.Aktywna = false;
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(MojeKonta));
 
-           // return View("MojeKonta", await portfelContext.ToListAsync());
         }
 
 
@@ -308,8 +305,6 @@ namespace Portfel.App.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("SzczegolyKonta", "Uzytkownik", new { id = konto });
         }
-
-
         private bool KontoExists(int id)
         {
             return _context.Konto.Any(e => e.Id == id);
@@ -336,8 +331,6 @@ namespace Portfel.App.Controllers
         }
 
         // POST: Transakcja/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EdytujTransakcje(int id, [Bind("Id,KontoId,Date,RodzajTransakcjiId,Waluta,SymbolGieldowyId,Kwota,Ilosc,RodzajOplatyId,IloscRodzajuOplaty, Komentarz")] EdytujTransakcjaRequest edytujTransakcja)
@@ -462,8 +455,6 @@ namespace Portfel.App.Controllers
                     }
                 );
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(MojeTransakcje));
-                //return RedirectToAction(nameof(SzczegolyKonta), id);
                 var transakcje = _context.Transakcja.
                     Include(t => t.RodzajTransakcji).
                     Include(t => t.RodzajOplaty).
@@ -478,8 +469,6 @@ namespace Portfel.App.Controllers
             ViewData["RodzajOplatyId"] = new SelectList(_context.RodzajOplaty, "Id", "Nazwa", stworzTransakcja.RodzajOplatyId);
             ViewData["RodzajTransakcjiId"] = new SelectList(_context.RodzajTransakcji, "Id", "Nazwa", stworzTransakcja.RodzajTransakcjiId);
             ViewData["SymbolGieldowyId"] = new SelectList(_context.SymbolGieldowy, "Id", "Nazwa", stworzTransakcja.SymbolGieldowyId);
-            //return View("SzczegolyKonta");
-            //  return View(stworzTransakcja);
             return RedirectToAction("SzczegolyKonta", "Uzytkownik", new { id = stworzTransakcja.KontoId });
         }
 
@@ -496,30 +485,13 @@ namespace Portfel.App.Controllers
             }
                 var uzytkownik = _context.Uzytkownik.FirstOrDefault(x => x.Email == user.Name);
 
-            //var tr = _context.Transakcja
-            //    .Include(t => t.IdKonta.Uzytkownik)
-            //    .Where(t => t.IdKonta.Uzytkownik.Email == uzytkownik.Email)
-            //    .ToList();
 
-            //var tr = _context.Transakcja
-            //    .Include(t => t.IdKonta.Uzytkownik)
-            //    .Where(t => t.IdKonta.Uzytkownik.Id == 3)
-            //    .ToList(); //dziala
 
             var tr = _context.Transakcja
                 //.Include(t => t.IdKonta.Uzytkownik)
                 .Where(t => t.Konto.Uzytkownik.Id == uzytkownik.Id)
                 .ToList();//dziala
-            //var tr = _context.Transakcja
-            //    .Include(t => t.IdKonta.Uzytkownik)
-            //    .Where(t => t.IdKonta.Uzytkownik.Email == uzytkownik.Email)
-            //    .ToList();
 
-            //var transakcja = _context.Transakcja
-            //    .Include(t => t.IdKonta.UzytkownikId)
-
-            //    .Where(t => t.KontoId == uzytkownik.Id)
-            //    .ToList();
             var mT = new MojeTransakcje
             {
                 Transakcje = tr,

@@ -4,7 +4,6 @@
      Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero">
     <div class="container position-relative">
       <div class="row gy-5" data-aos="fade-in">
@@ -21,7 +20,6 @@
         </div>
       </div>
     </div>
-
       <div class="icon-boxes position-relative">
           <div class="container position-relative">
               <div class="row gy-4 mt-5">
@@ -32,49 +30,30 @@
                           <h4 class="title"><a asp-controller="Home" asp-action="Kont" class="stretched-link">Kontakt</a></h4>
                       </div>
                   </div>
-                  <!--End Icon Box -->
-
-                  <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                 <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
                       <div class="icon-box">
                           <div class="icon"><i class="bi bi-question-square"></i></div>
                           <h4 class="title"><a asp-controller="Home" asp-action="Pomoc" class="stretched-link">Pomoc</a></h4>
                       </div>
                   </div>
-                  <!--End Icon Box -->
-
-                  <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
                       <div class="icon-box">
                           <div class="icon"><i class="bi bi-shield-lock"></i></div>
                           <h4 class="title"><a asp-controller="Home" asp-action="Polityka" class="stretched-link">Polityka prywatności</a></h4>
                       </div>
                   </div>
-                  <!--End Icon Box -->
-
                   <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
                       <div class="icon-box">
                           <div class="icon"><i class="bi bi-file-earmark-text"></i></div>
                           <h4 class="title"><a asp-controller="Home" asp-action="Regulamin" class="stretched-link">Regulamin</a></h4>
                       </div>
                   </div>
-                  <!--End Icon Box -->
-
               </div>
           </div>
       </div>
   </section>
-  <!-- End Hero Section -->
-
 
 @await Html.PartialAsync("Aktualnosci", (object) ViewBag.ModelAktualnosciIIAktywa);
 <div id="aktualnosci">
 
 </div>
-
-@*@section Scripts
-{
-    <script>
-        $(document).ready(function() {
-            $('#aktualnosci').load("/Home/AktualnosciPartial",)
-        });
-    </script>
-}*@

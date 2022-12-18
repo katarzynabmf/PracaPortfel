@@ -15,8 +15,8 @@ namespace Portfel.Testy
         public void TestWplacSrodkiNaKonto()
         {
             //test wp³aty
+
             // given
-            
             var portfele = new List<Data.Data.Portfel>().AsQueryable();
             //mockowanie encji Portfel
             var mockSet = new Mock<DbSet<Data.Data.Portfel>>();
@@ -24,6 +24,7 @@ namespace Portfel.Testy
             mockSet.As<IQueryable<Data.Data.Portfel>>().Setup(m => m.Expression).Returns(portfele.Expression);
             mockSet.As<IQueryable<Data.Data.Portfel>>().Setup(m => m.ElementType).Returns(portfele.ElementType);
             mockSet.As<IQueryable<Data.Data.Portfel>>().Setup(m => m.GetEnumerator()).Returns(() => portfele.GetEnumerator());
+           
             //mockowanie po³¹czenia z baz¹ danych
             var mockContext = new Mock<PortfelContext>();
             mockContext.Setup(c => c.Portfele).Returns(mockSet.Object);

@@ -12,12 +12,10 @@ namespace Portfel.Data.Serwisy
     public class PortfelSerwis : IPortfelSerwis
     {
         private readonly PortfelContext _context;
-
         public PortfelSerwis(PortfelContext context)
         {
             _context = context;
         }
-
         public void WplacSrodkiNaKonto(decimal kwota, int portfelId)
         {
             var portfel = _context.Portfele
@@ -25,14 +23,12 @@ namespace Portfel.Data.Serwisy
                 .FirstOrDefault(p=>p.Id == portfelId);
             WplacSrodkiNaKonto(kwota, portfel);
         }
-
         public void WplacSrodkiNaKonto(decimal kwota, Data.Portfel portfel)
         {
             if (kwota <= 0)
             {
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 kwoty");
             }
-
             var operacjaGotowkowa = new OperacjaGotowkowa(TypOperacjiGotowkowej.Wplata, kwota, portfel.KontoGotowkowe);
             portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
             _context.SaveChanges();
@@ -94,21 +90,14 @@ namespace Portfel.Data.Serwisy
             {
                 throw new ArgumentException("Nie można wprowadzić ujemniej lub równej 0 ceny");
             }
-
             //policz stan portfela po operacji - bez zapisu do BD
-            var aktywoTransakcji = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
-            //var transakcjaPolicz = _context.TransakcjeNew.Add(new TransakcjaNew(aktywoPolicz, kierunek, cena, ilosc));
-            //portfel.Transakcje.Add(transakcjaPolicz.Entity);
+          //  var aktywoTransakcji = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
             var kwotaWymaganaDoZawarciaTransakcji = cena * ilosc;
 
             if (kwotaWymaganaDoZawarciaTransakcji > portfel.KontoGotowkowe.StanKonta && kierunek == Kierunek.Kupno)
             {
                 throw new InvalidOperationException("Brak wystarczających środków na koncie.");
             }
-
-            //var nowaPozycjaPolicz = new Pozycja() { Aktywo = aktywoTransakcji, Ilosc = ilosc, SredniaCenaZakupu = cena };
-            //var posiadanaIloscJednostekDanegoAktywa =
-            //    portfel.Pozycje.SingleOrDefault(p => p.Aktywo.Symbol == symbolAktywa)?.Ilosc ?? 0;
 
             if (kierunek == Kierunek.Sprzedaz)
             {
@@ -121,16 +110,13 @@ namespace Portfel.Data.Serwisy
                 }
             }
 
-
             //zapisz stan portfela po operacji
-
             var aktywo = _context.Aktywa.Single(s => s.Symbol == symbolAktywa);
-            //var transakcja = _context.TransakcjeNew.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc));
             portfel.Transakcje.Add(new TransakcjaNew(aktywo, kierunek, cena, ilosc, komentarz));
             var kwotaTransakcji = cena * ilosc;
 
             var operacjaGotowkowa = new OperacjaGotowkowa(kierunek == Kierunek.Kupno ? TypOperacjiGotowkowej.Obciazenie : TypOperacjiGotowkowej.Uznanie, kwotaTransakcji, portfel.KontoGotowkowe);
-            //portfel.KontoGotowkowe.OperacjeGotowkowe.Add(operacjaGotowkowa);
+            
             _context.SaveChanges();
             operacjaGotowkowa.Wykonaj();
             _context.Portfele.Update(portfel);
@@ -162,7 +148,6 @@ namespace Portfel.Data.Serwisy
             _context.SaveChanges();
         }
     }
-
     public interface IPortfelSerwis
     {
         void WplacSrodkiNaKonto(decimal kwota, int portfelId);
