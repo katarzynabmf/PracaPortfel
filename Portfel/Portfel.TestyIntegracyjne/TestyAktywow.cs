@@ -25,11 +25,4 @@ public class TestyAktywow
         _contextInMemory.SaveChanges();
     }
 
-    [Fact]
-    public async Task Ajfdjodsj() //todo
-    {
-        // ----------------------------------------------------------------------
-        //var aktywaSerwis = new SymboleSerwis(_contextInMemory);
-        //await aktywaSerwis.ZaktualizujCeny();
-    }
 }

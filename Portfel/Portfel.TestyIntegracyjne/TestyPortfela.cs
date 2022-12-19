@@ -13,8 +13,11 @@ namespace Portfel.TestyIntegracyjne
         [Fact]
         public void Test1()
         {
+            // dla kontekstu PortfelContext
             var optionsBuilder = new DbContextOptionsBuilder<PortfelContext>();
+            // w pamiêci operacyjnej
             optionsBuilder.UseInMemoryDatabase("Portfel");
+            // utwórz po³¹czenie z baz¹ danych
             _contextInMemory = new PortfelContext(optionsBuilder.Options);
 
             var uzytkownik = _contextInMemory.Uzytkownik.Add(new Uzytkownik(){DataUtworzenia = DateTime.Now, Email = "x", Haslo = "x", Imie = "y", Portfele = new List<Data.Data.Portfel>()});
@@ -26,19 +29,19 @@ namespace Portfel.TestyIntegracyjne
             _contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Alior", Symbol = "ALR", CenaAktualna = 100 });
             _contextInMemory.SaveChanges();
 
-            // ----------------------------------------------------------------------
+            // ------------------------------------------------------------------------
 
             var portfelSerwis = new PortfelSerwis(_contextInMemory);
             portfelSerwis.WplacSrodkiNaKonto(123, portfel.Entity);
             portfel.Entity.StanPortfelaAssert(123, 0);
 
-            portfelSerwis.KupAktywo("PZU", 10, 10, portfel.Entity);
+            portfelSerwis.KupAktywo("PZU", 10, 10, portfel.Entity, "");
             portfel.Entity.StanPortfelaAssert(23, 1);
 
-            portfelSerwis.KupAktywo("PZU", 1, 1, portfel.Entity);
+            portfelSerwis.KupAktywo("PZU", 1, 1, portfel.Entity, "");
             portfel.Entity.StanPortfelaAssert(22, 1);
 
-            portfelSerwis.SprzedajAktywo("PZU", 11, 100, portfel.Entity);
+            portfelSerwis.SprzedajAktywo("PZU", 11, 100, portfel.Entity, "");
             portfel.Entity.StanPortfelaAssert(1122, 0);
 
             portfelSerwis.WyplacSrodkiZKonta(500, portfel.Entity);
@@ -46,7 +49,7 @@ namespace Portfel.TestyIntegracyjne
 
             // ----------------------------------------------------------------------------
 
-            portfelSerwis.KupAktywo("ALR", 10, 10, portfel.Entity);
+            portfelSerwis.KupAktywo("ALR", 10, 10, portfel.Entity, "");
             portfel.Entity.StanPortfelaAssert(522, 1);
 
             Assert.Throws<InvalidOperationException>(() => portfelSerwis.SprzedajAktywo("ALR", 20, 100, portfel.Entity));

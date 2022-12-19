@@ -56,35 +56,35 @@ namespace Portfel.Data.Serwisy
             _context.Portfele.Update(portfel);
             _context.SaveChanges();
         }
-        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId, string komentarz)
+        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, int portfelId, string komentarz = null)
         {
             var portfel = _context.Portfele
                 .Include(p => p.KontoGotowkowe)
                 .Include(p=>p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == portfelId);
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel, komentarz);
         }
 
-        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, string komentarz, Data.Portfel portfel)
+        public void KupAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel, string komentarz = null)
         {
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, komentarz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Kupno, portfel, komentarz);
         }
-        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,  int portfelId, string komentarz)
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,  int portfelId, string komentarz = null)
         {
             var portfel = _context.Portfele
                 .Include(p => p.KontoGotowkowe)
                 .Include(p => p.Pozycje)
                 .ThenInclude(p => p.Aktywo)
                 .FirstOrDefault(p => p.Id == portfelId);
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, komentarz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel, komentarz);
         }
-        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena,string komentarz, Data.Portfel portfel)
+        public void SprzedajAktywo(string symbolAktywa, uint ilosc, decimal cena, Data.Portfel portfel, string komentarz = null)
         {
-            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, komentarz, portfel);
+            ZawrzyjTransakcje(symbolAktywa, ilosc, cena, Kierunek.Sprzedaz, portfel, komentarz);
         }
 
-        private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek,string komentarz, Data.Portfel portfel)
+        private void ZawrzyjTransakcje(string symbolAktywa, uint ilosc, decimal cena, Kierunek kierunek, Data.Portfel portfel, string komentarz = null)
         {
             if (cena <= 0)
             {

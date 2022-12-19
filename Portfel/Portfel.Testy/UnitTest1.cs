@@ -18,7 +18,7 @@ namespace Portfel.Testy
 
             // given
             var portfele = new List<Data.Data.Portfel>().AsQueryable();
-            //mockowanie encji Portfel
+            //mockowanie encji Portfel - zbiór portfeli
             var mockSet = new Mock<DbSet<Data.Data.Portfel>>();
             mockSet.As<IQueryable<Data.Data.Portfel>>().Setup(m => m.Provider).Returns(portfele.Provider);
             mockSet.As<IQueryable<Data.Data.Portfel>>().Setup(m => m.Expression).Returns(portfele.Expression);
@@ -44,8 +44,8 @@ namespace Portfel.Testy
         public void TestWyplacSrodkiZKonta()
         {
             //test wyp³aty
-            // given
 
+            // given
             var portfele = new List<Data.Data.Portfel>().AsQueryable();
             //mockowanie encji Portfel
             var PortfeleMockSet = new Mock<DbSet<Data.Data.Portfel>>();
@@ -131,7 +131,7 @@ namespace Portfel.Testy
                     Transakcje = new List<TransakcjaNew>()
 
                 };
-            portfelSerwis.KupAktywo("PKO",10,10, "", portfel);
+            portfelSerwis.KupAktywo("PKO",10,10, portfel);
 
             // then
             mockContext.Verify(context =>
@@ -215,7 +215,7 @@ namespace Portfel.Testy
                 },
                 Transakcje = new List<TransakcjaNew>()
             };
-            portfelSerwis.SprzedajAktywo("PKO", 9, 10,  "", portfel);
+            portfelSerwis.SprzedajAktywo("PKO", 9, 10, portfel);
 
             // then
             mockContext.Verify(context =>
