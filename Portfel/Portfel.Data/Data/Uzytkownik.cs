@@ -21,7 +21,7 @@ namespace Portfel.Data.Data
         public string Email { get; set; }
         [Display(Name = "Czy Aktywny")]
         public bool Aktywna { get; set; } = true;
-        public DateTime DataUtworzenia { get; set; }
+        public DateTime DataUtworzenia { get; set; } = DateTime.Now;
         //dla danego uzytkownika jest wiele kont
         public virtual ICollection<Konto> Konto { get; set; } = new List<Konto>();
         public virtual ICollection<Portfel> Portfele { get; set; } = new List<Portfel>();

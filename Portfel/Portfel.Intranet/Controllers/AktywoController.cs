@@ -55,11 +55,20 @@ namespace Portfel.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nazwa,Symbol, CenaAktualna")] Aktywo aktywo)
+        public async Task<IActionResult> Create([Bind("Id,Nazwa,Symbol, CenaAktualna")] AktywoViewModel aktywo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aktywo);
+                var cena = Convert.ToDecimal(aktywo.CenaAktualna, Thread.CurrentThread.CurrentCulture);
+                var noweAktywo = new Aktywo()
+                {
+                    Aktywna = true,
+                    CenaAktualna = cena,
+                    Id = aktywo.Id,
+                    Nazwa = aktywo.Nazwa,
+                    Symbol = aktywo.Symbol
+                };
+                _context.Add(noweAktywo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

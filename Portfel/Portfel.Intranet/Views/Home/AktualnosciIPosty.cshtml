@@ -1,0 +1,43 @@
+﻿@using Portfel.Data.Data
+@model IEnumerable<Aktualnosc>
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ostatnia dodana aktualność</h6>
+            </div>
+            <div class="card-body">
+                @foreach (var item in Model.Where(a => a.Pozycja == "Aktualnosc").TakeLast(1))
+                {
+                    <div class="post-img">
+                        <img src="blog/@item.FotoUrl" alt="" class="img-fluid">
+                    </div>
+                    <h4>@item.Tytul</h4>
+                    <p>
+                        @item.Tresc
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ostatni dodany wpis na blogu</h6>
+            </div>
+            <div class="card-body">
+                @foreach (var item in Model.Where(a => a.Pozycja == "Post").TakeLast(1))
+                {
+                    <div class="post-img">
+                        <img src="blog/@item.FotoUrl" alt="" class="img-fluid">
+                    </div>
+                    <h4>@item.Tytul</h4>
+                    <p>
+                        @item.Tresc
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

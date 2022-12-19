@@ -15,37 +15,37 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Usuń aktywoViewModel</h1>
                             </div>
-    <dl class="row">
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Nazwa)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Nazwa)
-        </dd>
-         <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Symbol)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Symbol)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.CenaAktualna)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.CenaAktualna)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-  <input type="submit" value="Usuń" class="btn btn-danger" /> 
-        <button asp-action="Index" class="btn bg-info text-white shadow">Wróć do listy</button>
-    </form>
-                </div>
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Nazwa)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Nazwa)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Symbol)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Symbol)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.CenaAktualna)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.CenaAktualna)
+                                </dd>
+                            </dl>
+
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="submit" value="Usuń" class="btn btn-danger" />
+                                <button asp-action="Index" class="btn bg-info text-white shadow">Wróć do listy</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->

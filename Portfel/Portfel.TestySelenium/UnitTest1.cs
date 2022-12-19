@@ -24,7 +24,7 @@ namespace Portfel.TestySelenium
         //za pomoc¹ [Fact] testujemy jeden przypadek, za pomoc¹ [Theories] testujemy wiele przypadków
         public void RejestracjaTest()
         {
-            
+
             driver.Navigate().GoToUrl(new Uri("https://localhost:7272"));
             driver.Manage().Window.Maximize();
             //Znajdz element o id = rejestracja
@@ -35,12 +35,11 @@ namespace Portfel.TestySelenium
             IWebElement poleImie = driver.FindElement(By.Name("Imie"));
             poleImie.SendKeys("SeleniumImie");
             IWebElement poleEmail = driver.FindElement(By.Name("Email"));
-            poleEmail.SendKeys("selenium19@po.pl");
+            poleEmail.SendKeys("selenium35@po.pl");
             IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
             poleHaslo.SendKeys("Selenium2022");
             IWebElement polePowtorzHaslo = driver.FindElement(By.Id("powtorzHaslo"));
             polePowtorzHaslo.SendKeys("Selenium2022");
-
             //Znajdz element o id= re3
             IWebElement rejestracja = driver.FindElement(By.Id("re3"));
             IJavaScriptExecutor ex = (IJavaScriptExecutor)driver;
@@ -67,7 +66,7 @@ namespace Portfel.TestySelenium
             zalogujSieKlik.Click();
             string logowaniePomyslneURL = "https://localhost:7272/Portfel/MojePortfele";
             Assert.True(driver.Url == logowaniePomyslneURL, $"Strona, która siê pojawi³a to {driver.Url}");
-          //  driver.Quit();
+            driver.Quit();
         }
 
         [Fact]
@@ -76,29 +75,26 @@ namespace Portfel.TestySelenium
             LogowanieTest();
             driver.Navigate().GoToUrl(new Uri("https://localhost:7272/Portfel/MojePortfele"));
             driver.Manage().Window.Maximize();
-            //IWebElement dodajNowyPortfel = driver.FindElement(By.XPath("//button[@text()='Dodaj nowy portfel'"));
-            //IWebElement dodajNowyPortfel = driver.FindElement(By.XPath("//button[.='Dodaj nowy portfel']"));
             IWebElement dodajNowyPortfel = driver.FindElement(By.Id("dodajPortfel"));
             dodajNowyPortfel.Click();
             IWebElement poleNowyPortfel = driver.FindElement(By.Name("Nazwa"));
-            var nowaNazwaPortfela = "SeleniumPortfel20";
+            var nowaNazwaPortfela = "SeleniumPortfel21";
             poleNowyPortfel.SendKeys(nowaNazwaPortfela);
             IWebElement dodajPortfelKlik = driver.FindElement(By.Id("dodajPortfel"));
             dodajPortfelKlik.Click();
-            
+
             //lista wszystkich portfeli
             IList<IWebElement> listaKolumn = driver.FindElements(By.XPath(".//*[@id='about']/div/table/thead/tr/th"));
             IList<IWebElement> listaWierszy = driver.FindElements(By.XPath(".//*[@id='about']/div/table/tbody/tr/td[1]"));
 
-            // output.WriteLine("Liczba wierszy to ");
             _testOutputHelper.WriteLine("Liczba kolumn to: " + listaKolumn.Count());
             _testOutputHelper.WriteLine("Liczba wierszy to: " + listaWierszy.Count());
-            string value = driver.FindElement(By.XPath(".//table/tbody/tr["+ listaWierszy.Count() + "]/td[1]")).Text;
-            _testOutputHelper.WriteLine("Pierwsza komórka "+ listaWierszy.Count() + " wiersza ma wartoœæ: " + value);
+            string value = driver.FindElement(By.XPath(".//table/tbody/tr[" + listaWierszy.Count() + "]/td[1]")).Text;
+            _testOutputHelper.WriteLine("Pierwsza komórka " + listaWierszy.Count() + " wiersza ma wartoœæ: " + value);
             var ostatniaNazwaPortfela = value;
- 
-            Assert.Equal(nowaNazwaPortfela,ostatniaNazwaPortfela);
-            ////Chrome driver nie wisi w procesach
+
+            Assert.Equal(nowaNazwaPortfela, ostatniaNazwaPortfela);
+            //Chrome driver nie wisi w procesach
             driver.Quit();
         }
 
@@ -126,32 +122,30 @@ namespace Portfel.TestySelenium
         }
 
     }
+}
+
+public class DodawanieAkcjiTest
+{
+    IWebDriver driver = new ChromeDriver();
+    private readonly ITestOutputHelper _testOutputHelper;
+    public DodawanieAkcjiTest(ITestOutputHelper testOutputHelper)
+    {
+        //pozwala na wyswietlanie na consoli
+        _testOutputHelper = testOutputHelper;
     }
 
-    public class DodawanieAkcjiTest
+    public void Logowanie()
     {
-        IWebDriver driver = new ChromeDriver();
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public DodawanieAkcjiTest(ITestOutputHelper testOutputHelper)
-        {
-            //pozwala na wyswietlanie na consoli
-            _testOutputHelper = testOutputHelper;
-       
-        }
-
-        public void Logowanie()
-        {
-            driver.Navigate().GoToUrl(new Uri("https://localhost:7272"));
-            driver.Manage().Window.Maximize();
-            IWebElement zalogujSie = driver.FindElement(By.Id("navLogowanie"));
-            zalogujSie.Click();
-            IWebElement poleEmail = driver.FindElement(By.Name("Email"));
-            poleEmail.SendKeys("selenium9@po.pl");
-            IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
-            poleHaslo.SendKeys("Selenium2022");
-            IWebElement zalogujSieKlik = driver.FindElement(By.Id("logowanie"));
-            zalogujSieKlik.Click();
+        driver.Navigate().GoToUrl(new Uri("https://localhost:7272"));
+        driver.Manage().Window.Maximize();
+        IWebElement zalogujSie = driver.FindElement(By.Id("navLogowanie"));
+        zalogujSie.Click();
+        IWebElement poleEmail = driver.FindElement(By.Name("Email"));
+        poleEmail.SendKeys("selenium9@po.pl");
+        IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
+        poleHaslo.SendKeys("Selenium2022");
+        IWebElement zalogujSieKlik = driver.FindElement(By.Id("logowanie"));
+        zalogujSieKlik.Click();
     }
     [Fact]
     public void WplacKwoteTest()
@@ -171,7 +165,7 @@ namespace Portfel.TestySelenium
 
         _testOutputHelper.WriteLine("Liczba kolumn to: " + listaKolumn.Count());
         _testOutputHelper.WriteLine("Liczba wierszy to: " + listaWierszy.Count());
-      
+
         string value = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[1]")).Text;
         _testOutputHelper.WriteLine("Pierwsza komórka pierwszego wiersza ma wartoœæ: " + value);
         string value2 = driver.FindElement(By.XPath(".//table/tbody/tr[1]")).Text;
@@ -188,9 +182,9 @@ namespace Portfel.TestySelenium
             driver.FindElement(By.XPath("//*[@id='about']/div/div[2]/div/div/div/div/form/div[2]/input"));
         przyciksWplac.Click();
         var nowyStanKonta = decimal.Parse(stanKonta) + decimal.Parse(wplata);
-                            
+
         var wartoscKonta = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[2]")).Text;
-            //je¿eli stan konta == stan konta + wp³ata - test powinien przejœæ
+        //je¿eli stan konta == stan konta + wp³ata - test powinien przejœæ
         Assert.True(wartoscKonta == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {wartoscKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
@@ -263,8 +257,8 @@ namespace Portfel.TestySelenium
         Assert.True(stanKontaPoZakupie == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {stanKontaPoZakupie}, a test wykazuje: {nowyStanKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
-
     }
+
     [Fact]
     public void SprzedajAktywoTest()
     {
@@ -303,57 +297,16 @@ namespace Portfel.TestySelenium
     }
 
     [Fact]
-        public void SzczegolyPortfelaTest()
-        {
-            Logowanie();
-            IWebElement pierwszyWiersz = driver.FindElement(By.XPath(".//table/tbody/tr[1]"));
-            IWebElement szczegolyPortfela = pierwszyWiersz.FindElement(By.Id("szczegoly"));
-            szczegolyPortfela.Click();
-            var listaAktyw = "3";
-            IList<IWebElement> listaWierszy = driver.FindElements(By.XPath(".//*[@id='about']/div/table/tbody/tr/td[1]"));
-            Assert.True(listaWierszy.Count() == decimal.Parse(listaAktyw), $"Lista aktyw wynosi: {listaWierszy.Count()}");
-            //Chrome driver nie wisi w procesach
-            driver.Quit();
+    public void SzczegolyPortfelaTest()
+    {
+        Logowanie();
+        IWebElement pierwszyWiersz = driver.FindElement(By.XPath(".//table/tbody/tr[1]"));
+        IWebElement szczegolyPortfela = pierwszyWiersz.FindElement(By.Id("szczegoly"));
+        szczegolyPortfela.Click();
+        var listaAktyw = "3";
+        IList<IWebElement> listaWierszy = driver.FindElements(By.XPath(".//*[@id='about']/div/table/tbody/tr/td[1]"));
+        Assert.True(listaWierszy.Count() == decimal.Parse(listaAktyw), $"Lista aktyw wynosi: {listaWierszy.Count()}");
+        //Chrome driver nie wisi w procesach
+        driver.Quit();
     }
 }
-    //public class Tests2
-        //{
-        //    IWebDriver driver = new ChromeDriver();
-        //    [Fact]
-        //    public void LogowanieTest()
-        //    {
-        //        driver.Navigate().GoToUrl(new Uri("https://localhost:7272"));
-        //        driver.Manage().Window.Maximize();
-        //        IWebElement zalogujSie = driver.FindElement(By.Id("navLogowanie"));
-        //        zalogujSie.Click();
-        //        IWebElement poleEmail = driver.FindElement(By.Name("Email"));
-        //        poleEmail.SendKeys("selenium9@po.pl");
-        //        IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
-        //        poleHaslo.SendKeys("Selenium2022");
-        //        IWebElement zalogujSieKlik = driver.FindElement(By.Id("logowanie"));
-        //        zalogujSieKlik.Click();
-        //        string logowaniePomyslneURL = "https://localhost:7272/Portfel/MojePortfele";
-        //        Assert.True(driver.Url == logowaniePomyslneURL, $"Strona, która siê pojawi³a to {driver.Url}");
-        //        driver.Quit();
-        //    }
-
-        //    [Fact]
-        //    public void DodawaniePortfelaTest()
-        //    {
-        //        LogowanieTest();
-        //        driver.Navigate().GoToUrl(new Uri("https://localhost:7272/Portfel/MojePortfele"));
-        //        driver.Manage().Window.Maximize();
-        //      //  IWebElement dodajNowyPortfel = driver.FindElement(By.XPath("//button[@text()='Dodaj nowy portfel'"));
-        //      //IWebElement dodajNowyPortfel = driver.FindElement(By.XPath("//button[.='Dodaj nowy portfel']"));
-        //        IWebElement dodajNowyPortfel = driver.FindElement(By.Id("dodajPortfel"));
-        //          dodajNowyPortfel.Click();
-        //          IWebElement poleNowyPortfel = driver.FindElement(By.Name("Nazwa"));
-        //          poleNowyPortfel.SendKeys("SeleniumPortfel");
-        //          IWebElement dodajPortfelKlik = driver.FindElement(By.Id("dodajPortfel"));
-        //          dodajPortfelKlik.Click();
-        //          var listaPortfeli = driver.FindElements(By.Id("nazwaPortfela"));
-        //          Assert.Equal(listaPortfeli.Count, 4);
-        //          driver.Quit();
-        //    }
-        //}
-    

@@ -18,43 +18,38 @@
                             <form asp-action="Create">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
-                                   
+
                                     <select asp-for="PortfelId" class="form-control" asp-items="ViewBag.PortfelId"></select>
                                 </div>
                                 <div class="form-group">
-                                   
+
                                     <select asp-for="AktywoId" class="form-control" asp-items="ViewBag.AktywoId"></select>
                                 </div>
                                 <div class="form-group">
-                                   
+
                                     <select asp-for="Kierunek" class="form-control" asp-items="ViewBag.Kierunki"></select>
                                 </div>
                                 <div class="form-group">
-                                   
+
                                     <input asp-for="DataTransakcji" class="form-control form-control-user" id="exampleFirstName" placeholder="Data utworzenia" />
                                     <span asp-validation-for="DataTransakcji" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                   
+
                                     <input asp-for="Cena" class="form-control form-control-user" placeholder="Cena" />
                                     <span asp-validation-for="Cena" class="text-danger"></span>
                                 </div>
-                   
+
                                 <div class="form-group">
-                                   
-                                    <input asp-for="Ilosc" class="form-control form-control-user"  placeholder="Ilość" />
+
+                                    <input asp-for="Ilosc" class="form-control form-control-user" placeholder="Ilość" />
                                     <span asp-validation-for="Ilosc" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    
-                                    <input asp-for="Komentarz" class="form-control form-control-user"  placeholder="Komentarz"/>
+
+                                    <input asp-for="Komentarz" class="form-control form-control-user" placeholder="Komentarz" />
                                     <span asp-validation-for="Komentarz" class="text-danger"></span>
                                 </div>
-            @*                        <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
-                </label>
-            </div>*@
                                 <div class="form-group">
                                     <input type="submit" value="Utwórz transakcję" class="btn btn-primary btn-user btn-block" />
                                 </div>

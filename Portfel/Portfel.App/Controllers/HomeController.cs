@@ -37,16 +37,6 @@ namespace Portfel.App.Controllers
         {
             return View();
         }
-        public IActionResult Test()
-        {
-            var konta = _context.KontaGotowkowe.Include(p => p.Portfel).ToList();
-            return View(konta);
-        }
-        public IActionResult Test2()
-        {
-            var portfele = _context.Portfele.Include(p => p.KontoGotowkowe).ToList();
-            return View(portfele);
-        }
         public IActionResult Kont()
         {
             return View();
