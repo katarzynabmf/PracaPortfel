@@ -24,8 +24,6 @@ namespace Portfel.Intranet.Controllers
             ViewBag.UzytkownicyIloscDzisiaj = _context.Uzytkownik.Where(u => u.Aktywna == true && u.DataUtworzenia.Date == DateTime.Today).Count();
             ViewBag.UzytkownicyNieaktywni = _context.Uzytkownik.Where(u => u.Aktywna == false).Count();
             ViewBag.UzytkownicyAktywni = _context.Uzytkownik.Where(u => u.Aktywna == true).Count();
-            ViewBag.TransakcjeIlosc = _context.Transakcja.Where(t => t.Aktywna == true).Count();
-            ViewBag.TransakcjeIloscDzisiaj = _context.Transakcja.Where(t => t.Aktywna == true && t.DataUtworzenia.Date == DateTime.Today).Count();
             ViewBag.TransakcjeNewIlosc = _context.TransakcjeNew.Where(t => t.Aktywna == true).Count();
             ViewBag.TransakcjeNewIloscDzisiaj = _context.TransakcjeNew.Where(t => t.Aktywna == true && t.DataTransakcji.Date == DateTime.Today).Count();
             ViewBag.TransakcjeDodane = _context.TransakcjeNew.Where(t => t.Aktywna).GroupBy(u => u.DataTransakcji.Month)

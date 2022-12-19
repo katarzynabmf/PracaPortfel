@@ -14,11 +14,6 @@ namespace Portfel.Data
         {
         }
 
-        public virtual DbSet<Konto> Konto { get; set; }
-        public virtual DbSet<RodzajOplaty> RodzajOplaty { get; set; }
-        public virtual DbSet<RodzajTransakcji> RodzajTransakcji { get; set; }
-        public virtual DbSet<SymbolGieldowy> SymbolGieldowy { get; set; }
-        public virtual DbSet<Transakcja> Transakcja { get; set; }
         public virtual DbSet<Uzytkownik> Uzytkownik { get; set; }
         public virtual DbSet<Aktualnosc> Aktualnosc { get; set; }
         public virtual DbSet<Data.Portfel> Portfele { get; set; }

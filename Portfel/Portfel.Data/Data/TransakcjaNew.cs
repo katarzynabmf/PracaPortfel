@@ -57,3 +57,29 @@ public class SprzedajAktywoRequest
     public string Komentarz { get; set; } 
     public bool Aktywna { get; set; } = true;
 }
+
+public class StworzTransakcjaRequest
+{
+    public int? PortfelId { get; set; }
+    public int AktywoId { get; set; }
+    public DateTime DataTransakcji { get; set; }
+    public Kierunek Kierunek { get; set; }
+    [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Wpisz kwotę z dokładnością do 2 miejsc po przecinku.")]
+    public string Cena { get; set; }
+    public uint Ilosc { get; set; }
+    public string Komentarz { get; set; }
+    public bool Aktywna { get; set; } = true;
+}
+public class EdytujTransakcjaRequest
+{
+    public int Id { get; set; }
+    public int? PortfelId { get; set; }
+    public int AktywoId { get; set; }
+    public DateTime DataTransakcji { get; set; }
+    public Kierunek Kierunek { get; set; }
+    [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Wpisz kwotę z dokładnością do 2 miejsc po przecinku.")]
+    public string Cena { get; set; }
+    public uint Ilosc { get; set; }
+    public string Komentarz { get; set; }
+    public bool Aktywna { get; set; } = true;
+}

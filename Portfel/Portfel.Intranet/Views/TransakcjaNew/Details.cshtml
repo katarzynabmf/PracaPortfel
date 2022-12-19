@@ -1,4 +1,4 @@
-﻿@model Portfel.Data.Data.Transakcja
+﻿@model Portfel.Data.Data.TransakcjaNew
 
 @{
     ViewData["Title"] = "Details";
@@ -11,52 +11,40 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Konto)
+            @Html.DisplayNameFor(model => model.Portfel)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Konto.Nazwa)
+            @Html.DisplayFor(model => model.Portfel.Nazwa)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.DataTransakcji)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Date)
+            @Html.DisplayFor(model => model.DataTransakcji)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RodzajTransakcji)
+            @Html.DisplayNameFor(model => model.Aktywo)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RodzajTransakcji.Nazwa)
+            @Html.DisplayFor(model => model.Aktywo.Nazwa)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Waluta)
+            @Html.DisplayNameFor(model => model.Kierunek)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Waluta)
+            @Html.DisplayFor(model => model.Kierunek)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SymbolGieldowy)
+            @Html.DisplayNameFor(model => model.Cena)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SymbolGieldowy.Nazwa)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Kwota)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Kwota)
+            @Html.DisplayFor(model => model.Cena)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ilosc)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ilosc)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RodzajOplaty)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RodzajOplaty.Nazwa)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Komentarz)

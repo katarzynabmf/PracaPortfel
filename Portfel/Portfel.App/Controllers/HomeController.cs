@@ -55,16 +55,6 @@ namespace Portfel.App.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Symbole()
-        {
-            var symbole = from s in _context.SymbolGieldowy select s;
-            ViewBag.ModelSymboleGieldowe =
-            (
-                from symbol in _context.SymbolGieldowy
-                select symbol
-            ).ToList();
-            return View(symbole);
-        }
         public IActionResult Aktualnosci()
         {
             var aktualnosci = from a in _context.Aktualnosc select a;
