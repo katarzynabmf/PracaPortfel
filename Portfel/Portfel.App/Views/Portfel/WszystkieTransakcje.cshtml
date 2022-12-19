@@ -1,0 +1,116 @@
+﻿@model WszystkieTransakcjeDlaPortfela
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header" style="padding-bottom: 0px">
+            <h2>@Model.NazwaPortfela</h2>
+        </div>
+        <div class="section-header" style="padding-bottom: 0px">
+            <h5>Zakup/sprzedaż aktyw </h5>
+            <h2></h2>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th>
+                        <div>Data dodania</div>
+                    </th>
+                    <th>
+                        <div>Rodzaj transakcji</div>
+                    </th>
+                    <th>
+                        <div>Aktywo</div>
+                    </th>
+                    <th>
+                        <div>Symbol giełdowy</div>
+                    </th>
+                    <th>
+                        <div>Cena</div>
+                    </th>
+                    <th>
+                        <div>Ilość</div>
+                    </th>
+                    <th>
+                        <div>Razem</div>
+                    </th>
+                    <th>
+                        <div>Komentarz</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Transakcje)
+                {
+                    <tr>
+                        <td>
+                            @item.DataTransakcji.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Kierunek)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aktywo.Nazwa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aktywo.Symbol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cena) zł
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ilosc)
+                        </td>
+                        <td>
+                            @{
+                                var result = item.Cena * item.Ilosc; // mnożę cenę i ilość
+                                <span>@result zł</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Komentarz)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="section-header" style="padding-top: 30px; padding-bottom: 0px">
+            <h2></h2>
+            <h5>Operacje gotówkowe</h5>
+            <h2></h2>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th>
+                        <div>Data dodania</div>
+                    </th>
+                    <th>
+                        <div>Typ operacji</div>
+                    </th>
+                    <th>
+                        <div>Kwota</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OperacjeGotowkowe)
+                {
+                    <tr>
+                        <td>
+                            @item.DataOperacji.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TypOperacjiGotowkowej)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Kwota)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

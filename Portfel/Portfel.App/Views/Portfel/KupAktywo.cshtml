@@ -1,0 +1,57 @@
+﻿@model Portfel.Data.Data.KupAktywoRequest
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>Kup aktywo</h2>
+        </div>
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;  border-color: white;
+                                     box-shadow: 0px 2px 25px rgb(0 0 0 / 10%);">
+                        <div class="card-body p-5">
+                            <div class="info-item d-flex">
+                            </div>
+                            <form asp-action="KupAktywo" asp-controller="Portfel">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="PortfelId" />
+                                <div class="form mb-4">
+                                    <label asp-for="AktywoId">Aktywo</label>
+                                    <select asp-for="AktywoId" class="form-control form-control-lg" asp-items="ViewBag.AktywoId"></select>
+                                </div>
+                                <div class="form mb-4">
+                                    <label asp-for="Cena" class="control-label"></label>
+                                    <input asp-for="Cena" id="form3Example1cg" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Cena" class="text-danger"></span>
+                                </div>
+                                <div class="form mb-4">
+                                    <label asp-for="Ilosc" class="control-label">Ilość</label>
+                                    <input asp-for="Ilosc" id="form3Example1cg" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Ilosc" class="text-danger"></span>
+                                </div>
+                                <div class="form mb-4">
+                                    <label asp-for="Komentarz" class="control-label"></label>
+                                    <textarea rows="5" asp-for="Komentarz" id="form3Example1cg" class="form-control form-control-lg"></textarea>
+                                    <span asp-validation-for="Komentarz" class="text-danger"></span>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <input id="kupAktywo" type="submit" value="Kup aktywo" style="background: var(--color-primary); border: 0; padding: 14px 45px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

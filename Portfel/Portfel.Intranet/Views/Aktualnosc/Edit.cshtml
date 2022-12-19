@@ -15,72 +15,64 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Edytuj aktualność</h1>
                             </div>
-        <form enctype="multipart/form-data" asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Pozycja" class="control-label">Pozycja</label>
-                        <input asp-for="Pozycja" class="form-control"/>
-                        <span asp-validation-for="Pozycja" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Tytul" class="control-label">Tytuł</label>
-                        <input asp-for="Tytul" class="form-control"/>
-                        <span asp-validation-for="Tytul" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataDodania" class="control-label"></label>
-                <input asp-for="DataDodania" class="form-control" />
-                <span asp-validation-for="DataDodania" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-          @*          <div class="form-group" enctype="multipart/form-data">
-                        <label asp-for="Foto" class="control-label "></label>
-                        <div class="custom-file">
-                            <input asp-for="Foto" class="custom-file-input" id="customFileImage" accept="image/*" multiple />
-                            <label class="custom-file-label" for="customFileImage">Wybierz pliki..</label>
+                            <form enctype="multipart/form-data" asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Pozycja" class="control-label">Pozycja</label>
+                                            <input asp-for="Pozycja" class="form-control" />
+                                            <span asp-validation-for="Pozycja" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Tytul" class="control-label">Tytuł</label>
+                                            <input asp-for="Tytul" class="form-control" />
+                                            <span asp-validation-for="Tytul" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DataDodania" class="control-label"></label>
+                                    <input asp-for="DataDodania" class="form-control" />
+                                    <span asp-validation-for="DataDodania" class="text-danger"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea rows="5" cols="33" asp-for="Tresc" class="form-control form-control-user" placeholder="Treść">
+                        </textarea>
+                                            <span asp-validation-for="Tresc" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="FotoUrl" class="control-label">FotoUrl</label>
+                                            <input asp-for="FotoUrl" class="form-control" />
+                                            <span asp-validation-for="FotoUrl" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn-user btn-block" />
+                                </div>
+                            </form>
                         </div>
-                        <span asp-validation-for="Foto" class="text-danger"></span>
-                    </div>*@
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label asp-for="Tresc" class="control-label">Treść</label>
-                        @Html.TextAreaFor(model => model.Tresc)
-                        <span asp-validation-for="Tresc" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>    
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="FotoUrl" class="control-label">FotoUrl</label>
-                        <input asp-for="FotoUrl" class="form-control"/>
-                        <span asp-validation-for="FotoUrl" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
-                </label>
-            </div>
-            <div class="form-group">
-                 <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn-user btn-block" />
-            </div>
-        </form>
- </div>
                     </div>
                 </div>
             </div>
@@ -102,23 +94,7 @@
 
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script>  
-        document.addEventListener('DOMContentLoaded',() => {
-                    var input = document.getElementsByClassName("custom-file-input")[0];
-                    var label = document.getElementsByClassName("custom-file-label")[0];
-                    input.onchange = (event) => {
-                        label.innerHTML = event.target.files[0].name;
-                    }
-    
-        });
-    </script>
-    <script>
-          tinymce.init({
-                          selector: 'textarea',
-                          menubar:false,
-                          statusbar: false,
-                          language: 'pl'
-                        });
-    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

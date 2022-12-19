@@ -1,153 +1,125 @@
-﻿@model  IEnumerable<Portfel.Data.Data.Aktualnosc>
+﻿@model IEnumerable<Portfel.Data.Data.Aktualnosc>
 @{
     ViewData["Title"] = "Aktualności";
 }
 <style>
-.fa, .fas {
-    pointer-events: none;
-}
+    .fa, .fas {
+        pointer-events: none;
+    }
 </style>
 
 <div class="card shadow mb-4">
 
-                        <div class="card-header py-3">
-                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-primary">Aktualności</h1>
-                        <a asp-action="Create" title="Dodaj" class="d-sm-inline-block btn btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Dodaj</a>
-                    </div>
-</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            @*<th class="col-1" scope="col">
-            @Html.DisplayNameFor(model => model.Id)
-        </th>*@
-                            <th id="title">
-                                @Html.ActionLink("Tytuł", "Index", new { sortOrder = ViewBag.NameSortParm })
-                            </th>
-                            <th id="insertDate">
-                                @Html.ActionLink("Data dodania", "Index", new { sortOrder = ViewBag.DateSortParm })
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Aktywna)
-                            </th>
-                            <th class="text-center th-action">Akcja</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Tytul)
-                                </td>
-                                <td>
-                                    @Convert.ToDateTime(item.DataDodania).ToString("dd.MM.yyyy HH:mm:ss")
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Aktywna)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
-                                    <a data-dt=" @item.Id" data-controller="Aktualnosc" data-action="UsuwaniePotwierdzone" data-body-message="Czy jesteś pewien?" class="btn btn-danger btn-circle btn-sm delete" title="Usuń"><i class="fas fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script src="~/bootstrap/js/bootstrap.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-    $((function () {
-        var url;
-        var redirectUrl;
-        var target;
-
-        $('body').append(`
-                    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">Uwaga!</h4>
-                                </div>
-                            <div class="modal-body delete-modal-body">
-                                Czy jesteś pewien?
-                            </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" id="cancel-delete">Anuluj</button>
-                                    <button type="button" class="btn btn-danger" id="confirm-delete">Usuń</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`);
-
-        //Delete Action
-        $(".delete").on('click', (e) => {
-            e.preventDefault();
-
-            target = e.target;
-            var Id = $(target).data('dt');
-            var controller = $(target).data('controller');
-            var action = $(target).data('action');
-            var bodyMessage = $(target).data('body-message');
-            redirectUrl = $(target).data('redirect-url');
-
-            url = "/" + controller + "/" + action + "?Id=" + Id;
-            $(".delete-modal-body").text(bodyMessage);
-            $("#deleteModal").modal('show');
-        });
-
-        $("#confirm-delete").on('click', () => {
-            $.get(url)
-                .done((result) => {
-                    if (!redirectUrl) {
-                        return $(target).parent().parent().hide("slow");
-                    }
-                    window.location.href = redirectUrl;
-                })
-                .fail((error) => {
-                    if (redirectUrl)
-                        window.location.href = redirectUrl;
-                }).always(() => {
-                    $("#deleteModal").modal('hide');
-                    window.location.reload();
-                });
-        });
-    }()));
-</script>
+    <div class="card-header py-3">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-primary">Aktualności</h1>
+            <a asp-action="Create" title="Dodaj" class="d-sm-inline-block btn btn-primary shadow-sm">
+                <i class="fas fa-download fa-sm text-white-50"></i> Dodaj
+            </a>
+        </div>
     </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th id="title">
+                           Tytuł
+                        </th>
+                        <th id="insertDate">
+                           Data dodania
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Aktywna)
+                        </th>
+                        <th class="text-center th-action">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tytul)
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.DataDodania).ToString("dd.MM.yyyy HH:mm:ss")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Aktywna)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-circle btn-sm" title="Edytuj"><i class="fas fa-pencil-alt"> </i> </a>
+                                <a data-dt=" @item.Id" data-controller="Aktualnosc" data-action="UsuwaniePotwierdzone" data-body-message="Czy jesteś pewien?" class="btn btn-danger btn-circle btn-sm delete" title="Usuń"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded',
-        (doc) => {
-            var title = document.getElementById("title");
-            var insertDate = document.getElementById("insertDate");
-            if ('@ViewBag.NameSortParm' == 'name') {
-                var element = document.createElement("i");
-                element.className = "fas fa-arrow-down";
-                title.append(element);
-            } else {
-                var element = document.createElement("i");
-                element.className = "fas fa-arrow-up";
-                title.append(element);
-            }
+        <script src="~/bootstrap/js/bootstrap.js"></script>
 
-            if ('@ViewBag.DateSortParm' == 'date') {
-                var element = document.createElement("i");
-                element.className = "fas fa-arrow-down";
-                insertDate.append(element);
-            } else {
-                var element = document.createElement("i");
-                element.className = "fas fa-arrow-up";
-                insertDate.append(element);
-            }
-        });
-</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            $((function() {
+                var url;
+                var redirectUrl;
+                var target;
+
+                $('body').append(`
+                                <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Uwaga!</h4>
+                                            </div>
+                                        <div class="modal-body delete-modal-body">
+                                            Czy jesteś pewien?
+                                        </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-bs-dismiss="modal" id="cancel-delete">Anuluj</button>
+                                                <button type="button" class="btn btn-danger" id="confirm-delete">Usuń</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`);
+
+                //Delete Action
+                $(".delete").on('click', (e) => {
+                    e.preventDefault();
+
+                    target = e.target;
+                    var Id = $(target).data('dt');
+                    var controller = $(target).data('controller');
+                    var action = $(target).data('action');
+                    var bodyMessage = $(target).data('body-message');
+                    redirectUrl = $(target).data('redirect-url');
+
+                    url = "/" + controller + "/" + action + "?Id=" + Id;
+                    $(".delete-modal-body").text(bodyMessage);
+                    $("#deleteModal").modal('show');
+                });
+
+                $("#confirm-delete").on('click', () => {
+                    $.get(url)
+                        .done((result) => {
+                            if (!redirectUrl) {
+                                return $(target).parent().parent().hide("slow");
+                            }
+                            window.location.href = redirectUrl;
+                        })
+                        .fail((error) => {
+                            if (redirectUrl)
+                                window.location.href = redirectUrl;
+                        }).always(() => {
+                            $("#deleteModal").modal('hide');
+                            window.location.reload();
+                        });
+                });
+            }()));
+        </script>
+    </div>
+</div>

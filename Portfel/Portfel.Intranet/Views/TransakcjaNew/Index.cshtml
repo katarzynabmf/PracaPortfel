@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Portfel.Data.Data.TransakcjaNew>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-primary">Transakcje</h1>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Kierunek)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Aktywo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cena)
+                        </th>
+                        <th>
+                            Ilość
+                        </th>
+                        <th>
+                            Data dodania
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Aktywna)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Komentarz)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Kierunek)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Aktywo.Nazwa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cena)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ilosc)
+                            </td>
+                            <td>
+                                @item.DataTransakcji.ToShortDateString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Aktywna)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Komentarz)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

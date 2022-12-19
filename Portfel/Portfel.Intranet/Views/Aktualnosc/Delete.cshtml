@@ -3,56 +3,7 @@
 @{
     ViewData["Title"] = "Aktualność";
 }
-@*<div>
-    <h4>Aktualność</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayName("Tytuł")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tytul)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayName("Treść")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tresc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayName("Data dodania")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataDodania)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayName("Url zdjęcia")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FotoUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Priorytet)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Priorytet)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Odbiorca)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Odbiorca)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Usuń" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-info" role="button">Wróć do listy</a>
-    </form>
-</div>
-*@
-    <div class="row">
+<div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">

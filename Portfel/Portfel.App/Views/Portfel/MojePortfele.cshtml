@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<Portfel.Data.Data.Portfel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="about" class="about" style="margin-bottom: 55px;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>Moje portfele</h2>
+            <p>
+                <a id="dodajPortfel" asp-action="DodajPortfel" style="background: var(--color-primary); border: 0; padding: 8px 25px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Dodaj nowy portfel</a>
+            </p>
+        </div>
+        <table class="table align-middle mb-0 bg-white table-striped table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th>
+                        Nazwa
+                    </th>
+                    <th>
+                        Stan konta
+                    </th>
+                    <th> Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td id="nazwaPortfela">
+                            @Html.DisplayFor(modelItem => item.Nazwa)
+                        </td>
+                        <td id="stanKonta">
+                            @Html.DisplayFor(modelItem => item.KontoGotowkowe.StanKonta)
+                        </td>
+                        <td>
+                            <a id="wplac" asp-action="WplacKwote" asp-controller="Portfel"
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Wpłać kwotę</a>
+                            <a id="wyplac" asp-action="WyplacKwote" asp-controller="Portfel"
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Wypłać kwotę</a>
+                            <a id="kup" asp-action="KupAktywo" asp-controller="Portfel"
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Kup aktywo</a>
+                            <a id="sprzedaj" asp-action="SprzedajAktywo" asp-controller="Portfel"
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Sprzedaj aktywo</a>
+                            <a id="szczegoly" asp-action="SzczegolyPortfela" asp-controller="Portfel"
+                           asp-route-id="@item.Id"
+                           style="background: var(--color-primary); border: 0; padding: 2px 12px; color: #fff; transition: 0.4s; border-radius: 50px; margin-top: 8px;">Szczegóły portfela</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

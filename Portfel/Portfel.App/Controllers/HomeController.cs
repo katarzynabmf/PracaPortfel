@@ -3,42 +3,25 @@ using Portfel.App.Models;
 using System.Diagnostics;
 using Portfel.Data;
 using Microsoft.EntityFrameworkCore;
+using Portfel.Data.Data;
 
 namespace Portfel.App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PortfelContexts _context;
+        private readonly PortfelContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(PortfelContexts context)
+        public HomeController (PortfelContext context)
         {
             _context = context; // tu inicjalizujemy baze danych
         }
         public IActionResult Index()
         {
-            ViewBag.ModelSymboleGieldowe =
-            (
-                from symbol in _context.SymbolGieldowy
-                select symbol
-            ).ToList();
-
-            ViewBag.ModelAktualnosci =
-            (
-                from aktualnosc in _context.Aktualnosc
-                orderby aktualnosc.DataDodania descending 
-                select aktualnosc 
-            ).ToList();
-
+            IEnumerable<Aktualnosc> aktualnosci = _context.Aktualnosc.ToList();
+            IEnumerable<Aktywo> aktywa = _context.Aktywa.ToList();
+            ViewBag.ModelAktualnosciIIAktywa = new AktualnosciIAktywa(aktualnosci, aktywa);
             return View();
-            //ViewBag.ModelAktualnosci =
-            //(
-            //    from aktualnosc in _context.Aktualnosc
-            //    select aktualnosc
-            //).ToList();
-
-            //return View();
-
         }
 
         public async Task<ActionResult> Szczegoly(int id)
@@ -71,16 +54,6 @@ namespace Portfel.App.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public IActionResult Symbole()
-        {
-            var symbole = from s in _context.SymbolGieldowy select s;
-            ViewBag.ModelSymboleGieldowe =
-            (
-                from symbol in _context.SymbolGieldowy
-                select symbol
-            ).ToList();
-            return View(symbole);
         }
         public IActionResult Aktualnosci()
         {

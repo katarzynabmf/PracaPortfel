@@ -1,0 +1,88 @@
+﻿@model Portfel.Data.Data.TransakcjaNew
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Edytuj transakcję</h1>
+                            </div>
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="form-group">
+                                    <label asp-for="PortfelId" class="control-label"></label>
+                                    <select asp-for="PortfelId" class="form-control" asp-items="ViewBag.KontoId"></select>
+                                    <span asp-validation-for="PortfelId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DataTransakcji" class="control-label"></label>
+                                    <input asp-for="DataTransakcji" class="form-control" />
+                                    <span asp-validation-for="DataTransakcji" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AktywoId" class="control-label"></label>
+                                    <select asp-for="AktywoId" class="form-control" asp-items="ViewBag.RodzajTransakcjiId"></select>
+                                    <span asp-validation-for="AktywoId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Kierunek" class="control-label"></label>
+                                    <input asp-for="Kierunek" class="form-control" />
+                                    <span asp-validation-for="Kierunek" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Cena" class="control-label"></label>
+                                    <input asp-for="Cena" class="form-control" />
+                                    <span asp-validation-for="Cena" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Ilosc" class="control-label"></label>
+                                    <input asp-for="Ilosc" class="form-control" />
+                                    <span asp-validation-for="Ilosc" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Komentarz" class="control-label"></label>
+                                    <input asp-for="Komentarz" class="form-control" />
+                                    <span asp-validation-for="Komentarz" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn-user btn-block" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
