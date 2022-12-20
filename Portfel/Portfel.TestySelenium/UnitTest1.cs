@@ -35,7 +35,7 @@ namespace Portfel.TestySelenium
             IWebElement poleImie = driver.FindElement(By.Name("Imie"));
             poleImie.SendKeys("SeleniumImie");
             IWebElement poleEmail = driver.FindElement(By.Name("Email"));
-            poleEmail.SendKeys("selenium35@po.pl");
+            poleEmail.SendKeys("selenium38@po.pl");
             IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
             poleHaslo.SendKeys("Selenium2022");
             IWebElement polePowtorzHaslo = driver.FindElement(By.Id("powtorzHaslo"));
@@ -66,7 +66,7 @@ namespace Portfel.TestySelenium
             zalogujSieKlik.Click();
             string logowaniePomyslneURL = "https://localhost:7272/Portfel/MojePortfele";
             Assert.True(driver.Url == logowaniePomyslneURL, $"Strona, która siê pojawi³a to {driver.Url}");
-            driver.Quit();
+           // driver.Quit();
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Portfel.TestySelenium
             IWebElement dodajNowyPortfel = driver.FindElement(By.Id("dodajPortfel"));
             dodajNowyPortfel.Click();
             IWebElement poleNowyPortfel = driver.FindElement(By.Name("Nazwa"));
-            var nowaNazwaPortfela = "SeleniumPortfel21";
+            var nowaNazwaPortfela = "SeleniumPortfel23";
             poleNowyPortfel.SendKeys(nowaNazwaPortfela);
             IWebElement dodajPortfelKlik = driver.FindElement(By.Id("dodajPortfel"));
             dodajPortfelKlik.Click();

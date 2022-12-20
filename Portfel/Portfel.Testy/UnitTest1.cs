@@ -32,7 +32,8 @@ namespace Portfel.Testy
             // -----------------------------------------
             // when
             var portfelSerwis = new PortfelSerwis(mockContext.Object);
-            var portfel = new Data.Data.Portfel(){KontoGotowkowe = new KontoGotowkowe(){StanKonta = 0, OperacjeGotowkowe = new List<OperacjaGotowkowa>()}, Pozycje = new List<Pozycja>(), Transakcje = new List<TransakcjaNew>()};
+            var portfel = new Data.Data.Portfel(){KontoGotowkowe = new KontoGotowkowe(){StanKonta = 0, OperacjeGotowkowe = new List<OperacjaGotowkowa>()}, 
+                Pozycje = new List<Pozycja>(), Transakcje = new List<TransakcjaNew>()};
             portfelSerwis.WplacSrodkiNaKonto(100, portfel);
 
             // then

@@ -24,5 +24,4 @@ public class TestyAktywow
         _contextInMemory.Aktywa.Add(new Aktywo { Nazwa = "Apple", Symbol = "AAPL", CenaAktualna = 100 });
         _contextInMemory.SaveChanges();
     }
-
 }

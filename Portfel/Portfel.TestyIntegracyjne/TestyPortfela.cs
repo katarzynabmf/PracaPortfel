@@ -11,7 +11,7 @@ namespace Portfel.TestyIntegracyjne
         private PortfelContext _contextInMemory;
         
         [Fact]
-        public void Test1()
+        public void TestyIntegracyjne()
         {
             // dla kontekstu PortfelContext
             var optionsBuilder = new DbContextOptionsBuilder<PortfelContext>();

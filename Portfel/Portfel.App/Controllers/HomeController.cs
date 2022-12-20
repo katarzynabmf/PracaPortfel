@@ -18,7 +18,7 @@ namespace Portfel.App.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Aktualnosc> aktualnosci = _context.Aktualnosc.ToList();
+            IEnumerable<Aktualnosc> aktualnosci = _context.Aktualnosc.Where(a=>a.Aktywna==true).ToList();
             IEnumerable<Aktywo> aktywa = _context.Aktywa.ToList();
             ViewBag.ModelAktualnosciIIAktywa = new AktualnosciIAktywa(aktualnosci, aktywa);
             return View();
