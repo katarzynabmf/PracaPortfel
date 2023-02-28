@@ -21,7 +21,7 @@ namespace Portfel.TestySelenium
         }
 
         [Fact]
-        //za pomoc¹ [Fact] testujemy jeden przypadek, za pomoc¹ [Theories] testujemy wiele przypadków
+        //za pomocï¿½ [Fact] testujemy jeden przypadek, za pomocï¿½ [Theories] testujemy wiele przypadkï¿½w
         public void RejestracjaTest()
         {
 
@@ -29,13 +29,13 @@ namespace Portfel.TestySelenium
             driver.Manage().Window.Maximize();
             //Znajdz element o id = rejestracja
             IWebElement zarejestrujSie = driver.FindElement(By.Id("rejestracja"));
-            //Kliknij na zarejestruj siê
+            //Kliknij na zarejestruj siï¿½
             zarejestrujSie.Click();
-            //uzupe³nianie danych do rejestracji
+            //uzupeï¿½nianie danych do rejestracji
             IWebElement poleImie = driver.FindElement(By.Name("Imie"));
             poleImie.SendKeys("SeleniumImie");
             IWebElement poleEmail = driver.FindElement(By.Name("Email"));
-            poleEmail.SendKeys("selenium38@po.pl");
+            poleEmail.SendKeys("selenium41@po.pl");
             IWebElement poleHaslo = driver.FindElement(By.Name("Haslo"));
             poleHaslo.SendKeys("Selenium2022");
             IWebElement polePowtorzHaslo = driver.FindElement(By.Id("powtorzHaslo"));
@@ -46,8 +46,8 @@ namespace Portfel.TestySelenium
             ex.ExecuteScript("arguments[0].click();", rejestracja);
 
             string rejestracjaPomyslnaURL = "https://localhost:7272/Uzytkownik/Create";
-            //Test przejdzie je¿eli znajdziemy siê na konkretnej stronie
-            Assert.True(driver.Url == rejestracjaPomyslnaURL, $"Strona, która siê pojawi³a to {driver.Url}");
+            //Test przejdzie jeï¿½eli znajdziemy siï¿½ na konkretnej stronie
+            Assert.True(driver.Url == rejestracjaPomyslnaURL, $"Strona, ktï¿½ra siï¿½ pojawiï¿½a to {driver.Url}");
             driver.Quit();
         }
 
@@ -65,7 +65,7 @@ namespace Portfel.TestySelenium
             IWebElement zalogujSieKlik = driver.FindElement(By.Id("logowanie"));
             zalogujSieKlik.Click();
             string logowaniePomyslneURL = "https://localhost:7272/Portfel/MojePortfele";
-            Assert.True(driver.Url == logowaniePomyslneURL, $"Strona, która siê pojawi³a to {driver.Url}");
+            Assert.True(driver.Url == logowaniePomyslneURL, $"Strona, ktï¿½ra siï¿½ pojawiï¿½a to {driver.Url}");
            // driver.Quit();
         }
 
@@ -78,7 +78,7 @@ namespace Portfel.TestySelenium
             IWebElement dodajNowyPortfel = driver.FindElement(By.Id("dodajPortfel"));
             dodajNowyPortfel.Click();
             IWebElement poleNowyPortfel = driver.FindElement(By.Name("Nazwa"));
-            var nowaNazwaPortfela = "SeleniumPortfel23";
+            var nowaNazwaPortfela = "SeleniumPortfel25";
             poleNowyPortfel.SendKeys(nowaNazwaPortfela);
             IWebElement dodajPortfelKlik = driver.FindElement(By.Id("dodajPortfel"));
             dodajPortfelKlik.Click();
@@ -90,7 +90,7 @@ namespace Portfel.TestySelenium
             _testOutputHelper.WriteLine("Liczba kolumn to: " + listaKolumn.Count());
             _testOutputHelper.WriteLine("Liczba wierszy to: " + listaWierszy.Count());
             string value = driver.FindElement(By.XPath(".//table/tbody/tr[" + listaWierszy.Count() + "]/td[1]")).Text;
-            _testOutputHelper.WriteLine("Pierwsza komórka " + listaWierszy.Count() + " wiersza ma wartoœæ: " + value);
+            _testOutputHelper.WriteLine("Pierwsza komï¿½rka " + listaWierszy.Count() + " wiersza ma wartoï¿½ï¿½: " + value);
             var ostatniaNazwaPortfela = value;
 
             Assert.Equal(nowaNazwaPortfela, ostatniaNazwaPortfela);
@@ -108,7 +108,7 @@ namespace Portfel.TestySelenium
             IWebElement dodajNowyPortfel = driver.FindElement(By.Id("dodajPortfel"));
             dodajNowyPortfel.Click();
             IWebElement poleNowyPortfel = driver.FindElement(By.Name("Nazwa"));
-            var nowaNazwaPortfela = "SeleniumPortfel20";
+            var nowaNazwaPortfela = "SeleniumPortfel23";
             poleNowyPortfel.SendKeys(nowaNazwaPortfela);
             IWebElement dodajPortfelKlik = driver.FindElement(By.Id("dodajPortfel"));
             dodajPortfelKlik.Click();
@@ -116,7 +116,7 @@ namespace Portfel.TestySelenium
             var portfelJuzIstnieje = driver.FindElement(By.Id("portfelIstnieje")).Text;
             _testOutputHelper.WriteLine(portfelJuzIstnieje);
 
-            Assert.Equal("Podaj inn¹ nazwê portfela, taka ju¿ istnieje.", portfelJuzIstnieje);
+            Assert.Equal("Podaj innï¿½ nazwï¿½ portfela, taka juï¿½ istnieje.", portfelJuzIstnieje);
             //Chrome driver nie wisi w procesach
             driver.Quit();
         }
@@ -167,9 +167,9 @@ public class DodawanieAkcjiTest
         _testOutputHelper.WriteLine("Liczba wierszy to: " + listaWierszy.Count());
 
         string value = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[1]")).Text;
-        _testOutputHelper.WriteLine("Pierwsza komórka pierwszego wiersza ma wartoœæ: " + value);
+        _testOutputHelper.WriteLine("Pierwsza komï¿½rka pierwszego wiersza ma wartoï¿½ï¿½: " + value);
         string value2 = driver.FindElement(By.XPath(".//table/tbody/tr[1]")).Text;
-        _testOutputHelper.WriteLine("Pierwsz wiersz ma wartoœci: " + value2);
+        _testOutputHelper.WriteLine("Pierwsz wiersz ma wartoï¿½ci: " + value2);
 
         IWebElement pierwszyWiersz = driver.FindElement(By.XPath(".//table/tbody/tr[1]"));
         IWebElement wplac = pierwszyWiersz.FindElement(By.Id("wplac"));
@@ -184,8 +184,8 @@ public class DodawanieAkcjiTest
         var nowyStanKonta = decimal.Parse(stanKonta) + decimal.Parse(wplata);
 
         var wartoscKonta = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[2]")).Text;
-        //je¿eli stan konta == stan konta + wp³ata - test powinien przejœæ
-        Assert.True(wartoscKonta == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {wartoscKonta}");
+        //jeï¿½eli stan konta == stan konta + wpï¿½ata - test powinien przejï¿½ï¿½
+        Assert.True(wartoscKonta == nowyStanKonta.ToString(), $"Wartoï¿½ï¿½ konta wynosi: {wartoscKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
     }
@@ -216,9 +216,9 @@ public class DodawanieAkcjiTest
         var nowyStanKonta = decimal.Parse(stanKonta) - decimal.Parse(wyplata);
 
         var wartoscKonta = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[2]")).Text;
-        _testOutputHelper.WriteLine("Wartoœæ konta po wyp³acie: " + wartoscKonta);
-        //je¿eli stan konta == stan konta + wp³ata - test powinien przejœæ
-        Assert.True(wartoscKonta == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {wartoscKonta}");
+        _testOutputHelper.WriteLine("Wartoï¿½ï¿½ konta po wypï¿½acie: " + wartoscKonta);
+        //jeï¿½eli stan konta == stan konta + wpï¿½ata - test powinien przejï¿½ï¿½
+        Assert.True(wartoscKonta == nowyStanKonta.ToString(), $"Wartoï¿½ï¿½ konta wynosi: {wartoscKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
     }
@@ -254,7 +254,7 @@ public class DodawanieAkcjiTest
 
         var stanKontaPoZakupie = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[2]")).Text;
         var nowyStanKonta = decimal.Parse(stanPrzedZakupem) - kosztZakupu;
-        Assert.True(stanKontaPoZakupie == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {stanKontaPoZakupie}, a test wykazuje: {nowyStanKonta}");
+        Assert.True(stanKontaPoZakupie == nowyStanKonta.ToString(), $"Wartoï¿½ï¿½ konta wynosi: {stanKontaPoZakupie}, a test wykazuje: {nowyStanKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
     }
@@ -290,7 +290,7 @@ public class DodawanieAkcjiTest
 
         var stanKontaPoSprzedazy = driver.FindElement(By.XPath(".//table/tbody/tr[1]/td[2]")).Text;
         var nowyStanKonta = decimal.Parse(stanPrzedSprzedaza) + kosztSprzedazy;
-        Assert.True(stanKontaPoSprzedazy == nowyStanKonta.ToString(), $"Wartoœæ konta wynosi: {stanKontaPoSprzedazy}, a test wykazuje: {nowyStanKonta}");
+        Assert.True(stanKontaPoSprzedazy == nowyStanKonta.ToString(), $"Wartoï¿½ï¿½ konta wynosi: {stanKontaPoSprzedazy}, a test wykazuje: {nowyStanKonta}");
         //Chrome driver nie wisi w procesach
         driver.Quit();
 

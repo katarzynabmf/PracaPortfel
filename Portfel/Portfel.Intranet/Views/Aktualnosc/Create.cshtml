@@ -18,11 +18,24 @@
                             <form enctype="multipart/form-data" asp-action="Create">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                <div class="row">
+                                <!--  <div class="row">
                                     <div class="form-group">
 
                                         <input asp-for="Pozycja" class="form-control form-control-user" placeholder="Pozycja" />
                                         <span asp-validation-for="Pozycja" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                    -->
+                                <div class="row">
+                                    <div class="form-group">
+
+                                        <select asp-for="Pozycja" class="form-control form-control-user" placeholder="Pozycja">
+                                            <option>Aktualnosc</option>
+                                            <option>Post</option>
+                                            <span asp-validation-for="Pozycja" class="text-danger"></span>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -47,10 +60,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group">
-                                        <input asp-for="FotoUrl" class="form-control form-control-user" placeholder="Foto URL" />
-                                        <span asp-validation-for="FotoUrl" class="text-danger"></span>
+                                        <input type="hidden" id="FotoUrl" name="FotoUrl" class="form-control form-control-user" />
                                     </div>
                                 </div>
+                                    
+                                <input type="hidden" role="uploadcare-uploader" data-public-key="961967585fccc3291898" data-system-dialog="true" />
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" asp-for="Aktywna" /> @Html.DisplayNameFor(model => model.Aktywna)
@@ -84,14 +98,28 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <script>document.addEventListener('DOMContentLoaded', () => {
             var input = document.getElementsByClassName("custom-file-input")[0];
             var label = document.getElementsByClassName("custom-file-label")[0];
             input.onchange = (event) => {
                 label.innerHTML = event.target.files[0].name;
             }
 
-        });
+        });</script>
+
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js"></script>
+
+
+    <script>UPLOADCARE_LOCALE = "pl"</script>
+    <script>
+        const widget = uploadcare.SingleWidget("[role=uploadcare-uploader]");
+
+        widget.onUploadComplete(fileInfo => {
+
+            cdnUrl = fileInfo.cdnUrl;
+            document.getElementById('FotoUrl').value = cdnUrl;
+    });
     </script>
+
+
 }

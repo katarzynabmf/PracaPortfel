@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.my-settings {
+    --cfg-pubkey: '961967585fccc3291898';
+    /* all available settings https://uploadcare.github.io/blocks/solutions/file-uploader/#configuration */
+}
